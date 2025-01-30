@@ -5,7 +5,7 @@ import pandas as pd
 def hide_all():
     """ Hides all the pages """
     logInPage.hide()
-    page2.hide()
+    mainPage.hide()
 
 
 def show_page1():
@@ -55,6 +55,15 @@ class logInPage:
         
 
         self.app.mainloop()
+        #needs to be fixed change the variable names
+    def show(self):
+        hide_all()
+        self.label1.pack()
+        self.button1.pack()
+
+    def hide(self):
+        self.label1.pack_forget()
+        self.button1.pack_forget()
 
     def submit(self):
         grade = int(self.entry.get())
