@@ -1,4 +1,3 @@
-count = 0
-while count <= 7:
-    count += 1
-    print('Hello')
+strings = 0
+
+print(strings)
