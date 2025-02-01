@@ -1,5 +1,6 @@
 from customtkinter import *
 import customtkinter
+from CTkMessagebox import CTkMessagebox
 import pandas as pd
 
 app = CTk()
@@ -138,12 +139,25 @@ class manageAccPage:
                                    border_width=2, hover_color='#024950', text_color="#323231", height=40, width=185,
                                    font=(page1.font_para, 20))
         
-        self.done = CTkButton(master=app, text="Done", command=self.managePage, fg_color="#0fa4af",
+        self.done = CTkButton(master=app, text="Done", command=show_page2, fg_color="#0fa4af",
                                    border_color='#0d737a',
                                    border_width=2, hover_color='#024950', text_color="#323231", height=10, width=50,
                                    font=(page1.font_para, 20))
-    def goToMainPage():
-        show_page2()
+    def deleteAcc(self):
+        msg = CTkMessagebox(title="Delete", message="Are you sure you want to delete your account? This action is not reversable.",
+                        icon="warning", option_1="No", option_2="Yes")
+        response = msg.get()
+    
+        if response=="Yes":
+            page1.df = page1.df[page1.df.username != page1.user]
+            page1.df.to_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv', index=False)
+            print(page1.df)
+
+            show_page1()
+
+        else:
+            print("Click 'Yes' to exit!")
+        
         
     def show(self):
         hide_all()
