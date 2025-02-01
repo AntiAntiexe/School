@@ -88,25 +88,25 @@ class logInPage:
 
     def submit(self):
         
-        user = self.username.get()
-        password = self.password.get()
+        self.user = self.username.get()
+        self.password = self.passwordEntry.get()
 
-        data = self.df[self.df['username']== user].astype(str)
-        print(password, type(password))
+        data = self.df[self.df['username']== self.user].astype(str)
+        print(self.password, type(self.password))
         print(data['password'].tolist())
 
         print('\n ------------\n')
         print(self.df['username'].tolist())
 
-        if user in self.df['username'].tolist() and password in data['password'].tolist():
-            print(f'hello {user}.')
+        if self.user in self.df['username'].tolist() and self.password in data['password'].tolist():
+            print(f'hello {self.user}.')
             show_page2()
         else:
             self.check.place(relx=0.5, rely=0.5, anchor=CENTER)
             print('Incorrect username or password.')
 
 
-        print(self.df[self.df['username']== user])
+        print(self.df[self.df['username']== self.user])
  
 class mainPage:
     def __init__(self):
