@@ -134,7 +134,7 @@ class mainPage:
 
 class manageAccPage:
     def __init__(self):
-        self.delete =   CTkButton(master=app, text="back", command=show_page1, fg_color="#0fa4af",
+        self.delete =   CTkButton(master=app, text="Delete Account", command=self.deleteAcc, fg_color="#0fa4af",
                                    border_color='#0d737a',
                                    border_width=2, hover_color='#024950', text_color="#323231", height=40, width=185,
                                    font=(page1.font_para, 20))
