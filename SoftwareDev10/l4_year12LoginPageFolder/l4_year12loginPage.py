@@ -237,6 +237,8 @@ page2 = mainPage()
 
 page3 = newAccPage()
 
+page4 = manageAccPage()
+
 
 show_page1()
 
