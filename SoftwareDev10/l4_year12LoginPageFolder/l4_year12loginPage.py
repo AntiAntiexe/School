@@ -14,6 +14,7 @@ def hide_all():
     page1.hide()
     page2.hide()
     page3.hide()
+    page4.hide()
 
 
 def show_page1():
