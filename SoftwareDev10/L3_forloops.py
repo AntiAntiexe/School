@@ -14,7 +14,4 @@ else:
     print('Incorrect username or password.')
 
 
-#selected_rows = df[df['Name'] == 'Alice']
-#print(selected_rows)
-
 print(df[df['username']== user])
