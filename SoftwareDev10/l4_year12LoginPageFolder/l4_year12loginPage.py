@@ -119,8 +119,8 @@ class mainPage:
                                    border_color='#0d737a',
                                    border_width=2, hover_color='#024950', text_color="#323231", height=10, width=50,
                                    font=(page1.font_para, 20))
-    def managePage():
-        pass
+    def managePage(self):
+        page4.show()
         
     def show(self):
         hide_all()
