@@ -162,7 +162,7 @@ class manageAccPage:
     def show(self):
         hide_all()
         self.delete.place(relx=0.5, rely=0.4, anchor=CENTER)
-        self.manageAccBut.place(relx=0.8, rely=0.95, anchor=CENTER)
+        self.done.place(relx=0.8, rely=0.95, anchor=CENTER)
         
 
     def hide(self):
