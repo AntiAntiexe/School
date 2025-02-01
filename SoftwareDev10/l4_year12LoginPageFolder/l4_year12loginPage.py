@@ -26,6 +26,9 @@ def show_page2():
 def show_page3():
     page3.show()
 
+def show_page4():
+    page4.show()
+
 class logInPage:
 
     def __init__(self):
