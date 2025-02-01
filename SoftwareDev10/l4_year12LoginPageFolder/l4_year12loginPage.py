@@ -46,7 +46,7 @@ class logInPage:
                               font=(self.font_para, 20))
         
         
-        self.button = CTkButton(master=app, text="Submit", command=show_page2, fg_color="#0fa4af",
+        self.button = CTkButton(master=app, text="Submit", command=self.submit, fg_color="#0fa4af",
                                    border_color='#0d737a',
                                    border_width=2, hover_color='#024950', text_color="#323231", height=40, width=185,
                                    font=(self.font_para, 20))
@@ -65,10 +65,11 @@ class logInPage:
         self.button.place_forget()
 
     def submit(self):
-        grade = int(self.username.get())
-        result = self.gradeCheck(grade)
+        data = pd.read_csv("accounts.csv")
 
-        self.result.configure(text=str(result))
+        
+
+        show_page2()
         
 class mainPage:
     def __init__(self):

@@ -4,8 +4,6 @@ df = pd.read_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv')
 user = input('User: ')
 password = int(input('Pass: '))
 
-#trial_username = 'bob12'
-
 data = df[df['username']== user]
 
 if user in df['username'].tolist() and password in data['password'].to_list():
