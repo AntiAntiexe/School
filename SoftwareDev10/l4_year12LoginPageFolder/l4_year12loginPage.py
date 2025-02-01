@@ -202,7 +202,7 @@ class newAccPage:
                 if len(newPass) >= 8:
                     page1.df.loc[len(page1.df)] = [newUser, newPass]  
                     page1.show()
-                    page1.df.to_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv', index=False)
+                    page1.df.to_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv', index=True)
                     print('New account created')
                     print(page1.df)
                 else:
