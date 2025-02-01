@@ -50,7 +50,7 @@ class logInPage:
                               border_color='#0d737a', text_color="black", placeholder_text_color='#323231',
                               font=(self.font_para, 20))
         
-        self.password = CTkEntry(master=app, placeholder_text="Password", width=185, height=40,fg_color='#0fa4af',
+        self.passwordEntry = CTkEntry(master=app, placeholder_text="Password", width=185, height=40,fg_color='#0fa4af',
                               border_color='#0d737a', text_color="black", placeholder_text_color='#323231',
                               font=(self.font_para, 20))
         
@@ -69,7 +69,7 @@ class logInPage:
         hide_all()
         self.label.place(relx=0.5, rely=0.1, anchor=CENTER)
         self.username.place(relx=0.5, rely=0.2, anchor=CENTER)
-        self.password.place(relx=0.5, rely=0.3, anchor=CENTER)
+        self.passwordEntry.place(relx=0.5, rely=0.3, anchor=CENTER)
         self.button.place(relx=0.5, rely=0.4, anchor=CENTER)
         self.newAccBut.place(relx=0.8, rely=0.95, anchor=CENTER)
         
