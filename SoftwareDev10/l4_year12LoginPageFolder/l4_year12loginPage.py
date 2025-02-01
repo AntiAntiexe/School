@@ -167,7 +167,7 @@ class manageAccPage:
 
     def hide(self):
         self.delete.place_forget()
-        self.manageAccBut.place_forget()
+        self.done.place_forget()
 
 class newAccPage:
     def __init__(self):
