@@ -77,7 +77,7 @@ class logInPage:
     def hide(self):
         self.label.place_forget()
         self.username.place_forget()
-        self.password.place_forget()
+        self.passwordEntry.place_forget()
         self.button.place_forget()
         self.check.place_forget()
         self.newAccBut.place_forget()
