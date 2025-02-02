@@ -114,9 +114,11 @@ class logInPage:
  
 class mainPage:
     def __init__(self):
-        self.back =   CTkButton(master=app, text="back", command=show_page1, fg_color="#0fa4af",
+        #username = page1.user
+        self.hello = CTkLabel(master=app, text=f"Hello, user", font=page1.font_title)
+        self.back = CTkButton(master=app, text="Log Out", command=show_page1, fg_color="#0fa4af",
                                    border_color='#0d737a',
-                                   border_width=2, hover_color='#024950', text_color="#323231", height=40, width=185,
+                                   border_width=2, hover_color='#024950', text_color="#323231", height=10, width=50,
                                    font=(page1.font_para, 20))
         
         self.manageAccBut = CTkButton(master=app, text="Manage Account", command=self.managePage, fg_color="#0fa4af",
@@ -128,11 +130,13 @@ class mainPage:
         
     def show(self):
         hide_all()
-        self.back.place(relx=0.5, rely=0.4, anchor=CENTER)
+        self.hello.place(relx=0.5, rely=0.1, anchor=CENTER)
+        self.back.place(relx=0.125, rely=0.95, anchor=CENTER)
         self.manageAccBut.place(relx=0.8, rely=0.95, anchor=CENTER)
         
 
     def hide(self):
+        self.hello.place_forget()
         self.back.place_forget()
         self.manageAccBut.place_forget()
 
