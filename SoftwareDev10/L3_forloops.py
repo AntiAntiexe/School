@@ -1,7 +1,8 @@
 import pandas as pd
+import re
 
-df = pd.read_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv')
-'''user = input('User: ')
+df = pd.read_csv("SoftwareDev10/l4_year12LoginPageFolder/accounts.csv")
+"""user = input('User: ')
 password = int(input('Pass: '))
 
 data = df[df['username']== user]
@@ -12,10 +13,9 @@ else:
     print('Incorrect username or password.')
 
 
-print(df[df['username']== user])'''
+print(df[df['username']== user])"""
 
-txt = "7"
-
-x = txt.isalnum()
-
+txt = "The rain in Spain"
+x = re.findall("ai", txt)
 print(x)
+
