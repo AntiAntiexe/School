@@ -2,6 +2,7 @@ from customtkinter import *
 import customtkinter
 from CTkMessagebox import CTkMessagebox
 import pandas as pd
+import re
 
 app = CTk()
 app.title('My App')
@@ -196,6 +197,11 @@ class newAccPage:
         self.done = CTkButton(master=app, text="Submit", command=self.createNewAcc, fg_color="#0fa4af",
                                    border_color='#0d737a',
                                    border_width=2, hover_color='#024950', text_color="#323231", height=40, width=185)
+        
+        #self.backbut = CTkButton(master=app, text="Back", command=self.managePage, fg_color="#0fa4af",
+                                  # border_color='#0d737a',
+                                  # border_width=2, hover_color='#024950', text_color="#323231", height=10, width=50,
+                                  # font=(page1.font_para, 20))
     
     def createNewAcc(self):
         newUser = self.newUsername.get()
@@ -205,6 +211,8 @@ class newAccPage:
             print('Username not available')
             self.checkNewAcc.configure(text='Username not available')
             self.checkNewAcc.place(relx=0.5, rely=0.5, anchor=CENTER)
+        elif:
+            x = re.findall("@gwsc.vic.edu.au")
         else:
             if newPass.isascii():
                 if len(newPass) >= 8:

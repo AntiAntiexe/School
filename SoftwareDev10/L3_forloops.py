@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 df = pd.read_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv')
 '''user = input('User: ')
@@ -14,8 +15,15 @@ else:
 
 print(df[df['username']== user])'''
 
-txt = "7"
+txt = "dib0003@gwsc.vic.edu.au@"
+x = re.findall("@gwsc.vic.edu.au", txt)
+print(x) 
 
-x = txt.isalnum()
 
-print(x)
+txt = "The rain in Spain"
+x = re.split("\s", txt)
+print(x) 
+
+txt = "The rain in Spain"
+x = re.sub("\s", "9", txt)
+print(x) 
