@@ -31,7 +31,7 @@ class App:
         self.label = CTkLabel(master=self.app, text="CSV Sorter", font=self.my_font)
         self.label.grid(column=0, row=0, padx=20, pady=20)
 
-        self.btn_submit = CTkButton(master=self.app, text="Submit", command=self.select_file, fg_color="#0fa4af",
+        self.btn_submit = CTkButton(master=self.app, text="Select File", command=self.select_file, fg_color="#0fa4af",
                                    border_color='#0d737a',
                                    border_width=2, hover_color='#024950', text_color="#323231", height=40,
                                    font=(self.my_font2, 25))
@@ -39,7 +39,6 @@ class App:
 
         self.textbox = customtkinter.CTkTextbox(master=self.app, width=400, corner_radius=0)
         self.textbox.grid(row=2, column=0, padx=20, pady=20)
-        self.textbox.insert("0.0", "Some example text!\n" * 50)
 
         
 
@@ -56,10 +55,14 @@ class App:
     def sort(self):
         df = pd.read_csv(self.filename)
 
+        self.textbox.delete(0.0, END)
+
         sorted_df = df.sort_values(by=["number"], ascending=True)
         sorted_df.to_csv('homes_sorted.csv', index=False)
+        
 
-        self.textbox.insert("0.0", sorted_df)
+
+        self.textbox.insert("0.0", sorted_df["number"].to_string(index=FALSE))
         print(sorted_df)
     
     def select_file(self):
@@ -72,11 +75,6 @@ class App:
             title='Open a file',
             initialdir='/',
             filetypes=filetypes)
-
-        showinfo(
-            title='Selected File',
-            message=self.filename
-        )
 
         self.sort()
 
