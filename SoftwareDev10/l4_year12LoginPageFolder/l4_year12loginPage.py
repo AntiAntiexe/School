@@ -215,14 +215,21 @@ class newAccPage:
             x = re.findall("@gwsc.vic.edu.au")
         else:
             if newPass.isascii():
-                if len(newPass) >= 8:
-                    page1.df.loc[len(page1.df)] = [newUser, newPass]  
-                    page1.show()
-                    page1.df.to_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv', index=True)
-                    print('New account created')
-                    print(page1.df)
+                
+                match = re.findall('@gwsc.vic.edu.au', newUser)
+                if match:
+                    
+                    if len(newPass) >= 8:
+                        page1.df.loc[len(page1.df)] = [newUser, newPass]  
+                        page1.show()
+                        page1.df.to_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv', index=True)
+                        print('New account created')
+                        print(page1.df)
+                    else:
+                        self.checkNewAcc.configure(text='Password must contain at least 8 characters')
+                        self.checkNewAcc.place(relx=0.5, rely=0.5, anchor=CENTER)
                 else:
-                    self.checkNewAcc.configure(text='Password must contain at least 8 characters')
+                    self.checkNewAcc.configure(text='Email must be GWSC')
                     self.checkNewAcc.place(relx=0.5, rely=0.5, anchor=CENTER)
 
             else:
