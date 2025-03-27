@@ -77,7 +77,6 @@ class App:
         sorted_df.to_csv('homes_sorted.csv', index=False)
         
 
-
         self.textbox.insert("0.0", sorted_df["word"].to_string(index=FALSE))
         print(sorted_df)
     
@@ -110,8 +109,6 @@ class App:
         self.sortString()
 
         print(self.filename)
-    
-
 
 
 App()
