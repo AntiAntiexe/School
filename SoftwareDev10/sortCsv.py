@@ -44,12 +44,8 @@ class App:
         self.btn_select_string.grid(column=0, row=2, padx=20, pady=20)
 
 
-        
-
         self.textbox = customtkinter.CTkTextbox(master=self.app, width=400, corner_radius=0)
         self.textbox.grid(row=3, column=0, padx=20, pady=20)
-
-        
 
 
         self.app.mainloop()
@@ -63,7 +59,7 @@ class App:
         sorted_df = df.sort_values(by=["number"], ascending=True)
         sorted_df.to_csv('homes_sorted.csv', index=False)
         
-
+        
 
         self.textbox.insert("0.0", sorted_df["number"].to_string(index=FALSE))
         print(sorted_df)
