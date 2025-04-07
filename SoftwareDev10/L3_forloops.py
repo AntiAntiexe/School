@@ -15,6 +15,18 @@ else:
 
 print(df[df['username']== user])"""
 
+txt = "dib0003@gwsc.vic.edu.au@"
+x = re.findall("@gwsc.vic.edu.au", txt)
+print(x) 
+
+
+txt = "The rain in Spain"
+x = re.split("\s", txt)
+print(x) 
+
+txt = "The rain in Spain"
+x = re.sub("\s", "9", txt)
+print(x) 
 txt = "The rain in Spain"
 x = re.findall("ai", txt)
 print(x)
