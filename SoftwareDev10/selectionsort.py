@@ -1,39 +1,30 @@
-# Python program for implementation of Selection
-# Sort
+'''my_array = [12, 23, 19, 11, 1, 20, 342, 29]
 
-def selection_sort(arr):
-    n = len(arr)
-    for i in range(n - 1):
-      
-        # Assume the current position holds
-        # the minimum element
-        min_idx = i
-        
-        # Iterate through the unsorted portion
-        # to find the actual minimum
-        for j in range(i + 1, n):
-            if arr[j] < arr[min_idx]:
-              
-                # Update min_idx if a smaller element is found
-                min_idx = j
-        
-        # Move minimum element to its
-        # correct position
-        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+LengthOne = len(my_array)
 
-def print_array(arr):
-    for val in arr:
-        print(val, end=" ")
-    print()
+for i in range(LengthOne-1):
+    min_index = 1
 
-if __name__ == "__main__":
-    arr = [64, 25, 12, 22, 11]
-    
-    print("Original array: ", end="")
-    print_array(arr)
-    
-    selection_sort(arr)
-    
-    print("Sorted array: ", end="")
-    print_array(arr)
+    for j in range(i+1, LengthOne):
+        if my_array[i] < my_array[min_index]:
+            min_index = j
+    min_value = my_array.pop(min_index)
+    my_array.insert(i, min_value)
+
+print(my_array)'''
+
+
+my_array = [64, 34, 25, 5, 22, 11, 90, 12]
+
+n = len(my_array)
+for i in range(n-1):
+    min_index = i
+    for j in range(i+1, n):
+        if my_array[j] < my_array[min_index]:
+            min_index = j
+    min_value = my_array.pop(min_index)
+    my_array.insert(i, min_value)
+
+print("Sorted array:", my_array)
+
 
