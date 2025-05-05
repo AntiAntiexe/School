@@ -5,7 +5,7 @@ import pandas as pd
 import re
 
 app = CTk()
-app.title('My App')
+app.title('Password')
 app.geometry("500x500")
 set_appearance_mode("dark")
 app.grid_columnconfigure(0, weight=1)
@@ -47,6 +47,9 @@ class logInPage:
         # Title
         self.label = CTkLabel(master=app, text="Login Screen!", font=self.font_title)
         
+        self.usernameLbl= CTkLabel(master=app, text='Enter Username', font=self.font_para)
+        self.passwordLbl= CTkLabel(master=app, text='Enter Password', font=self.font_para)
+        
 
         self.check = CTkLabel(master=app, text="Incorrect username or password!", font=(self.font_para, 20))
         
@@ -73,10 +76,12 @@ class logInPage:
     def show(self):
         hide_all()
         self.label.place(relx=0.5, rely=0.1, anchor=CENTER)
-        self.username.place(relx=0.5, rely=0.2, anchor=CENTER)
-        self.passwordEntry.place(relx=0.5, rely=0.3, anchor=CENTER)
-        self.button.place(relx=0.5, rely=0.4, anchor=CENTER)
+        self.username.place(relx=0.5, rely=0.3, anchor=CENTER)
+        self.passwordEntry.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.button.place(relx=0.5, rely=0.6, anchor=CENTER)
         self.newAccBut.place(relx=0.8, rely=0.95, anchor=CENTER)
+        self.usernameLbl.place(relx=0.5, rely=0.2, anchor=CENTER)
+        self.passwordLbl.place(relx=0.5, rely=0.4, anchor=CENTER)
         
 
     def hide(self):
