@@ -13,6 +13,7 @@ SALES_FILE_NAME = "sales.txt"
 # Complete this function (10 marks)
 
 
+
 def apply_concession_discount(total_cost):
     has_concession_card = input("Do you have a concession card? (yes or no) ").lower()
     if has_concession_card == "yes":
