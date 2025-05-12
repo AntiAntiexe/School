@@ -1,2 +1,22 @@
 Begin
+    Get total_cost
+    Get num_coffees
+
+    IF num_coffees % 4 = 0 THEN
+        num_discounts <- num_coffees // 4
+        total_cost <- total_cost - (num_discounts * COFFEE_DISCOUNT)
+    END IF
+
+    RETURN total_cost
+End
+
+
+
+TRACE TABLE
+---------------------------------------------------
+num_coffees | num_discounts | total_cost | output
+    3       |       n/a     |     14     |    14
+    4       |       1       |     20     |    17
+
+
     
