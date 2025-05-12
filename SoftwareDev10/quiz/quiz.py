@@ -13,7 +13,6 @@ app.grid_columnconfigure(0, weight=1)
 class quiz:
     def __init__(self):
 
-
         # Fonts
         self.font_title = customtkinter.CTkFont(family="Helvetica", size=25, weight="bold")
 
@@ -84,7 +83,7 @@ class quiz:
         else:
             quest3 = False
 
-        results.loc[len(results.df)] = [self.name, self.studentID, self.right]
+        results.loc[len(results)] = [self.name.get(), self.studentID.get(), right]
         results.to_csv('SoftwareDev10/quiz/results.csv', index=True)
 
 
