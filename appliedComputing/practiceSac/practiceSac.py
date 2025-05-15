@@ -49,14 +49,10 @@ def apply_coffee_discount(total_cost, num_coffees):
         total_cost -= num_discounts * COFFEE_DISCOUNT
     return total_cost
 
-
-# Complete this function (5 marks)
 def display_total_cost(total_cost):
     print(f"Your total cost is ${total_cost:.2f}")
     # Display the total cost to the user
 
-
-# Use this exact completed function to save to required output to a text file (do not modify if you are employing text-based)
 def save_sale_data(total_cost, has_concession_card):
     # Save the sale data to a file
     sale_data = {
@@ -67,9 +63,6 @@ def save_sale_data(total_cost, has_concession_card):
 
     with open(SALES_FILE_NAME, "a") as sales_file:
         sales_file.write(str(sale_data) + "\n")
-
-
-# Use this exact completed main function (do not modify if you are employingtext-based)
 
 
 def main():
