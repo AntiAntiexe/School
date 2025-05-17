@@ -29,7 +29,7 @@ def get_order():
     num_coffees = int(input("How many coffees would you like to order? "))
     total_cost = 0.0
     for i in range(num_coffees):
-        coffee_size = input("Enter the size of coffee (small, medium, large) ").lower()
+        coffee_size = input("Enter the size of coffee " + "#"+ str(i) + " (small, medium, large) ").lower()
         if coffee_size == "small":
             total_cost += SMALL_PRICE
         elif coffee_size == "medium":
@@ -44,7 +44,7 @@ def get_order():
 
 # Complete this function (20 marks)
 def apply_coffee_discount(total_cost, num_coffees):
-    if num_coffees % 4 == 0:
+    if total_cost %
         num_discounts = num_coffees // 4
         total_cost -= num_discounts * COFFEE_DISCOUNT
     return total_cost

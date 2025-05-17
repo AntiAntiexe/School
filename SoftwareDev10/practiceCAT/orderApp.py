@@ -1,5 +1,6 @@
 from customtkinter import *
 import customtkinter
+import csv
 
 app = CTk()
 app.title("Frank's Food")
@@ -11,7 +12,7 @@ app.grid_columnconfigure(0, weight=1)
 class FranksFoodApp:
     def __init__(self):
 
-        SENIOR_CITIZEN_DISCOUNT = 10
+        self.SENIOR_CITIZEN_DISCOUNT = 10
 
         # fonts
         self.font_title = customtkinter.CTkFont(
@@ -71,23 +72,70 @@ class FranksFoodApp:
         )
         self.submit.place(relx=0.1, rely=0.7, anchor=W)
 
-        self.resultLbl = CTkLabel(master=app, text="Total Cost:", font=self.font_para)
+        self.resultLbl = CTkLabel(master=app, text="Total Cost:", font=(self.font_para, 20))
+        self.resultLbl.place(relx=0.6, rely=0.4)
+
+        self.acctualResult = CTkLabel(master=app,font=(self.font_para))
+
     def calcDiscount(self, orderValue):
+        totalOrderValue=0
+        valueOfDiscount=0
         if orderValue > 100 and orderValue < 150:
             orderDiscount = 10
-            totalOrderValue = orderValue * (1 - orderDiscount / 100) 
+            totalOrderValue = orderValue * (1 - orderDiscount / 100)
+            valueOfDiscount = orderValue * 0.1
+        elif orderValue >= 150:
+            orderDiscount = 15
+            totalOrderValue = orderValue * (1 - orderDiscount / 100)
+            valueOfDiscount = orderValue * 0.15
+        else:
+            totalOrderValue = orderValue
+            valueOfDiscount = 0
+        return totalOrderValue, valueOfDiscount
+        
+    def calcSeniorDiscount(self, totalOrderValue, valueOfDiscount):
+        finalOrderValue = 0
+        totalOrderDiscount= 0
+        if self.radio_var.get() == 1:
+            if totalOrderValue > 50:
+                finalOrderValue = totalOrderValue - self.SENIOR_CITIZEN_DISCOUNT
+                totalOrderDiscount = self.SENIOR_CITIZEN_DISCOUNT + valueOfDiscount
+            elif totalOrderValue <= 50:
+                finalOrderValue = totalOrderValue
+                totalOrderDiscount = valueOfDiscount
+        elif self.radio_var.get() == 2:
+            totalOrderDiscount = valueOfDiscount
+            finalOrderValue = totalOrderValue
+        return finalOrderValue, totalOrderDiscount
+
+
+    def save(self, customerName, totalOrderValue, finalOrderValue, totalOrderDiscount):
+        data = {'customerName': customerName, 'totalOrderValue': totalOrderValue, 'finalOrderValue': finalOrderValue, 'totalOrderDiscount':totalOrderDiscount}
+
+        with open('SoftwareDev10/practiceCAT/CustomerDetails.csv', 'w', newline='') as csvfile:
+            fieldnames = ['customerName', 'totalOrderValue', 'finalOrderValue', 'totalOrderDiscount']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            #writer.writerow([customerName, totalOrderValue, finalOrderValue, totalOrderDiscount])
+            writer.writerow(data)
+
+
+    def configResult(self, finalOrderValue):
+        self.acctualResult.configure(text=str(finalOrderValue))
+        self.acctualResult.place(relx=0.6, rely=0.5)
             
     def submit(self):
-        pass
+        totalOrderValue, valueOfDiscount = self.calcDiscount(int(self.orderValueEntry.get()))
+        print('TotalOrderValue', totalOrderValue)
+        print('Value of discount', valueOfDiscount)
 
+        finalOrderValue, totalOrderDiscount = self.calcSeniorDiscount(totalOrderValue, valueOfDiscount)
+        print('finalOrderValue', finalOrderValue)
+        print('totalOrderDiscount', totalOrderDiscount)
 
+        self.save(self.nameEntry.get(), self.orderValueEntry.get(), totalOrderDiscount, finalOrderValue)
 
-
-
-
-
-
-        
+        self.configResult(finalOrderValue)
 
 
 
