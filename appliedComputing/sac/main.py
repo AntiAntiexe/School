@@ -129,7 +129,7 @@ class JimmyApp:
 
         cost = self.calcCost(area, glassType)
         cost = self.apply_concession_discount(self.CONCESSION_DISCOUNT, cost, has_concession)
-        cost = round(cost + 100, 2)
+        cost = round((cost + 100), 2)
 
         self.resultLbl.forget()
         self.resultLbl = CTkLabel(master=app, text=f"Total cost: ${cost}", font=self.font_para)
