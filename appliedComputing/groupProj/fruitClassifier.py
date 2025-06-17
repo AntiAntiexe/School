@@ -110,6 +110,29 @@ val_loss = history.history['val_loss']
 
 epochs_range = range(epochs)
 
+downloaded_img = "/Users/stineyttingejstrup/Downloads/592px-Red_sunflower.jpg"
+
+
+
+
+data_dir = pathlib.Path(extract_path)
+sunflower_path = data_dir / "592px-Red_sunflower.jpg"
+
+
+img = tf.keras.utils.load_img(
+    sunflower_path, target_size=(img_height, img_width)
+)
+
+img_array = tf.keras.utils.img_to_array(img)
+img_array = tf.expand_dims(img_array, 0)  # Create a batch
+
+predictions = model.predict(img_array)
+score = tf.nn.softmax(predictions[0])
+print(
+    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    .format(class_names[np.argmax(score)], 100 * np.max(score))
+)
+
 plt.figure(figsize=(8, 8))
 plt.subplot(1, 2, 1)
 plt.plot(epochs_range, acc, label='Training Accuracy')
@@ -123,3 +146,4 @@ plt.plot(epochs_range, val_loss, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 plt.show()
+
