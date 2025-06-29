@@ -18,8 +18,8 @@ import tarfile
 import pathlib
 
 # Path to the manually downloaded file
-downloaded_file = "/Users/stineyttingejstrup/Downloads/flower_photos.tgz"
-extract_path = "/Users/stineyttingejstrup/Downloads"
+downloaded_file = "/Users/home/Downloads/flower_photos.tgz"
+extract_path = "/Users/home/Downloads"
 
 # Extract the tar.gz file
 with tarfile.open(downloaded_file, "r:gz") as tar:
@@ -94,6 +94,9 @@ model.compile(optimizer='adam',
 
 model.summary()
 
+
+
+
 epochs = 10
 
 history = model.fit(
@@ -101,6 +104,24 @@ history = model.fit(
     validation_data=val_ds,
     epochs=epochs
 )
+
+'''
+
+tf.keras.models.save_model(model, 'model.pbtxt')
+
+#convert model to TensorFlow Lite
+converter = tf.lite.TFLiteConverter.from_keras_model(model = model)
+tflite_model = converter.convert()
+
+open("imgModel.tflite", "wb").write(tflite_model)
+
+
+'''
+
+
+
+
+
 
 acc = history.history['accuracy']
 val_acc = history.history['val_accuracy']
@@ -110,7 +131,7 @@ val_loss = history.history['val_loss']
 
 epochs_range = range(epochs)
 
-downloaded_img = "/Users/stineyttingejstrup/Downloads/592px-Red_sunflower.jpg"
+downloaded_img = "/Users/home/Downloads/592px-Red_sunflower.jpg"
 
 
 
@@ -146,4 +167,3 @@ plt.plot(epochs_range, val_loss, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 plt.show()
-
