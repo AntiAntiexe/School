@@ -1,6 +1,6 @@
 import requests
 
-USDA_API_KEY = 'ut3YgGsXJZZF0KDSHYbnX5j4Xo4PmmBhpGIYQneO'
+USDA_API_KEY = '########################'
 
 def search_food(food_name):
     url = 'https://api.nal.usda.gov/fdc/v1/foods/search'

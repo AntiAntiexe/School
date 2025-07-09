@@ -1,0 +1,5 @@
+deep infra
+API_KEY = 'Kxz6wxPEYehy7vtXbkGCzi1an30LnnEf'
+
+usda food
+USDA_API_KEY = 'ut3YgGsXJZZF0KDSHYbnX5j4Xo4PmmBhpGIYQneO'

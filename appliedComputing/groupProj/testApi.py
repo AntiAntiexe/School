@@ -1,6 +1,6 @@
 import requests
 
-API_KEY = 'Kxz6wxPEYehy7vtXbkGCzi1an30LnnEf'
+API_KEY = '######################'
 
 url = 'https://api.deepinfra.com/v1/inference/meta-llama/Meta-Llama-3-8B-Instruct'
 
