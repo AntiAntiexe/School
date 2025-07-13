@@ -60,7 +60,7 @@ plt.figure(figsize=(10, 10))
 def classNames():
     return train_ds.class_names
 
-'''
+
 
 
 
@@ -128,5 +128,5 @@ tf.saved_model.save(model, "appliedComputing/groupProj/fruitModel")
 
 #downloaded_img = "/Users/home/Downloads/apple.png"
 
-'''
+
 

@@ -1,0 +1,65 @@
+Protein                                2.000     g
+Total lipid (fat)                     14.700     g
+Carbohydrate, by difference            8.530     g
+Energy                               160.000  kcal
+Alcohol, ethyl                         0.000     g
+Water                                 73.200     g
+Caffeine                               0.000    mg
+Theobromine                            0.000    mg
+Total Sugars                           0.660     g
+Fiber, total dietary                   6.700     g
+Calcium, Ca                           12.000    mg
+Iron, Fe                               0.550    mg
+Magnesium, Mg                         29.000    mg
+Phosphorus, P                         52.000    mg
+Potassium, K                         485.000    mg
+Sodium, Na                             7.000    mg
+Zinc, Zn                               0.640    mg
+Copper, Cu                             0.190    mg
+Selenium, Se                           0.400    µg
+Retinol                                0.000    µg
+Vitamin A, RAE                         7.000    µg
+Carotene, beta                        62.000    µg
+Carotene, alpha                       24.000    µg
+Vitamin E (alpha-tocopherol)           2.070    mg
+Vitamin D (D2 + D3)                    0.000    µg
+Cryptoxanthin, beta                   28.000    µg
+Lycopene                               0.000    µg
+Lutein + zeaxanthin                  271.000    µg
+Vitamin C, total ascorbic acid        10.000    mg
+Thiamin                                0.067    mg
+Riboflavin                             0.130    mg
+Niacin                                 1.740    mg
+Vitamin B-6                            0.257    mg
+Folate, total                         81.000    µg
+Vitamin B-12                           0.000    µg
+Choline, total                        14.200    mg
+Vitamin K (phylloquinone)             21.000    µg
+Folic acid                             0.000    µg
+Folate, food                          81.000    µg
+Folate, DFE                           81.000    µg
+Vitamin E, added                       0.000    mg
+Vitamin B-12, added                    0.000    µg
+Cholesterol                            0.000    mg
+Fatty acids, total saturated           2.130     g
+SFA 4:0                                0.000     g
+SFA 6:0                                0.000     g
+SFA 8:0                                0.001     g
+SFA 10:0                               0.000     g
+SFA 12:0                               0.000     g
+SFA 14:0                               0.000     g
+SFA 16:0                               2.080     g
+SFA 18:0                               0.049     g
+MUFA 18:1                              9.070     g
+PUFA 18:2                              1.670     g
+PUFA 18:3                              0.125     g
+PUFA 20:4                              0.000     g
+PUFA 22:6 n-3 (DHA)                    0.000     g
+MUFA 16:1                              0.698     g
+PUFA 18:4                              0.000     g
+MUFA 20:1                              0.025     g
+PUFA 20:5 n-3 (EPA)                    0.000     g
+MUFA 22:1                              0.000     g
+PUFA 22:5 n-3 (DPA)                    0.000     g
+Fatty acids, total monounsaturated     9.800     g
+Fatty acids, total polyunsaturated     1.820     g
