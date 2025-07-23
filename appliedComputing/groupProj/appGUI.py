@@ -1,8 +1,8 @@
-from logging import root
 import tkinter as tk
 from tkinter import ttk
+from tkinter.filedialog import askopenfilename
+from tkinter import messagebox
 
-from matplotlib import style
 
 class App:
     def __init__(self, root, frm):
@@ -38,13 +38,24 @@ class App:
 
         font_main = ('Helvetica', 50, 'bold')
         label = tk.Label(self.root, text='NutriVision', font=font_main, foreground=self.colours['text'], background=self.colours['bg_dark'])
-        label.grid(column=0, row=0, padx=100, pady=0, sticky='w')
+        label.grid(column=0, row=1, padx=60, pady=0, sticky='w')
 
         button = tk.Button(self.root, text='Select Image', command=self.select_image, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
-        button.grid(column=0, row=1, padx=10, pady=10, sticky='w')
+        button.grid(column=0, row=2, padx=60, pady=30, sticky='w')
 
 
     def select_image(self):
+        filename = askopenfilename()
+
+        if filename:
+            # Here you can add the logic to process the selected image
+            print(f"Selected file: {filename}")
+            tk.messagebox.showinfo("File Selected", f"You selected: {filename}")
+        else:
+            print("No file selected")
+            tk.messagebox.showinfo("No Selection", "No file was selected. Please try again.")
+    
+    def runClassifier(self):
         pass
 
 app = tk.Tk()
