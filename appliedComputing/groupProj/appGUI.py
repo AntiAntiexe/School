@@ -67,6 +67,10 @@ class App:
         if self.filename:
             self.predicter.classify(self.filename)
 
+    def getNutrientData(self):
+        # This method can be used to fetch nutrient data if needed
+        pass
+
 app = tk.Tk()
 frm = ttk.Frame(app, padding=10)
 frm.grid()
