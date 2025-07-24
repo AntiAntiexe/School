@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 from tkinter import messagebox
+from runTfLite import Classifier 
 
 
 class App:
@@ -33,30 +34,38 @@ class App:
         self.root.geometry("800x600")
         self.root.configure(bg=self.colours['bg_dark'])
 
+        self.predicter = Classifier('fruitModel.tflite')
+
         style = ttk.Style(self.root)
         style.theme_use('classic')
 
         font_main = ('Helvetica', 50, 'bold')
-        label = tk.Label(self.root, text='NutriVision', font=font_main, foreground=self.colours['text'], background=self.colours['bg_dark'])
-        label.grid(column=0, row=1, padx=60, pady=0, sticky='w')
+        label = ttk.Label(self.root, text='NutriVision', font=font_main, foreground=self.colours['text'], background=self.colours['bg_dark'])
+        label.place(x=10, y=30, anchor='w')
 
-        button = tk.Button(self.root, text='Select Image', command=self.select_image, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
-        button.grid(column=0, row=2, padx=60, pady=30, sticky='w')
+        selectFileButton = tk.Button(self.root, text='Select Image', command=self.select_image, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
+        selectFileButton.place(x=10, y=100, anchor='w')
+
+        classifyButton = tk.Button(self.root, text='Classify Image', command=self.runClassifier, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
+        classifyButton.place(x=10, y=150, anchor='w')
 
 
     def select_image(self):
-        filename = askopenfilename()
+        self.filename = askopenfilename()
 
-        if filename:
+        if self.filename:
             # Here you can add the logic to process the selected image
-            print(f"Selected file: {filename}")
-            tk.messagebox.showinfo("File Selected", f"You selected: {filename}")
+            print(f"Selected file: {self.filename}")
+            tk.messagebox.showinfo("File Selected", f"You selected: {self.filename}")
         else:
             print("No file selected")
             tk.messagebox.showinfo("No Selection", "No file was selected. Please try again.")
+
+        
     
     def runClassifier(self):
-        pass
+        if self.filename:
+            self.predicter.classify(self.filename)
 
 app = tk.Tk()
 frm = ttk.Frame(app, padding=10)

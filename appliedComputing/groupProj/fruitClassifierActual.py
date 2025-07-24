@@ -60,6 +60,8 @@ plt.figure(figsize=(10, 10))
 def classNames():
     return train_ds.class_names
 
+print("Class names:", classNames())
+
 
 
 
