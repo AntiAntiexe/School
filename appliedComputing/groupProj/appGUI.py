@@ -39,7 +39,7 @@ class App:
         style = ttk.Style(self.root)
         style.theme_use('classic')
 
-        font_main = ('Helvetica', 50, 'bold')
+        font_main = ('Manrope', 50, 'bold')
         label = ttk.Label(self.root, text='NutriVision', font=font_main, foreground=self.colours['text'], background=self.colours['bg_dark'])
         label.place(x=10, y=30, anchor='w')
 
