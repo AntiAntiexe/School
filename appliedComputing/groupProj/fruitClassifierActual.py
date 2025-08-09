@@ -110,7 +110,7 @@ model.summary()
 
 
 
-epochs = 10
+epochs = 5
 
 history = model.fit(
     train_ds, 
