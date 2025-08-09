@@ -3,6 +3,9 @@ from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 from tkinter import messagebox
 from runTfLite import Classifier 
+from usdaFood import NutrientData
+import numpy as np
+from runMainModel import FruitClassifier
 
 
 class App:
@@ -35,6 +38,8 @@ class App:
         self.root.configure(bg=self.colours['bg_dark'])
 
         self.predicter = Classifier('fruitModel.tflite')
+        
+        self.fruitClassifier = FruitClassifier()
 
         style = ttk.Style(self.root)
         style.theme_use('classic')
@@ -49,6 +54,22 @@ class App:
         classifyButton = tk.Button(self.root, text='Classify Image', command=self.runClassifier, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
         classifyButton.place(x=10, y=150, anchor='w')
 
+        self.nutrientsInfo = ttk.Label(self.root, text='', font=('Manrope', 12), foreground=self.colours['text'], background=self.colours['bg_dark'])
+        self.nutrientsInfo.place(x=10, y=200, anchor='nw')
+
+    def runClassifier(self):
+        if self.filename:
+            #self.predicter.classify(self.filename)
+            #self.fruitClassifier.runClassifier(self.filename)
+            #self.fruitName = self.fruitClassifier.fruitName
+            
+            self.acc, self.fruitName = self.fruitClassifier.runClassifier(self.filename)
+
+    def getNutrientData(self):
+        nutrientData = NutrientData()
+        self.nurtrients = nutrientData.getNutrientData(self.fruitName)
+
+        print(f"Nutrient data for {self.fruitName}: {self.nurtrients}")
 
     def select_image(self):
         self.filename = askopenfilename()
@@ -57,19 +78,24 @@ class App:
             # Here you can add the logic to process the selected image
             print(f"Selected file: {self.filename}")
             tk.messagebox.showinfo("File Selected", f"You selected: {self.filename}")
+            self.runClassifier()
+            self.getNutrientData()
+            self.nutrientsInfo.config(text=f"Nutrient data for {self.fruitName}: {self.nurtrients}")
         else:
             print("No file selected")
             tk.messagebox.showinfo("No Selection", "No file was selected. Please try again.")
 
         
-    
-    def runClassifier(self):
-        if self.filename:
-            self.predicter.classify(self.filename)
 
-    def getNutrientData(self):
-        # This method can be used to fetch nutrient data if needed
-        pass
+        
+
+        
+    
+    
+
+    
+
+
 
 app = tk.Tk()
 frm = ttk.Frame(app, padding=10)
