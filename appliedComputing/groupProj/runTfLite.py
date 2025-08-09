@@ -69,11 +69,11 @@ class Classifier:
         classify_lite = self.interpreter.get_signature_runner('serving_default')
         classify_lite
         predictions_lite = classify_lite(dense_input=img_array)['dense_2']
-        score_lite = tf.nn.softmax(predictions_lite)
+        self.score_lite = tf.nn.softmax(predictions_lite)
 
         print(
         "This image most likely belongs to {} with a {:.2f} percent confidence."
-        .format(self.class_names[np.argmax(score_lite)], 100 * np.max(score_lite))
+        .format(self.class_names[np.argmax(self.score_lite)], 100 * np.max(self.score_lite))
         )
 
 
