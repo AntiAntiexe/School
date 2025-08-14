@@ -7,6 +7,13 @@ from usdaFood import NutrientData
 import numpy as np
 from runMainModel import FruitClassifier
 
+'''
+The App class initialises the variables required for the tkinter GUI.
+This includes methods and objects for:
+    colours
+    UI elements
+    fruit classifier
+'''
 
 class App:
     def __init__(self, root, frm):
@@ -56,7 +63,11 @@ class App:
 
         self.nutrientsInfo = ttk.Label(self.root, text='', font=('Manrope', 12), foreground=self.colours['text'], background=self.colours['bg_dark'])
         self.nutrientsInfo.place(x=10, y=200, anchor='nw')
-
+        
+    '''
+    Applys an existance check to the filename to see whether a file was selected and then runs it through the fruitClassifier runClassifier command.
+    Then assigns the returned values to two variables.
+    '''
     def runClassifier(self):
         if self.filename:
             #self.predicter.classify(self.filename)
@@ -64,6 +75,9 @@ class App:
             #self.fruitName = self.fruitClassifier.fruitName
             
             self.acc, self.fruitName = self.fruitClassifier.runClassifier(self.filename)
+    '''
+    Creates the object for the fooddata central API and then requests the data for the classified fruit.
+    '''
 
     def getNutrientData(self):
         nutrientData = NutrientData()
@@ -71,6 +85,9 @@ class App:
 
         print(f"Nutrient data for {self.fruitName}: {self.nurtrients}")
 
+    '''
+    Uses tks askopenfilename to let the iser to pick a photo they wish to classifiy then it applys an existence check and runs the previous functions.
+    '''
     def select_image(self):
         self.filename = askopenfilename()
 
