@@ -50,6 +50,9 @@ class App:
 
         style = ttk.Style(self.root)
         style.theme_use('classic')
+        
+        frame = ttk.Frame(self.root, height=300, width=600)
+        frame.place(x=400, y=300, anchor='center')
 
         font_main = ('Manrope', 50, 'bold')
         label = ttk.Label(self.root, text='NutriVision', font=font_main, foreground=self.colours['text'], background=self.colours['bg_dark'])
