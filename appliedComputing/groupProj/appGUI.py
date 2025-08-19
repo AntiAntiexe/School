@@ -62,10 +62,10 @@ class App:
 
         font_main = ('Manrope', 100, 'bold')
         label = ttk.Label(self.root, text='NutriVision', font=font_main, foreground=self.colours['text'], background=self.colours['bg_dark'])
-        label.place(x=10, y=30, anchor='w')
-
-        selectFileButton = tk.Button(self.root, text='Select Image', command=self.select_image, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
-        selectFileButton.place(x=10, y=100, anchor='w')
+        label.place(x=10, y=50, anchor='w')
+        font_main = ('Manrope', 20, 'bold')
+        selectFileButton = tk.Button(self.root, text='Select Image', font= font_main, command=self.select_image, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'], height=2, width=10)
+        selectFileButton.place(x=10, y=175, anchor='w')
 
         classifyButton = tk.Button(self.root, text='Classify Image', command=self.runClassifier, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
         classifyButton.place(x=10, y=150, anchor='w')
