@@ -70,9 +70,9 @@ class App:
         #classifyButton = tk.Button(self.root, text='Classify Image', command=self.runClassifier, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
         #classifyButton.place(x=10, y=150, anchor='w')
 
-        self.nutrientsInfo = ttk.Label(self.root, text='', font=('Manrope', 12), foreground=self.colours['text'], background=self.colours['bg_dark'])
-        self.nutrientsInfo.place(x=10, y=200, anchor='nw')
-        
+        self.nutrientsInfo = ttk.Label(frame, text='', font=('Manrope', 12), foreground=self.colours['text'], background=self.colours['border'])
+        self.nutrientsInfo.place(x=175, y=150, anchor='center')
+
     '''
     Applys an existance check to the filename to see whether a file was selected and then runs it through the fruitClassifier runClassifier command.
     Then assigns the returned values to two variables.
