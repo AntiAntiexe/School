@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 from tkinter import messagebox
@@ -6,6 +7,7 @@ from runTfLite import Classifier
 from usdaFood import NutrientData
 import numpy as np
 from runMainModel import FruitClassifier
+from PIL import ImageTk, Image
 
 '''
 The App class initialises the variables required for the tkinter GUI.
