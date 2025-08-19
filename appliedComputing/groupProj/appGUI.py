@@ -103,7 +103,16 @@ class App:
         if self.filename:
             # Here you can add the logic to process the selected image
             print(f"Selected file: {self.filename}")
-            tk.messagebox.showinfo("File Selected", f"You selected: {self.filename}")
+            #tk.messagebox.showinfo("File Selected", f"You selected: {self.filename}")
+            
+            #panel.pl(side = "bottom", fill = "both", expand = "yes")
+            #panel.place(x=100, y=400, anchor='center')
+            
+            canvas = Canvas(self.root, width = 300, height = 300)
+            canvas.place(x=400, y=300, anchor='center')
+            img = ImageTk.PhotoImage(Image.open(self.filename))
+            canvas.create_image(20,20, anchor='center', image=img)
+            
             self.runClassifier()
             self.getNutrientData()
             self.nutrientsInfo.config(text=f"Nutrient data for {self.fruitName}: {self.nurtrients}")
