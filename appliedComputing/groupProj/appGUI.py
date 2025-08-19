@@ -67,8 +67,8 @@ class App:
         selectFileButton = tk.Button(self.root, text='Select Image', font= font_main, command=self.select_image, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'], height=2, width=10)
         selectFileButton.place(x=10, y=175, anchor='w')
 
-        classifyButton = tk.Button(self.root, text='Classify Image', command=self.runClassifier, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
-        classifyButton.place(x=10, y=150, anchor='w')
+        #classifyButton = tk.Button(self.root, text='Classify Image', command=self.runClassifier, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
+        #classifyButton.place(x=10, y=150, anchor='w')
 
         self.nutrientsInfo = ttk.Label(self.root, text='', font=('Manrope', 12), foreground=self.colours['text'], background=self.colours['bg_dark'])
         self.nutrientsInfo.place(x=10, y=200, anchor='nw')
