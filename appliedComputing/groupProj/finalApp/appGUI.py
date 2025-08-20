@@ -2,12 +2,11 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
-from tkinter import messagebox
-from runTfLite import Classifier 
 from usdaFood import NutrientData
 import numpy as np
 from runMainModel import FruitClassifier
 from PIL import ImageTk, Image
+
 
 '''
 The App class initialises the variables required for the tkinter GUI.
@@ -16,7 +15,6 @@ This includes methods and objects for:
     UI elements
     fruit classifier
 '''
-
 class App:
     def __init__(self, root):
 
@@ -43,16 +41,11 @@ class App:
         self.root.title("NutriVision")
         self.root.geometry("800x600")
         self.root.configure(bg=self.colours['bg_dark'])
-
-        self.predicter = Classifier('fruitModel.tflite')
-        
+  
         self.fruitClassifier = FruitClassifier()
 
         style = ttk.Style(self.root)
         style.theme_use('classic')
-        
-        #frame = ttk.Frame(self.root, height=300, width=300, )
-        #frame.place(x=400, y=300, anchor='center')
         
         s = ttk.Style()
         s.configure('Danger.TFrame', background=self.colours['border'], borderwidth=5)
@@ -67,9 +60,6 @@ class App:
         selectFileButton = tk.Button(self.root, text='Select Image', font= font_main, command=self.select_image, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'], height=2, width=10)
         selectFileButton.place(x=10, y=175, anchor='w')
 
-        #classifyButton = tk.Button(self.root, text='Classify Image', command=self.runClassifier, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
-        #classifyButton.place(x=10, y=150, anchor='w')
-
         self.nutrientsInfo = ttk.Label(frame, text='', font=('Manrope', 35), foreground=self.colours['text'], background=self.colours['border'])
         self.nutrientsInfo.place(x=210, y=190, anchor='center')
         
@@ -81,15 +71,11 @@ class App:
     '''
     def runClassifier(self):
         if self.filename:
-            #self.predicter.classify(self.filename)
-            #self.fruitClassifier.runClassifier(self.filename)
-            #self.fruitName = self.fruitClassifier.fruitName
-            
             self.acc, self.fruitName = self.fruitClassifier.runClassifier(self.filename)
+            
     '''
     Creates the object for the fooddata central API and then requests the data for the classified fruit.
     '''
-
     def getNutrientData(self):
         nutrientData = NutrientData()
         self.energy, self.carb, self.sugar, self.protein, self.fat = nutrientData.getNutrientData(self.fruitName)
@@ -122,18 +108,8 @@ class App:
             print("No file selected")
             tk.messagebox.showinfo("No Selection", "No file was selected. Please try again.")
 
-        
 
-        
-
-        
-    
-    
-
-    
-
-
-
+# Create the main application window
 app = Tk()
 app_instance = App(app)
 app.mainloop()
