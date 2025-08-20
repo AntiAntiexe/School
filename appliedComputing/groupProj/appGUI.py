@@ -18,7 +18,7 @@ This includes methods and objects for:
 '''
 
 class App:
-    def __init__(self, root, frm):
+    def __init__(self, root):
 
 
         self.root = root
@@ -40,8 +40,6 @@ class App:
             'info': '#879FC4',
         }
 
-
-        self.frm = frm
         self.root.title("NutriVision")
         self.root.geometry("800x600")
         self.root.configure(bg=self.colours['bg_dark'])
@@ -59,8 +57,8 @@ class App:
         s = ttk.Style()
         s.configure('Danger.TFrame', background=self.colours['border'], borderwidth=5)
         
-        frame = ttk.Frame(self.root, height=300, width=400, style='Danger.TFrame')
-        frame.place(x=550, y=300, anchor='center')
+        frame = ttk.Frame(self.root, height=400, width=400, style='Danger.TFrame')
+        frame.place(x=550, y=350, anchor='center')
 
         font_main = ('Manrope', 100, 'bold')
         label = ttk.Label(self.root, text='NutriVision', font=font_main, foreground=self.colours['text'], background=self.colours['bg_dark'])
@@ -72,8 +70,10 @@ class App:
         #classifyButton = tk.Button(self.root, text='Classify Image', command=self.runClassifier, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'])
         #classifyButton.place(x=10, y=150, anchor='w')
 
-        self.nutrientsInfo = ttk.Label(frame, text='', font=('Manrope', 12), foreground=self.colours['text'], background=self.colours['border'])
-        self.nutrientsInfo.place(x=175, y=150, anchor='center')
+        self.nutrientsInfo = ttk.Label(frame, text='', font=('Manrope', 35), foreground=self.colours['text'], background=self.colours['border'])
+        self.nutrientsInfo.place(x=210, y=190, anchor='center')
+        
+        
 
     '''
     Applys an existance check to the filename to see whether a file was selected and then runs it through the fruitClassifier runClassifier command.
@@ -92,9 +92,9 @@ class App:
 
     def getNutrientData(self):
         nutrientData = NutrientData()
-        self.nurtrients = nutrientData.getNutrientData(self.fruitName)
+        self.energy, self.carb, self.sugar, self.protein, self.fat = nutrientData.getNutrientData(self.fruitName)
 
-        print(f"Nutrient data for {self.fruitName}: {self.nurtrients}")
+        print(f"Nutrient data for {self.fruitName}: {self.energy}, {self.carb}, {self.sugar}, {self.protein}, {self.fat}")
 
     '''
     Uses tks askopenfilename to let the iser to pick a photo they wish to classifiy then it applys an existence check and runs the previous functions.
@@ -105,19 +105,19 @@ class App:
         if self.filename:
             # Here you can add the logic to process the selected image
             print(f"Selected file: {self.filename}")
-            #tk.messagebox.showinfo("File Selected", f"You selected: {self.filename}")
             
-            #panel.pl(side = "bottom", fill = "both", expand = "yes")
-            #panel.place(x=100, y=400, anchor='center')
             
-            canvas = Canvas(self.root, width = 300, height = 300)
-            canvas.place(x=400, y=300, anchor='center')
-            img = ImageTk.PhotoImage(Image.open(self.filename))
-            canvas.create_image(20,20, anchor='center', image=img)
+            img = Image.open(self.filename).resize((300, 300))
+            self.img = ImageTk.PhotoImage(img)
+
+            my_label = Label(self.root, image=self.img)
+            my_label.place(x=10, y=400, anchor='w')
             
+              
             self.runClassifier()
             self.getNutrientData()
-            self.nutrientsInfo.config(text=f"Nutrient data for {self.fruitName}: {self.nurtrients}")
+            self.nutrientsInfo.config(text=f"Nutrient data for {self.fruitName}: \nEnergy: {round(self.energy[0], 2)}kcal \nCarbohydrates: {round(self.carb[0], 2)}g \nSugars: {round(self.sugar[0], 2)}g \nProtein: {round(self.protein[0], 2)}g \nTotal Fat: {round(self.fat[0], 2)}g \n\nPer 100g", anchor='center')
+
         else:
             print("No file selected")
             tk.messagebox.showinfo("No Selection", "No file was selected. Please try again.")
@@ -134,8 +134,6 @@ class App:
 
 
 
-app = tk.Tk()
-frm = ttk.Frame(app, padding=10)
-frm.grid()
-app_instance = App(app, frm)
+app = Tk()
+app_instance = App(app)
 app.mainloop()

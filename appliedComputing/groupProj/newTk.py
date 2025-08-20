@@ -1,13 +1,18 @@
-import tkinter as tk
-from tkinter import ttk
+from tkinter import *
+from PIL import ImageTk, Image
 
 # Create the main window
-root = tk.Tk()
+root = Tk()
 root.title("Black Background Label")
+root.geometry("800x600")
 
-# Create a Label with a black background and white text
-label = ttk.Label(root, text="This is a label on a black background", background="black", foreground="white")
-label.pack(pady=20, padx=20) # Add some padding
+filename = '/Users/home/Downloads/MANGOES-R2E2.jpg'
+
+img = Image.open(filename)
+img = ImageTk.PhotoImage(img)
+            
+my_label = Label(root, image=img)
+my_label.pack(padx=20, pady=20)
 
 # Run the Tkinter event loop
 root.mainloop()

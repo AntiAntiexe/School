@@ -65,6 +65,12 @@ class NutrientData:
             "Protein",
             "Total lipid (fat)"
         ]
-    ]
 
-            return final
+    ]
+            energy = nutrientData.loc["Energy (Atwater General Factors)"]
+            carbohydrate = nutrientData.loc["Carbohydrate, by difference"]
+            sugars = nutrientData.loc["Sugars, Total"]
+            protein = nutrientData.loc["Protein"]
+            total_lipid = nutrientData.loc["Total lipid (fat)"]
+
+            return energy, carbohydrate, sugars, protein, total_lipid
