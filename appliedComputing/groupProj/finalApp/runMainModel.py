@@ -1,9 +1,6 @@
 import numpy as np
 from PIL import Image
 from tensorflow import keras
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.preprocessing.image import load_img
-from tkinter.filedialog import askopenfilename
 
 
 class FruitClassifier:

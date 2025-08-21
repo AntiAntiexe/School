@@ -1,5 +1,4 @@
 import fooddatacentral as fdc
-import pandas as pd
 
 
 class NutrientData:

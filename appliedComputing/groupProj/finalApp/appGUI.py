@@ -3,7 +3,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 from usdaFood import NutrientData
-import numpy as np
 from runMainModel import FruitClassifier
 from PIL import ImageTk, Image
 
