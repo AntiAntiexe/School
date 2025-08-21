@@ -28,8 +28,12 @@ class NutrientData:
         if fruit_name.lower() in self.fdcIds:
             fdc_id = self.fdcIds[fruit_name.lower()]
             nutrientData = fdc.nutrients(self.apikey, fdc_id=fdc_id)
-
-            energy = nutrientData.loc["Energy (Atwater General Factors)"]
+            
+            print(f"Nutrient data for {fruit_name}: {nutrientData}")
+            if fruit_name.lower() == "orange" or fruit_name.lower() == "banana":
+                energy = nutrientData.loc["Energy"] # Convert kJ to kcal
+            else:
+                energy = nutrientData.loc["Energy (Atwater General Factors)"]
             carbohydrate = nutrientData.loc["Carbohydrate, by difference"]
             sugars = nutrientData.loc["Sugars, Total"]
             protein = nutrientData.loc["Protein"]

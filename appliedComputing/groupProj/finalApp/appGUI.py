@@ -78,9 +78,10 @@ class App:
     '''
     def getNutrientData(self):
         nutrientData = NutrientData()
+        
         self.energy, self.carb, self.sugar, self.protein, self.fat = nutrientData.getNutrientData(self.fruitName)
 
-        print(f"Nutrient data for {self.fruitName}: {self.energy}, {self.carb}, {self.sugar}, {self.protein}, {self.fat}")
+        #print(f"Nutrient data for {self.fruitName}: {self.energy}, {self.carb}, {self.sugar}, {self.protein}, {self.fat}")
 
     '''
     Uses tks askopenfilename to let the iser to pick a photo they wish to classifiy then it applys an existence check and runs the previous functions.
@@ -90,7 +91,7 @@ class App:
 
         if self.filename:
             # Here you can add the logic to process the selected image
-            print(f"Selected file: {self.filename}")
+            #print(f"Selected file: {self.filename}")
             
             
             img = Image.open(self.filename).resize((300, 300))
@@ -102,10 +103,11 @@ class App:
               
             self.runClassifier()
             self.getNutrientData()
-            self.nutrientsInfo.config(text=f"Nutrient data for {self.fruitName}: \nEnergy: {round(self.energy[0], 2)}kcal \nCarbohydrates: {round(self.carb[0], 2)}g \nSugars: {round(self.sugar[0], 2)}g \nProtein: {round(self.protein[0], 2)}g \nTotal Fat: {round(self.fat[0], 2)}g \n\nPer 100g", anchor='center')
+           
+            self.nutrientsInfo.config(text=f"Nutrient data for {self.fruitName}: \nEnergy: {round((int(self.energy[0])/4.184), 2)}kcal \nCarbohydrates: {round(self.carb[0], 2)}g \nSugars: {round(self.sugar[0], 2)}g \nProtein: {round(self.protein[0], 2)}g \nTotal Fat: {round(self.fat[0], 2)}g \n\nPer 100g", anchor='center')
 
         else:
-            print("No file selected")
+            #print("No file selected")
             tk.messagebox.showinfo("No Selection", "No file was selected. Please try again.")
 
 
