@@ -50,16 +50,16 @@ class App:
         s.configure('Danger.TFrame', background=self.colours['border'], borderwidth=5)
         
         frame = ttk.Frame(self.root, height=400, width=400, style='Danger.TFrame')
-        frame.place(x=550, y=350, anchor='center')
+        frame.place(x=380, y=150, anchor='nw')
 
         font_main = ('Manrope', 100, 'bold')
         label = ttk.Label(self.root, text='NutriVision', font=font_main, foreground=self.colours['text'], background=self.colours['bg_dark'])
-        label.place(x=10, y=50, anchor='w')
+        label.place(x=20, y=2.5, anchor='nw')
         font_main = ('Manrope', 20, 'bold')
         selectFileButton = tk.Button(self.root, text='Select Image', font= font_main, command=self.select_image, background=self.colours['text'], foreground=self.colours['bg_dark'], highlightbackground=self.colours['bg_dark'], height=2, width=10)
-        selectFileButton.place(x=10, y=175, anchor='w')
+        selectFileButton.place(x=20, y=150, anchor='nw')
 
-        self.nutrientsInfo = ttk.Label(frame, text='', font=('Manrope', 35), foreground=self.colours['text'], background=self.colours['border'])
+        self.nutrientsInfo = ttk.Label(frame, text='', font=('Manrope', 30), foreground=self.colours['text'], background=self.colours['border'])
         self.nutrientsInfo.place(x=210, y=190, anchor='center')
         
         
@@ -97,7 +97,7 @@ class App:
             self.img = ImageTk.PhotoImage(img)
 
             my_label = Label(self.root, image=self.img)
-            my_label.place(x=10, y=400, anchor='w')
+            my_label.place(x=20, y=250, anchor='nw')
             
               
             self.runClassifier()
