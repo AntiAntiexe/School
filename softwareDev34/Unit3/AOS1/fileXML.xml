@@ -1,0 +1,12 @@
+<students>
+    <student>
+        <name>John Doe</name>
+        <age>15</age>
+        <grade>9</grade>
+    </student>
+    <student>
+        <name>John Smith</name>
+        <age>16</age>
+        <grade>10</grade>
+    </student>
+</students>
