@@ -1,4 +1,3 @@
-
 # Imprts
 import tkinter as tk
 from tkinter import *
@@ -70,8 +69,18 @@ class App:
             print('Checkbutton 2 is selected')
         if self.ch3.get() == 1:
             print('Checkbutton 3 is selected')
-            
+
         print('Selected option:', self.optionMenu['text'])
+
+        #Access csv per row
+        with open('softwareDev34/Unit3/AOS1/practiceSACs/members.csv', newline='') as f:
+            reader = csv.reader(f, skipinitialspace=True)
+            self.memberIDs = next(reader)          
+            self.firstNames = next(reader)
+            self.lastNames = next(reader)
+            self.dateOfBirths = next(reader)
+
+         
 
 
         
