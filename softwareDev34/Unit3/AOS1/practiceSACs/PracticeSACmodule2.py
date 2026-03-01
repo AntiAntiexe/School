@@ -56,7 +56,7 @@ class SherrinGlenApp:
                     found = True
                     break
                 else:
-                    messagebox.showinfo("",f"{s elf.lastNames[i]} {self.firstNames[i]} is not eligible.")
+                    messagebox.showinfo("",f"{self.lastNames[i]} {self.firstNames[i]} is not eligible.")
                     found = True
                     break
         if found == False:
