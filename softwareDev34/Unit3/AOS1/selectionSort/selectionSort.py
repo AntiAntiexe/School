@@ -14,7 +14,7 @@ class App:
         self.root.geometry("600x250")
         
         data = []
-        with open('softwareDev34/Unit3/AOS1/numbersSort.csv') as file:
+        with open('softwareDev34/Unit3/AOS1/selectionSort/numbersSort.csv') as file:
             reader = csv.reader(file)
             for row in reader:
                 data.append(row)
@@ -30,7 +30,7 @@ class App:
             minIndx = i
 
             for j in range(i+1, n-1):
-                if self.arr[j] >= self.arr[minIndx]:
+                if self.arr[j] <= self.arr[minIndx]:
                     minIndx = j
         self.arr[i], self.arr[minIndx] = self.arr[minIndx], self.arr[i]
 
