@@ -29,6 +29,8 @@ class App:
         self.arr.sort(key=int)
 
     def search_number(self):
+
+        print(self.arr)
         
  
         numExists = False
