@@ -19,18 +19,18 @@ class App:
         self.root.geometry("600x250")
         
         data = []
-        with open('softwareDev34/Unit3/AOS1/binarySearch/numbers.csv') as file:
+        with open('softwareDev34/Unit3/AOS1/binarySearch/strings.csv') as file:
             reader = csv.reader(file)
             for row in reader:
                 data.append(row)
         
         self.arr= [c[0] for c in data]
 
-        self.arr.sort(key=int)
-
-    def search_number(self):
+        self.arr.sort(key=str)
 
         print(self.arr)
+
+    def search_number(self):
         
  
         numExists = False
@@ -42,18 +42,18 @@ class App:
             Mid = (Low + High) // 2
             print(f"Low: {Low}, High: {High}, Mid: {Mid}, Checking: {self.arr[Mid]}")
             
-            if int(self.arr[Mid]) == int(self.targetEntry.get()):
+            if str(self.arr[Mid]) == str(self.targetEntry.get()):
                 numExists = True
-            elif int(self.arr[Mid]) > int(self.targetEntry.get()):
+            elif str(self.arr[Mid]) > str(self.targetEntry.get()):
                 High = Mid - 1
             else:
                 Low = Mid + 1
         
         
         if numExists:
-            messagebox.showinfo("Result", f"Number {self.targetEntry.get()} found in the list at index {Mid}.")
+            messagebox.showinfo("Result", f"String {self.targetEntry.get()} found in the list at index {Mid}.")
         else:
-            messagebox.showinfo("Result", f"Number {self.targetEntry.get()} not found in the list.")
+            messagebox.showinfo("Result", f"String {self.targetEntry.get()} not found in the list.")
 
 
 app = tk.Tk()
