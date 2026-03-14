@@ -1,11 +1,6 @@
 import csv
 import json
-questions = {
-    "What is the capital of France?": "Paris",
-    "What is the largest planet in our solar system?": "Jupiter",
-    "Who wrote 'To Kill a Mockingbird'?": "Harper Lee",
-
-}
+import random
 
 def getData():
     data = []
@@ -16,20 +11,39 @@ def getData():
             data.append(row)
     return data
 
-#print(getData())
 
 quizes = getData()
 
 for quiz in quizes:
     if quiz[0] == "Quiz 1":
         quizToBeTaken = json.loads(quiz[1])
-#print(quizToBeTaken)
+
+possibleAnswers = []
+for possibleAnswer in quizToBeTaken.values():
+        possibleAnswers.append(possibleAnswer)
+
+
 for question, answer in quizToBeTaken.items():
-    userAnswer = input(question + " ")
+    q1Ansswers = []
+
+    incorrectAnswers = [ans for ans in possibleAnswers if ans != answer]
+    q1Ansswers = random.sample(incorrectAnswers, 3)
+
+    answerPos = random.randint(0, 3)
+    q1Ansswers.insert(answerPos, answer)
+
+    print(question)
+    print("Possible answers:")
+
+    for i, ans in enumerate(q1Ansswers):
+        print(f"{i + 1}. {ans}")
+
+    
+    userAnswer = input("Answer: ")
     if userAnswer.lower() == answer.lower():
         print("Correct!")
     else:
         print("Incorrect. The correct answer is:", answer)
     
-    
+
 
