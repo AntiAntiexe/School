@@ -15,7 +15,7 @@ def getData():
 quizes = getData()
 
 for quiz in quizes:
-    if quiz[0] == "Quiz 1":
+    if quiz[0] == "Quiz 2":
         quizToBeTaken = json.loads(quiz[1])
 
 possibleAnswers = []
