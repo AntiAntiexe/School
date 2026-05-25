@@ -44,7 +44,7 @@ def get_order():
 
 # Complete this function (20 marks)
 def apply_coffee_discount(total_cost, num_coffees):
-    if total_cost %
+    if total_cost % 4 == 0:
         num_discounts = num_coffees // 4
         total_cost -= num_discounts * COFFEE_DISCOUNT
     return total_cost

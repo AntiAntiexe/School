@@ -22,7 +22,7 @@ possibleAnswers = []
 for possibleAnswer in quizToBeTaken.values():
         possibleAnswers.append(possibleAnswer)
 
-
+print(quizToBeTaken)
 for question, answer in quizToBeTaken.items():
     q1Ansswers = []
 

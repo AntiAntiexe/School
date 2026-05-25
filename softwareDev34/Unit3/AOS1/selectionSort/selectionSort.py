@@ -24,7 +24,7 @@ class App:
     def sortNumbers(self):
         n = len(self.arr)
  
-        for i in range(n-2):
+        for i in range(n):
             minIndx = i
 
             for j in range(i+1, n):
