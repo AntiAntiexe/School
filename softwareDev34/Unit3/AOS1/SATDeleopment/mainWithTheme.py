@@ -128,8 +128,8 @@ class logInPage:
         self.labela.place(relx=0.5, rely=0.1, anchor="center")
         self.username.place(relx=0.5, rely=0.3, anchor="center")
         self.passwordEntry.place(relx=0.5, rely=0.5, anchor="center")
-        self.button.place(relx=0.5, rely=0.6, anchor="center")
-        self.newAccBut.place(relx=0.8, rely=0.95, anchor="center")
+        self.button.place(relx=0.5, rely=0.7, anchor="center")
+        self.newAccBut.place(relx=0.9, rely=0.95, anchor="center")
         self.loginFrame.place(relx=0.5, rely=0.5, anchor="center")
         
         
