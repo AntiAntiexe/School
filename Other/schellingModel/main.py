@@ -11,7 +11,7 @@ t = 0.3
     
 #   print(grid)
 
-size = 5
+size = 100
 
 grid = np.random.choice([pop1, pop2, empty], size=(size, size), p=[0.45, 0.45, 0.1])
 print(grid)
