@@ -72,18 +72,7 @@ def show_page4():
     page4.show()
 
 class logInPage:
-    def __init__(self):
-        super().__init__()
-        
-        
-        
-
-        self.labela = ttk.Label(master=app, text="Squiz", font=font_title, style='TLabel')
-
-        self.check = ttk.Label(master=app, text="Incorrect username or password!", font=font_para, style='TLabel')
-
-
-        def on_entry_click(event, entryType, placeholder):
+    def on_entry_click(self, event, entryType, placeholder):
             """Function to clear placeholder and enable masking."""
             if placeholder == "Password":
                 if entryType.get() == placeholder:
@@ -94,7 +83,7 @@ class logInPage:
                     entryType.delete(0, tk.END)
                     
 
-        def on_focusout(event, entryType, placeholder):
+    def on_focusout(self, event, entryType, placeholder):
             """Function to restore placeholder if field is left empty."""
             if placeholder == "Password":
                 if not entryType.get():
@@ -105,23 +94,33 @@ class logInPage:
                     entryType.insert(0, placeholder)
                     entryType.config(show='') # Show text and change color to grey
 
+    def __init__(self):
+        super().__init__() 
+
+         
+
+        self.labela = ttk.Label(master=app, text="Squiz", font=font_title, style='TLabel')
+
+        self.check = ttk.Label(master=app, text="Incorrect username or password!", font=font_para, style='TLabel')
+        
+
         self.loginFrame = ttk.Frame(master=app, style='TFrame', width=600, height=400)
 
         self.username = ttk.Entry(master=self.loginFrame, width=25, font=font_para, style='TEntry')
         self.username.insert(0, "Username")
 
-        self.username.bind('<FocusIn>', lambda event: on_entry_click(event, self.username, "Username"))
-        self.username.bind('<FocusOut>', lambda event: on_focusout(event, self.username, "Username"))
+        self.username.bind('<FocusIn>', lambda event: self.on_entry_click(event, self.username, "Username"))
+        self.username.bind('<FocusOut>', lambda event: self.on_focusout(event, self.username, "Username"))
 
         self.passwordEntry = ttk.Entry(master=self.loginFrame, width=25, font=font_para, style='TEntry')
         self.passwordEntry.insert(0, "Password")
         
-        self.passwordEntry.bind('<FocusIn>', lambda event: on_entry_click(event, self.passwordEntry, "Password"))
-        self.passwordEntry.bind('<FocusOut>', lambda event: on_focusout(event, self.passwordEntry, "Password"))
+        self.passwordEntry.bind('<FocusIn>', lambda event: self.on_entry_click(event, self.passwordEntry, "Password"))
+        self.passwordEntry.bind('<FocusOut>', lambda event: self.on_focusout(event, self.passwordEntry, "Password"))
 
         self.button = ttk.Button(master=self.loginFrame, text="Login", command=self.submit)
 
-        self.newAccBut = ttk.Button(master=self.loginFrame, text="Create new account", command=self.goToNewAcc)
+        self.newAccBut = ttk.Button(master=app, text="Sign Up", command=self.goToNewAcc)
 
     def show(self):
         hide_all()
