@@ -333,17 +333,21 @@ class newAccPage:
     def show(self):
         hide_all()
         self.newAccLabel.place(relx=0.5, rely=0.1, anchor="center")
-        self.newUsername.place(relx=0.5, rely=0.2, anchor="center")
-        self.newPassword.place(relx=0.5, rely=0.3, anchor="center")
-        self.done.place(relx=0.5, rely=0.4, anchor="center")
+        self.newUsername.place(relx=0.5, rely=0.3, anchor="center")
+        self.newPasswordEntry.place(relx=0.5, rely=0.5, anchor="center")
+        self.submit.place(relx=0.5, rely=0.7, anchor="center")
+        self.signUpFrame.place(relx=0.5, rely=0.5, anchor="center")
+        self.loginButton.place(relx=0.9, rely=0.95, anchor="center")
         
 
     def hide(self):
         self.newAccLabel.place_forget()
         self.newUsername.place_forget()
-        self.newPassword.place_forget()
+        self.newPasswordEntry.place_forget()
         self.checkNewAcc.place_forget()
-        self.done.place_forget()
+        self.submit.place_forget()
+        self.signUpFrame.place_forget()
+        self.loginButton.place_forget()
 
 
 
