@@ -149,33 +149,58 @@ class logInPage:
         
 
     def submit(self):
-        with open('C:/Users/anton/Programming/PythonProjects/School/softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv', newline='') as f:
+        self.arrUsernames = []
+        self.arrPasswords = []
+        with open('softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv', newline='') as f:
             reader = csv.reader(f, skipinitialspace=True)
-            first_row = reader.__next__()          # first row
-            next(reader)          # first row
-            second_row = next(reader)
-        print(first_row)
-        print(second_row)
-        
-        self.user = self.username.get()
-        self.password = self.passwordEntry.get()
+            self.arrUsernames = next(reader, None)
 
-        data = self.df[self.df['username']== self.user].astype(str)
-        print(self.password, type(self.password))
-        print(data['password'].tolist())
+            if self.arrUsernames is not None:
+                self.arrPasswords = next(reader, None)
+        print(self.arrUsernames)
 
-        print('\n ------------\n')
-        print(self.df['username'].tolist())
-
-        if self.user in self.df['username'].tolist() and self.password in data['password'].tolist():
-            print(f'hello {self.user}.')
-            show_page2()
+        if self.arrUsernames is None:
+            print('accounts.csv is empty or missing header rows')
         else:
+            print(self.arrUsernames)
+            if self.arrPasswords is not None:
+                print(self.arrPasswords)
+            else:
+                print('accounts.csv has only one row')
+        
+        
+        self.strUsernameToFind = self.username.get()
+        self.strPasswordToFind = self.passwordEntry.get()
+
+        
+
+        intLow = 0
+        intHigh = len(self.arrUsernames) - 1
+        bFound = False
+
+        while bFound == False and intLow <= intHigh:
+            intMid = (intLow + intHigh) // 2
+
+            if self.arrUsernames[intMid] == self.strUsernameToFind:
+                if self.arrPasswords[intMid] == self.strPasswordToFind:
+                    bFound = True
+                    print("Login successful")
+                    page2.show()
+                else:
+                    intLow = intMid + 1
+            elif self.arrUsernames[intMid] > self.strUsernameToFind:
+                intHigh = intMid - 1
+            else:
+                intLow = intMid + 1
+        
+        if bFound == True:
+            print("Login successful")
+            page2.show()
+        else:
+            print("Login failed")
             self.check.place(relx=0.5, rely=0.5, anchor="center")
-            print('Incorrect username or password.')
 
-
-        print(self.df[self.df['username']== self.user])
+        
  
 class mainPage:
     def __init__(self):
@@ -208,8 +233,8 @@ class manageAccPage:
         response = messagebox.askyesno(title="Delete", message="Are you sure you want to delete your account? This action is not reversable.")
 
         if response:
-            page1.df = page1.df[page1.df.username != page1.user]
-            page1.df.to_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv', index=False)
+            page1.df = page1.df[page1.df.username != page1.strUsernameToFind]
+            page1.df.to_csv('softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv', index=False)
             print(page1.df)
 
             show_page1()
@@ -230,48 +255,79 @@ class manageAccPage:
 
 class newAccPage:
     def __init__(self):
-        self.newAccLabel = tk.Label(master=app, text="Create a New Account", font=font_title)
+        super().__init__()
 
-        self.checkNewAcc = tk.Label(master=app, text="Incorrect username or password!", font=(font_para, 20))
+        self.newAccLabel = ttk.Label(master=app, text="Sign Up", font=font_title, style='TLabel')
+        self.checkNewAcc = ttk.Label(master=app, text="Incorrect username or password!", font=(font_para, 20), style='TLabel')
 
-
-        self.newUsername = tk.Entry(master=app, width=20, font=font_para)
-
-        self.newPassword = tk.Entry(master=app, width=20, font=font_para, show="*")
-
-        self.done = tk.Button(master=app, text="Submit", command=self.createNewAcc)
         
-        #self.backbut = ttk.Button(master=app, text="Back", command=self.managePage)
+        self.signUpFrame = ttk.Frame(master=app, style='TFrame', width=600, height=400)
+        
+        self.newUsername = ttk.Entry(master=self.signUpFrame, width=25, font=font_para, style='TEntry')
+        self.newUsername.insert(0, "Username")
+
+        
+
+        self.newUsername.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.newUsername, "Username"))
+        self.newUsername.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.newUsername, "Username"))
+
+        self.newPasswordEntry = ttk.Entry(master=self.signUpFrame, width=25, font=font_para, style='TEntry')
+        self.newPasswordEntry.insert(0, "Password")
+
+        self.newPasswordEntry.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.newPasswordEntry, "Password"))
+        self.newPasswordEntry.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.newPasswordEntry, "Password"))
+
+        self.submit = ttk.Button(master=self.signUpFrame, text="Submit", command=self.createNewAcc, style='TButton')
+
+        self.loginButton = ttk.Button(master=app, text="Login", command=self.goToLogin, style='TButton')
+
+    def goToLogin(self):
+        show_page1()
+
     def createNewAcc(self):
-        newUser = self.newUsername.get()
-        newPass = self.newPassword.get()
 
-        if newUser in page1.df['username'].tolist():
-            print('Username not available')
-            self.checkNewAcc.configure(text='Username not available')
-            self.checkNewAcc.place(relx=0.5, rely=0.5, anchor="center")
+        self.arrUsernames = []
+        self.arrPasswords = []
+        with open('softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv', newline='') as f:
+            reader = csv.reader(f, skipinitialspace=True)
+            self.arrUsernames = next(reader, None)
+
+            if self.arrUsernames is not None:
+                self.arrPasswords = next(reader, None)
+        print(self.arrUsernames)
+
+        if self.arrUsernames is None:
+            print('accounts.csv is empty or missing header rows')
         else:
-            if newPass.isascii():
-                
-                match = re.findall('@gwsc.vic.edu.au', newUser)
-                if match:
-                    
-                    if len(newPass) >= 8:
-                        page1.df.loc[len(page1.df)] = [newUser, newPass]  
-                        page1.show()
-                        page1.df.to_csv('SoftwareDev10/l4_year12LoginPageFolder/accounts.csv', index=True)
-                        print('New account created')
-                        print(page1.df)
-                    else:
-                        self.checkNewAcc.configure(text='Password must contain at least 8 characters')
-                        self.checkNewAcc.place(relx=0.5, rely=0.5, anchor="center")
-                else:
-                    self.checkNewAcc.configure(text='Email must be GWSC')
-                    self.checkNewAcc.place(relx=0.5, rely=0.5, anchor="center")
-
+            print(self.arrUsernames)
+            if self.arrPasswords is not None:
+                print(self.arrPasswords)
             else:
-                self.checkNewAcc.configure(text='Please enter a password')
-                self.checkNewAcc.place(relx=0.5, rely=0.5, anchor="center")
+                print('accounts.csv has only one row')
+
+        strNewUsername = self.newUsername.get()
+        strNewPassword = self.newPasswordEntry.get()
+        if self.arrUsernames is not None:
+            for i in range(len(self.arrUsernames)):
+                if strNewUsername == self.arrUsernames[i]:
+                    print('Username not available')
+                    self.checkNewAcc.configure(text='Username not available')
+                    self.checkNewAcc.place(relx=0.5, rely=0.5, anchor="center")
+                    return
+                
+        if len(strNewPassword) < 8:
+            print('Password must contain at least 8 characters')
+            self.checkNewAcc.configure(text='Password must contain at least 8 characters')
+            self.checkNewAcc.place(relx=0.5, rely=0.5, anchor="center")
+            return
+            
+        writer = csv.writer(open("softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv", 'a', newline=''))
+        writer.writerow([strNewUsername])
+        writer.writerow([strNewPassword])
+        print('New account created')
+        
+
+        
 
                      
     def show(self):
