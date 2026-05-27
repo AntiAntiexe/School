@@ -34,12 +34,20 @@ font_title = ("Helvetica", 60, "bold")
 font_para = ("Helvetica", 30, "normal")
 
 style = ttk.Style()
-style.theme_use('alt')
-style.configure('TButton',font=font_para, background=colours["border"], foreground=colours["lightText"], borderwidth=3, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
-style.map('TButton', background=[('active', colours["actualBorder"]), ('disabled', colours["actualBorder"])], foreground=[('disabled', colours["actualBorder"])])
+style.theme_use('classic')
+
+style.configure('TButton',font=font_para, background=colours["actualBorder"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
+style.map('TButton', background=[('active', colours["primary"])])
+
 style.configure('TLabel', background=colours["bg"], foreground=colours["text"])
-style.configure('TEntry', background=colours["border"], foreground=colours["lightText"], fieldbackground=colours["border"], borderwidth=0, highlightthickness=3, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"] )
+
+style.configure('TEntry', background=colours["actualBorder"], foreground=colours["lightText"], fieldbackground=colours["border"], relief="flat",borderwidth=0, highlightthickness=2, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"] )
+style.map('TEntry', background=[('focus', colours["actualBorder"]), ('focus', colours["actualBorder"])], foreground=[('focus', colours["lightText"])], highlightcolor=[('focus', colours["actualBorder"])])
+
 style.configure('TFrame', background=colours["border"], highlightthickness=3, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"])
+
+
+
 
 
 def hide_all():
