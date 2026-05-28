@@ -1,11 +1,8 @@
-#import pandas as pd
-import re
 import tkinter as tk
 from tkinter import ttk
 import csv
 from tkinter import messagebox
 
-#from matplotlib import style
 
 colours = {
     "bg":  "#e0e6f0",
@@ -40,6 +37,7 @@ style.configure('TButton',font=font_para, background=colours["actualBorder"], fo
 style.map('TButton', background=[('active', colours["primary"])])
 
 style.configure('TLabel', background=colours["bg"], foreground=colours["text"])
+style.configure('Secondary.TLabel', background=colours["border"], foreground=colours["lightText"])
 
 style.configure('TEntry', background=colours["actualBorder"], foreground=colours["lightText"], fieldbackground=colours["border"], relief="flat",borderwidth=0, highlightthickness=2, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"] )
 style.map('TEntry', background=[('focus', colours["actualBorder"]), ('focus', colours["actualBorder"])], foreground=[('focus', colours["lightText"])], highlightcolor=[('focus', colours["actualBorder"])])
@@ -57,10 +55,8 @@ def hide_all():
     page3.hide()
     page4.hide()
 
-
 def show_page1():
     page1.show()
-
 
 def show_page2():
     page2.show()
@@ -72,77 +68,72 @@ def show_page4():
     page4.show()
 
 class logInPage:
-    def on_entry_click(self, event, entryType, placeholder):
+    def on_entry_click(self, event, entryType, strPlaceholder):
             """Function to clear placeholder and enable masking."""
-            if placeholder == "Password":
-                if entryType.get() == placeholder:
+            if strPlaceholder == "Password":
+                if entryType.get() == strPlaceholder:
                     entryType.delete(0, tk.END)
                     entryType.config(show='*')
             else:
-                if entryType.get() == placeholder:
+                if entryType.get() == strPlaceholder:
                     entryType.delete(0, tk.END)
                     
 
-    def on_focusout(self, event, entryType, placeholder):
+    def on_focusout(self, event, entryType, strPlaceholder):
             """Function to restore placeholder if field is left empty."""
-            if placeholder == "Password":
+            if strPlaceholder == "Password":
                 if not entryType.get():
-                    entryType.insert(0, placeholder)
+                    entryType.insert(0, strPlaceholder)
                     entryType.config(show='') # Show text and change color to grey
             else:
                 if not entryType.get():
-                    entryType.insert(0, placeholder)
+                    entryType.insert(0, strPlaceholder)
                     entryType.config(show='') # Show text and change color to grey
 
     def __init__(self):
-        super().__init__() 
+        super().__init__()
+        self.current_username = ""
 
-         
+        self.lblTitle = ttk.Label(master=app, text="Squiz", font=font_title, style='TLabel')
 
-        self.labela = ttk.Label(master=app, text="Squiz", font=font_title, style='TLabel')
-
-        self.check = ttk.Label(master=app, text="Incorrect username or password!", font=font_para, style='TLabel')
         
 
-        self.loginFrame = ttk.Frame(master=app, style='TFrame', width=600, height=400)
+        self.frLogin = ttk.Frame(master=app, style='TFrame', width=600, height=400)
 
-        self.username = ttk.Entry(master=self.loginFrame, width=25, font=font_para, style='TEntry')
-        self.username.insert(0, "Username")
+        self.entryUsername = ttk.Entry(master=self.frLogin, width=25, font=font_para, style='TEntry')
+        self.entryUsername.insert(0, "Username")
 
-        self.username.bind('<FocusIn>', lambda event: self.on_entry_click(event, self.username, "Username"))
-        self.username.bind('<FocusOut>', lambda event: self.on_focusout(event, self.username, "Username"))
+        self.entryUsername.bind('<FocusIn>', lambda event: self.on_entry_click(event, self.entryUsername, "Username"))
+        self.entryUsername.bind('<FocusOut>', lambda event: self.on_focusout(event, self.entryUsername, "Username"))
 
-        self.passwordEntry = ttk.Entry(master=self.loginFrame, width=25, font=font_para, style='TEntry')
-        self.passwordEntry.insert(0, "Password")
+        self.entryPassword = ttk.Entry(master=self.frLogin, width=25, font=font_para, style='TEntry')
+        self.entryPassword.insert(0, "Password")
         
-        self.passwordEntry.bind('<FocusIn>', lambda event: self.on_entry_click(event, self.passwordEntry, "Password"))
-        self.passwordEntry.bind('<FocusOut>', lambda event: self.on_focusout(event, self.passwordEntry, "Password"))
+        self.entryPassword.bind('<FocusIn>', lambda event: self.on_entry_click(event, self.entryPassword, "Password"))
+        self.entryPassword.bind('<FocusOut>', lambda event: self.on_focusout(event, self.entryPassword, "Password"))
 
-        self.button = ttk.Button(master=self.loginFrame, text="Login", command=self.submit)
+        self.btnLogin = ttk.Button(master=self.frLogin, text="Login", command=self.submit)
 
-        self.newAccBut = ttk.Button(master=app, text="Sign Up", command=self.goToNewAcc)
+        self.btnSignUp = ttk.Button(master=app, text="Sign Up", command=self.goToNewAcc)
 
     def show(self):
         hide_all()
-        #self.label.place(relx=0.5, rely=0.1, anchor="center")
-        self.labela.place(relx=0.5, rely=0.1, anchor="center")
-        self.username.place(relx=0.5, rely=0.3, anchor="center")
-        self.passwordEntry.place(relx=0.5, rely=0.5, anchor="center")
-        self.button.place(relx=0.5, rely=0.7, anchor="center")
-        self.newAccBut.place(relx=0.9, rely=0.95, anchor="center")
-        self.loginFrame.place(relx=0.5, rely=0.5, anchor="center")
+        self.lblTitle.place(relx=0.5, rely=0.1, anchor="center")
+        self.entryUsername.place(relx=0.5, rely=0.3, anchor="center")
+        self.entryPassword.place(relx=0.5, rely=0.5, anchor="center")
+        self.btnLogin.place(relx=0.5, rely=0.7, anchor="center")
+        self.btnSignUp.place(relx=0.9, rely=0.95, anchor="center")
+        self.frLogin.place(relx=0.5, rely=0.5, anchor="center")
         
         
 
     def hide(self):
-        #self.label.place_forget()
-        self.labela.place_forget()
-        self.username.place_forget()
-        self.passwordEntry.place_forget()
-        self.button.place_forget()
-        self.check.place_forget()
-        self.newAccBut.place_forget()
-        self.loginFrame.place_forget()
+        self.lblTitle.place_forget()
+        self.entryUsername.place_forget()
+        self.entryPassword.place_forget()
+        self.btnLogin.place_forget()
+        self.btnSignUp.place_forget()
+        self.frLogin.place_forget()
 
     def goToNewAcc(self):
         show_page3()
@@ -151,26 +142,16 @@ class logInPage:
     def submit(self):
         self.arrUsernames = []
         self.arrPasswords = []
-        with open('softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv', newline='') as f:
-            reader = csv.reader(f, skipinitialspace=True)
-            self.arrUsernames = next(reader, None)
 
-            if self.arrUsernames is not None:
-                self.arrPasswords = next(reader, None)
-        print(self.arrUsernames)
-
-        if self.arrUsernames is None:
-            print('accounts.csv is empty or missing header rows')
-        else:
-            print(self.arrUsernames)
-            if self.arrPasswords is not None:
-                print(self.arrPasswords)
-            else:
-                print('accounts.csv has only one row')
+        with open('softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv', mode='r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                self.arrPasswords.append(row[1])  # Assuming passwords are in the second column
+                self.arrUsernames.append(row[0])  # Assuming usernames are in the first column
         
         
-        self.strUsernameToFind = self.username.get()
-        self.strPasswordToFind = self.passwordEntry.get()
+        self.strUsernameToFind = self.entryUsername.get().strip()
+        self.strPasswordToFind = self.entryPassword.get()
 
         
 
@@ -184,8 +165,9 @@ class logInPage:
             if self.arrUsernames[intMid] == self.strUsernameToFind:
                 if self.arrPasswords[intMid] == self.strPasswordToFind:
                     bFound = True
+                    self.current_username = self.strUsernameToFind
                     print("Login successful")
-                    page2.show()
+                    break
                 else:
                     intLow = intMid + 1
             elif self.arrUsernames[intMid] > self.strUsernameToFind:
@@ -195,34 +177,80 @@ class logInPage:
         
         if bFound == True:
             print("Login successful")
+            messagebox.showinfo(title="Login Successful", message="You have successfully logged in.")
             page2.show()
         else:
             print("Login failed")
-            self.check.place(relx=0.5, rely=0.5, anchor="center")
+            messagebox.showwarning(title="Login Failed", message="Invalid username or password.")
+            
 
         
  
 class mainPage:
     def __init__(self):
+        super().__init__()
         #username = page1.user
-        self.hello = tk.Label(master=app, text=f"Hello, user", font=font_title)
-        self.back = tk.Button(master=app, text="Log Out", command=show_page1)
+        self.hello = ttk.Label(master=app, text="Quizzes", font=font_title, style='TLabel')
 
-        self.manageAccBut = tk.Button(master=app, text="Manage Account", command=self.managePage)
+        self.btnSort = ttk.Button(master=app, text="Sort", command=self.sort, style='TButton')
+        self.btnAdd = ttk.Button(master=app, text="Add", command=self.add, style='TButton')
+
+        self.back = ttk.Button(master=app, text="Log Out", command=show_page1, style='TButton')
+        self.manageAccBut = ttk.Button(master=app, text="Account", command=self.managePage, style='TButton')
+
+    def getQuizzes(self):
+        username = getattr(page1, 'strUsernameToFind', '').strip()
+        if not username:
+            return
+
+        data = []
+
+        with open('softwareDev34/Unit3/AOS1/SAT/quiz.csv') as file:
+            reader = csv.reader(file, delimiter=';')
+            for row in reader:
+                data.append(row)
+
+        for i in range(len(data)):
+            if data[i][1].startswith(page1.strUsernameToFind):
+                strQuizTitle = data[i][0]
+
+                frameQuiz = ttk.Frame(master=app, style='TFrame', width=800, height=100)
+                lblQuizTitle = ttk.Label(master=frameQuiz, text=strQuizTitle, font=font_para, style='TLabel')
+                btnTakeQuiz = ttk.Button(master=frameQuiz, text="Take Quiz", style='TButton', command=self.playQuiz())
+
+        
+        
+    def playQuiz(self):
+        pass
+
+    def sort(self):
+        pass
+
+    def add(self):
+        pass
+
     def managePage(self):
         page4.show()
         
     def show(self):
         hide_all()
+        self.getQuizzes()
+        
         self.hello.place(relx=0.5, rely=0.1, anchor="center")
-        self.back.place(relx=0.125, rely=0.95, anchor="center")
-        self.manageAccBut.place(relx=0.8, rely=0.95, anchor="center")
+        self.btnSort.place(relx=0.05, rely=0.05, anchor="nw")
+        self.btnAdd.place(relx=0.95, rely=0.05, anchor="ne")
+        self.back.place(relx=0.05, rely=0.95, anchor="sw")
+        self.manageAccBut.place(relx=0.95, rely=0.95, anchor="se")
+
         
 
     def hide(self):
         self.hello.place_forget()
+        self.btnSort.place_forget()
+        self.btnAdd.place_forget()
         self.back.place_forget()
         self.manageAccBut.place_forget()
+        
 
 class manageAccPage:
     def __init__(self):
@@ -257,29 +285,28 @@ class newAccPage:
     def __init__(self):
         super().__init__()
 
-        self.newAccLabel = ttk.Label(master=app, text="Sign Up", font=font_title, style='TLabel')
-        self.checkNewAcc = ttk.Label(master=app, text="Incorrect username or password!", font=(font_para, 20), style='TLabel')
+        self.lblNewAccount = ttk.Label(master=app, text="Sign Up", font=font_title, style='TLabel')
+
+        self.frmSignUp = ttk.Frame(master=app, style='TFrame', width=600, height=400)
 
         
-        self.signUpFrame = ttk.Frame(master=app, style='TFrame', width=600, height=400)
-        
-        self.newUsername = ttk.Entry(master=self.signUpFrame, width=25, font=font_para, style='TEntry')
-        self.newUsername.insert(0, "Username")
+        self.entryNewUsername = ttk.Entry(master=self.frmSignUp, width=25, font=font_para, style='TEntry')
+        self.entryNewUsername.insert(0, "Username")
 
         
 
-        self.newUsername.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.newUsername, "Username"))
-        self.newUsername.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.newUsername, "Username"))
+        self.entryNewUsername.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.entryNewUsername, "Username"))
+        self.entryNewUsername.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.entryNewUsername, "Username"))
 
-        self.newPasswordEntry = ttk.Entry(master=self.signUpFrame, width=25, font=font_para, style='TEntry')
-        self.newPasswordEntry.insert(0, "Password")
+        self.entryNewPassword = ttk.Entry(master=self.frmSignUp, width=25, font=font_para, style='TEntry')
+        self.entryNewPassword.insert(0, "Password")
 
-        self.newPasswordEntry.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.newPasswordEntry, "Password"))
-        self.newPasswordEntry.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.newPasswordEntry, "Password"))
+        self.entryNewPassword.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.entryNewPassword, "Password"))
+        self.entryNewPassword.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.entryNewPassword, "Password"))
 
-        self.submit = ttk.Button(master=self.signUpFrame, text="Submit", command=self.createNewAcc, style='TButton')
+        self.btnSubmit = ttk.Button(master=self.frmSignUp, text="Submit", command=self.createNewAcc, style='TButton')
 
-        self.loginButton = ttk.Button(master=app, text="Login", command=self.goToLogin, style='TButton')
+        self.btnBackToLogin = ttk.Button(master=app, text="Login", command=self.goToLogin, style='TButton')
 
     def goToLogin(self):
         show_page1()
@@ -288,66 +315,66 @@ class newAccPage:
 
         self.arrUsernames = []
         self.arrPasswords = []
-        with open('softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv', newline='') as f:
-            reader = csv.reader(f, skipinitialspace=True)
-            self.arrUsernames = next(reader, None)
 
-            if self.arrUsernames is not None:
-                self.arrPasswords = next(reader, None)
-        print(self.arrUsernames)
+        with open('softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv', mode='r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                self.arrPasswords.append(row[1])  # Assuming passwords are in the second column
+                self.arrUsernames.append(row[0])  # Assuming usernames are in the first column
+        
 
-        if self.arrUsernames is None:
-            print('accounts.csv is empty or missing header rows')
-        else:
-            print(self.arrUsernames)
-            if self.arrPasswords is not None:
-                print(self.arrPasswords)
-            else:
-                print('accounts.csv has only one row')
-
-        strNewUsername = self.newUsername.get()
-        strNewPassword = self.newPasswordEntry.get()
+        strNewUsername = self.entryNewUsername.get()
+        strNewPassword = self.entryNewPassword.get()
         if self.arrUsernames is not None:
+            if strNewUsername == '' or strNewUsername == "Username":
+                print('Please enter a username')
+                messagebox.showwarning(title="Invalid Username", message="Please enter a valid username.")
+                return
             for i in range(len(self.arrUsernames)):
                 if strNewUsername == self.arrUsernames[i]:
                     print('Username not available')
-                    self.checkNewAcc.configure(text='Username not available')
-                    self.checkNewAcc.place(relx=0.5, rely=0.5, anchor="center")
+                    messagebox.showwarning(title="Username Unavailable", message="The username you have entered is already taken. Please choose a different username.")
                     return
+            if strNewPassword == '' or strNewPassword == "Password":
+                print('Please enter a password')
+                messagebox.showwarning(title="Invalid Password", message="Please enter a valid password.")
+                return
                 
-        if len(strNewPassword) < 8:
-            print('Password must contain at least 8 characters')
-            self.checkNewAcc.configure(text='Password must contain at least 8 characters')
-            self.checkNewAcc.place(relx=0.5, rely=0.5, anchor="center")
-            return
+            if len(strNewPassword) < 8:
+                print('Password must contain at least 8 characters')
+                messagebox.showwarning(title="Weak Password", message="Your password must contain at least 8 characters. Please choose a stronger password.")
+                return
             
-        writer = csv.writer(open("softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv", 'a', newline=''))
-        writer.writerow([strNewUsername])
-        writer.writerow([strNewPassword])
-        print('New account created')
-        
+            writer = csv.writer(open("softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv", 'a', newline=''))
+            writer.writerow([strNewUsername, strNewPassword])
+            
+            print('New account created')
+            messagebox.showinfo(title="Account Created", message="Your new account has been created successfully.")
+            show_page1()
+        else:
+            print('Please enter a username')
+            messagebox.showwarning(title="Invalid Username", message="Please enter a valid username.")
 
         
 
                      
     def show(self):
         hide_all()
-        self.newAccLabel.place(relx=0.5, rely=0.1, anchor="center")
-        self.newUsername.place(relx=0.5, rely=0.3, anchor="center")
-        self.newPasswordEntry.place(relx=0.5, rely=0.5, anchor="center")
-        self.submit.place(relx=0.5, rely=0.7, anchor="center")
-        self.signUpFrame.place(relx=0.5, rely=0.5, anchor="center")
-        self.loginButton.place(relx=0.9, rely=0.95, anchor="center")
+        self.lblNewAccount.place(relx=0.5, rely=0.1, anchor="center")
+        self.entryNewUsername.place(relx=0.5, rely=0.3, anchor="center")
+        self.entryNewPassword.place(relx=0.5, rely=0.5, anchor="center")
+        self.btnSubmit.place(relx=0.5, rely=0.7, anchor="center")
+        self.frmSignUp.place(relx=0.5, rely=0.5, anchor="center")
+        self.btnBackToLogin.place(relx=0.9, rely=0.95, anchor="center")
         
 
     def hide(self):
-        self.newAccLabel.place_forget()
-        self.newUsername.place_forget()
-        self.newPasswordEntry.place_forget()
-        self.checkNewAcc.place_forget()
-        self.submit.place_forget()
-        self.signUpFrame.place_forget()
-        self.loginButton.place_forget()
+        self.lblNewAccount.place_forget()
+        self.entryNewUsername.place_forget()
+        self.entryNewPassword.place_forget()
+        self.btnSubmit.place_forget()
+        self.frmSignUp.place_forget()
+        self.btnBackToLogin.place_forget()
 
 
 
