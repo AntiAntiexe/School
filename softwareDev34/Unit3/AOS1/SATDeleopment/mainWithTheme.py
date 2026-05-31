@@ -1,7 +1,9 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import ttk
-import csv
 from tkinter import messagebox
+import csv
+
 
 
 colours = {
@@ -29,12 +31,17 @@ app.configure(bg=colours["bg"])
 
 font_title = ("Helvetica", 60, "bold")
 font_para = ("Helvetica", 30, "normal")
+small_font = ("Helvetica", 20, "normal")
 
 style = ttk.Style()
 style.theme_use('classic')
 
 style.configure('TButton',font=font_para, background=colours["actualBorder"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
 style.map('TButton', background=[('active', colours["primary"])])
+
+style.configure('Secondary.TButton',font=small_font, background=colours["actualBorder"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
+style.map('Secondary.TButton', background=[('active', colours["primary"])])
+
 
 style.configure('TLabel', background=colours["bg"], foreground=colours["text"])
 style.configure('Secondary.TLabel', background=colours["border"], foreground=colours["lightText"])
@@ -44,9 +51,10 @@ style.map('TEntry', background=[('focus', colours["actualBorder"]), ('focus', co
 
 style.configure('TFrame', background=colours["border"], highlightthickness=3, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"])
 
+#style.configure('TScrollbar', background=colours["border"],width = 20, foreground=colours["border"], troughcolor=colours["border"], bordercolor=colours["actualBorder"], arrowcolor=colours["actualBorder"], relief="flat", borderwidth=0, highlightthickness=0, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"])
 
-
-
+style.configure('TScrollbar', arrowcolor=colours["primary"], relief="flat", arrowsize=0, background=colours["actualBorder"], width=20, foreground=colours["border"], troughcolor=colours["border"], bordercolor=colours["actualBorder"], borderwidth=0, highlightthickness=0, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"])
+style.map('TScrollbar', background=[('active', colours["primary"])])
 
 def hide_all():
     """ Hides all the pages """
@@ -124,6 +132,13 @@ class logInPage:
         self.btnLogin.place(relx=0.5, rely=0.7, anchor="center")
         self.btnSignUp.place(relx=0.9, rely=0.95, anchor="center")
         self.frLogin.place(relx=0.5, rely=0.5, anchor="center")
+        # ensure login widgets are above other stacked widgets (like the canvas)
+        try:
+            self.frLogin.lift()
+            self.lblTitle.lift()
+            self.btnSignUp.lift()
+        except Exception:
+            pass
         
         
 
@@ -198,6 +213,27 @@ class mainPage:
         self.back = ttk.Button(master=app, text="Log Out", command=show_page1, style='TButton')
         self.manageAccBut = ttk.Button(master=app, text="Account", command=self.managePage, style='TButton')
 
+        self.canvas = Canvas(app, bg=colours["bg"], highlightthickness=0, borderwidth=0, highlightcolor=colours["bg"], highlightbackground=colours["border"], relief="flat")
+        
+
+        self.scrollbar = ttk.Scrollbar(master=self.canvas, orient="vertical", command=self.canvas.yview, style='TScrollbar')
+        
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        self.scrollable_frame = Frame(self.canvas, bg=colours["bg"])
+
+        self.scrollable_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
+        self.canvas_window = self.canvas.create_window((100, 2), window=self.scrollable_frame, anchor="nw")
+        
+
+
+        
+        self.lblQuiz = ttk.Label(master=app, text="", font=small_font, style='Secondary.TLabel')
+        self.btnPlay = ttk.Button(master=app, text="Play", command=self.playQuiz, style='Secondary.TButton')
+        self.quiz_labels = []
+        self.quiz_buttons = []
+        self.quiz_frames = []
+
     def getQuizzes(self):
         username = getattr(page1, 'strUsernameToFind', '').strip()
         if not username:
@@ -205,21 +241,15 @@ class mainPage:
 
         data = []
 
-        with open('softwareDev34/Unit3/AOS1/SAT/quiz.csv') as file:
+        with open('softwareDev34/Unit3/AOS1/SATDeleopment/quizzesArray.csv') as file:
             reader = csv.reader(file, delimiter=';')
             for row in reader:
                 data.append(row)
 
-        for i in range(len(data)):
-            if data[i][1].startswith(page1.strUsernameToFind):
-                strQuizTitle = data[i][0]
+        rquizzes_for_user = [row for row in data if row[1].strip() == username]
 
-                frameQuiz = ttk.Frame(master=app, style='TFrame', width=800, height=100)
-                lblQuizTitle = ttk.Label(master=frameQuiz, text=strQuizTitle, font=font_para, style='TLabel')
-                btnTakeQuiz = ttk.Button(master=frameQuiz, text="Take Quiz", style='TButton', command=self.playQuiz())
-
-        
-        
+        return rquizzes_for_user
+  
     def playQuiz(self):
         pass
 
@@ -234,8 +264,44 @@ class mainPage:
         
     def show(self):
         hide_all()
-        self.getQuizzes()
+        self.hide()
+        quizzes = self.getQuizzes()
+
+        self.canvas.place(relx=0.45, rely=0.5, anchor="center", width=800, height=500)
+        self.scrollbar.pack(side=RIGHT, fill=Y)
+
         
+
+        
+        
+        #for i in range(30):
+            #Label(self.scrollable_frame, text=f"Item {i+1}", width=20).pack(pady=5)
+
+        for i in range(len(quizzes)):
+            strQuizTitle = quizzes[i][0]
+
+            frmQuiz = ttk.Frame(self.scrollable_frame, style='TFrame', width=600, height=50)
+            if i == 0:
+                frmQuiz.pack(pady=(0,10), padx=10)
+            #elif i == len(quizzes) - 1:
+                #frmQuiz.pack(pady=0, padx=10)
+            #elif i == 1:
+                #frmQuiz.pack(pady=20, padx=10)
+            else:
+                frmQuiz.pack(pady=10, padx=10)
+            #frmQuiz.place(relx=0.5, rely=0.5, anchor="center")
+
+            lblQuiz = ttk.Label(master=frmQuiz, text=strQuizTitle, font=small_font, style='Secondary.TLabel')
+            btnPlay = ttk.Button(master=frmQuiz, text="Play", command=self.playQuiz, style='Secondary.TButton')
+
+            lblQuiz.place(relx=0.05, rely=0.5, anchor="w")
+            btnPlay.place(relx=0.95, rely=0.5, anchor="e")
+
+            self.quiz_labels.append(lblQuiz)
+            self.quiz_buttons.append(btnPlay)
+            self.quiz_frames.append(frmQuiz)
+
+
         self.hello.place(relx=0.5, rely=0.1, anchor="center")
         self.btnSort.place(relx=0.05, rely=0.05, anchor="nw")
         self.btnAdd.place(relx=0.95, rely=0.05, anchor="ne")
@@ -245,6 +311,26 @@ class mainPage:
         
 
     def hide(self):
+
+        for frame in self.quiz_frames:
+                frame.destroy()
+
+        self.quiz_labels.clear()
+        self.quiz_buttons.clear()
+        self.quiz_frames.clear()
+
+        # lower canvas below the login frame (call with a widget argument)
+        # calling lower() with no args raised a TclError on some Tk versions
+        try:
+            self.canvas.lower(page1.frLogin)
+        except Exception:
+            # fallback: lower below the root window's first child
+            try:
+                self.canvas.lower()
+            except Exception:
+                pass
+        self.scrollbar.pack_forget()
+
         self.hello.place_forget()
         self.btnSort.place_forget()
         self.btnAdd.place_forget()
