@@ -32,15 +32,21 @@ app.configure(bg=colours["bg"])
 font_title = ("Helvetica", 60, "bold")
 font_para = ("Helvetica", 30, "normal")
 small_font = ("Helvetica", 20, "normal")
+verticalFont = ("Helvetica", 150, "normal")
 
 style = ttk.Style()
 style.theme_use('classic')
+
+
 
 style.configure('TButton',font=font_para, background=colours["actualBorder"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
 style.map('TButton', background=[('active', colours["primary"])])
 
 style.configure('Secondary.TButton',font=small_font, background=colours["actualBorder"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
 style.map('Secondary.TButton', background=[('active', colours["primary"])])
+
+style.configure('Next.TButton',font=font_para, background=colours["success"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
+style.map('Next.TButton', background=[('active', colours["primary"])], foreground=[('active', colours["lightText"])])
 
 
 style.configure('TLabel', background=colours["bg"], foreground=colours["text"])
@@ -62,6 +68,10 @@ def hide_all():
     page2.hide()
     page3.hide()
     page4.hide()
+    page5.hide()
+    page6.hide()
+    page7.hide()
+    page8.hide()
 
 def show_page1():
     page1.show()
@@ -74,6 +84,19 @@ def show_page3():
 
 def show_page4():
     page4.show()
+
+def show_page5():
+    page5.show()
+
+def show_page6():
+    page6.show()
+
+def show_page7():
+    page7.show()
+    
+def show_page8():
+    page8.show()
+
 
 class logInPage:
     def on_entry_click(self, event, entryType, strPlaceholder):
@@ -101,6 +124,7 @@ class logInPage:
     def __init__(self):
         super().__init__()
         self.current_username = ""
+        
 
         self.lblTitle = ttk.Label(master=app, text="Squiz", font=font_title, style='TLabel')
 
@@ -206,14 +230,18 @@ class mainPage:
         super().__init__()
         #username = page1.user
         self.hello = ttk.Label(master=app, text="Quizzes", font=font_title, style='TLabel')
+        
+        self.sideBar = ttk.Frame(app, style='TFrame', width=200, height=800)
 
-        self.btnSort = ttk.Button(master=app, text="Sort", command=self.sort, style='TButton')
-        self.btnAdd = ttk.Button(master=app, text="Add", command=self.add, style='TButton')
+        self.clicks = 0
+        self.btnSort = ttk.Button(master=self.sideBar, text="Sort", command=self.sort, style='TButton')
+        self.btnAdd = ttk.Button(master=self.sideBar, text="Add", command=self.add, style='TButton')
 
-        self.back = ttk.Button(master=app, text="Log Out", command=show_page1, style='TButton')
-        self.manageAccBut = ttk.Button(master=app, text="Account", command=self.managePage, style='TButton')
+        self.manageAccBut = ttk.Button(master=self.sideBar, text="Account", command=self.managePage, style='TButton')
 
         self.canvas = Canvas(app, bg=colours["bg"], highlightthickness=0, borderwidth=0, highlightcolor=colours["bg"], highlightbackground=colours["border"], relief="flat")
+        
+        
         
 
         self.scrollbar = ttk.Scrollbar(master=self.canvas, orient="vertical", command=self.canvas.yview, style='TScrollbar')
@@ -251,45 +279,90 @@ class mainPage:
         return rquizzes_for_user
   
     def playQuiz(self):
-        pass
+        #methodOfPlay = self.quizzes[self.quiz_buttons.index(self.btnPlay)][2]
+        
+        win = Toplevel()
+        win.title('warning')
+        win.configure(bg=colours["bg"])
+        
+        lblPlay = ttk.Label(master=win, text="How would you like to play the quiz?", font=font_para, style='TLabel').pack(pady=20, padx=20)
+        
+        def flashCard():
+            win.destroy()
+            show_page7()
+        
+        def kahoot():
+            win.destroy()
+            show_page8()
+        
+        btnFlashCard = ttk.Button(master=win, text="Flashcards", command=flashCard, style='TButton').pack(pady=10, padx=20)
+        btnKahoot = ttk.Button(master=win, text="Kahoot", command=kahoot, style='TButton').pack(pady=10, padx=20)
+        
+        
+        
+        #methodOFPlay = messagebox.askquestion(title="Play Quiz", message="How would you like to play the quiz?", icon='question', type='yesnocancel', default='yes', detail="Yes: Play as Quiz\nNo: Play as Flashcards\nCancel: Play as Kahoot")
+        
 
     def sort(self):
-        pass
+        
+        self.clicks += 1
+        
+        n = len(self.quizzes)
+
+        if self.clicks % 2 == 0:
+            for i in range(n - 1):
+                min_index = i
+                for j in range(i + 1, n):
+                    if self.quizzes[j][0].lower() > self.quizzes[min_index][0].lower():
+                        min_index = j
+                if min_index != i:
+                    self.quizzes[i], self.quizzes[min_index] = self.quizzes[min_index], self.quizzes[i]
+            self.show(reload_quizzes=False)
+            return
+            
+        
+        for i in range(n - 1):
+            min_index = i
+            for j in range(i + 1, n):
+                if self.quizzes[j][0].lower() < self.quizzes[min_index][0].lower():
+                    min_index = j
+            if min_index != i:
+                self.quizzes[i], self.quizzes[min_index] = self.quizzes[min_index], self.quizzes[i]
+
+        self.show(reload_quizzes=False)
 
     def add(self):
-        pass
+        show_page5()
 
     def managePage(self):
         page4.show()
         
-    def show(self):
+    def show(self, reload_quizzes=True):
         hide_all()
         self.hide()
-        quizzes = self.getQuizzes()
+        if reload_quizzes:
+            self.quizzes = self.getQuizzes()
+        if self.quizzes is None:
+            self.quizzes = []
+        
+        self.sideBar.place(relx=0, rely=0, anchor="nw", width=200, height=800)
 
-        self.canvas.place(relx=0.45, rely=0.5, anchor="center", width=800, height=500)
-        self.scrollbar.pack(side=RIGHT, fill=Y)
+        self.canvas.place(relx=0.6, rely=0.5, anchor="center", width=800, height=500)
+        self.scrollbar.pack(side=RIGHT, fill=Y, padx=(0,50))
 
         
 
-        
-        
-        #for i in range(30):
-            #Label(self.scrollable_frame, text=f"Item {i+1}", width=20).pack(pady=5)
 
-        for i in range(len(quizzes)):
-            strQuizTitle = quizzes[i][0]
+
+        for i in range(len(self.quizzes)):
+            strQuizTitle = self.quizzes[i][0]
 
             frmQuiz = ttk.Frame(self.scrollable_frame, style='TFrame', width=600, height=50)
             if i == 0:
                 frmQuiz.pack(pady=(0,10), padx=10)
-            #elif i == len(quizzes) - 1:
-                #frmQuiz.pack(pady=0, padx=10)
-            #elif i == 1:
-                #frmQuiz.pack(pady=20, padx=10)
             else:
                 frmQuiz.pack(pady=10, padx=10)
-            #frmQuiz.place(relx=0.5, rely=0.5, anchor="center")
+
 
             lblQuiz = ttk.Label(master=frmQuiz, text=strQuizTitle, font=small_font, style='Secondary.TLabel')
             btnPlay = ttk.Button(master=frmQuiz, text="Play", command=self.playQuiz, style='Secondary.TButton')
@@ -302,11 +375,10 @@ class mainPage:
             self.quiz_frames.append(frmQuiz)
 
 
-        self.hello.place(relx=0.5, rely=0.1, anchor="center")
-        self.btnSort.place(relx=0.05, rely=0.05, anchor="nw")
-        self.btnAdd.place(relx=0.95, rely=0.05, anchor="ne")
-        self.back.place(relx=0.05, rely=0.95, anchor="sw")
-        self.manageAccBut.place(relx=0.95, rely=0.95, anchor="se")
+        self.hello.place(relx=0.6, rely=0.1, anchor="center")
+        self.btnSort.place(relx=0.5, rely=0.3, anchor="center")
+        self.btnAdd.place(relx=0.5, rely=0.5, anchor="center")
+        self.manageAccBut.place(relx=0.5, rely=0.7, anchor="center")
 
         
 
@@ -318,6 +390,8 @@ class mainPage:
         self.quiz_labels.clear()
         self.quiz_buttons.clear()
         self.quiz_frames.clear()
+        
+        self.sideBar.place_forget()
 
         # lower canvas below the login frame (call with a widget argument)
         # calling lower() with no args raised a TclError on some Tk versions
@@ -334,7 +408,6 @@ class mainPage:
         self.hello.place_forget()
         self.btnSort.place_forget()
         self.btnAdd.place_forget()
-        self.back.place_forget()
         self.manageAccBut.place_forget()
         
 
@@ -650,6 +723,15 @@ page2 = mainPage()
 page3 = newAccPage()
 
 page4 = manageAccPage()
+
+page5 = newQuizPage()
+
+page6 = playQuizPage()
+
+page7 = flashCardPage()
+
+page8 = kahootPage()
+
 
 
 show_page1()
