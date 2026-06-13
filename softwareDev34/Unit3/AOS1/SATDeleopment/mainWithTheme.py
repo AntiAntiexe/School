@@ -461,6 +461,185 @@ class newAccPage:
         self.btnSubmit.place_forget()
         self.frmSignUp.place_forget()
         self.btnBackToLogin.place_forget()
+        
+class newQuizPage:
+    def __init__(self):
+        self.lblNewQuiz = ttk.Label(master=app, text="Create Quiz", font=font_title, style='TLabel')
+        
+        self.frmCard = ttk.Frame(master=app, style='TFrame', width=600, height=400)
+        
+        self.entryQuizTitle = ttk.Entry(master=app, width=35, font=font_para, style='TEntry')
+        self.entryQuizTitle.insert(0, "Quiz Title")
+        
+        self.entryQuizTitle.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.entryQuizTitle, "Quiz Title"))
+        self.entryQuizTitle.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.entryQuizTitle, "Quiz Title"))
+        
+        self.entryQuestion = ttk.Entry(master=self.frmCard, width=25, font=font_para, style='TEntry')
+        self.entryQuestion.insert(0, "Question")
+        
+        self.entryQuestion.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.entryQuestion, "Question"))
+        self.entryQuestion.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.entryQuestion, "Question"))
+        
+        self.entryAnswer = ttk.Entry(master=self.frmCard, width=25, font=font_para, style='TEntry')
+        self.entryAnswer.insert(0, "Answer")
+        
+        self.entryAnswer.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.entryAnswer, "Answer"))
+        self.entryAnswer.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.entryAnswer, "Answer"))
+        
+        self.photo = PhotoImage(file="softwareDev34/Unit3/AOS1/SATDeleopment/whiteArrowIcon.png")
+        
+        self.photoimage = self.photo.subsample(20, 20)  # Adjust the subsample values as needed to resize the image
+        
+        
+        self.btnNext = ttk.Button(master=app, text="Next Question", command=self.nextQuestion, style='TButton')
+        
+        self.btnFinish = ttk.Button(master=app, text="Finish", command=self.finishQuiz, style='TButton')
+        
+        self.btnExit = ttk.Button(master=app, text="Exit", command=self.exit, style='TButton')
+        
+        self.arrQuizQuestions = []
+        self.arrQuizAnswers = []
+        
+    
+    def exit(self):
+        response = messagebox.askyesno(title="Exit", message="Are you sure you want to exit? Your progress will not be saved.")
+
+        if response:
+            self.arrQuizQuestions.clear()
+            self.arrQuizAnswers.clear()
+            show_page2()
+        else:
+            print("Click 'Yes' to exit!")
+            
+    def nextQuestion(self):
+        if self.entryQuestion.get() == '' or self.entryQuestion.get() == "Question":
+            print('Please enter a question')
+            messagebox.showwarning(title="Invalid Question", message="Please enter a valid question.")
+            return
+        
+        if self.entryAnswer.get() == '' or self.entryAnswer.get() == "Answer":
+            print('Please enter an answer')
+            messagebox.showwarning(title="Invalid Answer", message="Please enter a valid answer.")
+            return
+        
+        question = self.entryQuestion.get()
+        answer = self.entryAnswer.get()
+        
+        print('Get result')
+        print(self.entryQuestion.get())
+        print(self.entryAnswer.get())
+        
+        print('Variable result')
+        print(question)
+        print(answer)
+        
+        self.arrQuizQuestions.append(question)
+        self.arrQuizAnswers.append(answer)
+        
+        print('Append to array')
+        print(self.arrQuizQuestions)
+        print(self.arrQuizAnswers)
+        
+        self.entryQuestion.delete(0, tk.END)
+        self.entryQuestion.insert(0, "Question")
+        self.entryQuestion.config(show='') # Show text and change color to grey
+        self.entryAnswer.delete(0, tk.END)
+        self.entryAnswer.insert(0, "Answer")
+        self.entryAnswer.config(show='') # Show text and change color to grey
+    
+    def finishQuiz(self):
+        
+        quizTitle = self.entryQuizTitle.get()
+        
+        if quizTitle == '' or quizTitle == "Quiz Title":
+            print('Please enter a quiz title')
+            messagebox.showwarning(title="Invalid Quiz Title", message="Please enter a valid quiz title.")
+            return
+        
+        if len(self.arrQuizQuestions) < 5:
+            print('Please enter at least 5 questions')
+            messagebox.showwarning(title="Not Enough Questions", message="Please enter at least 5 questions for your quiz.")
+            return
+        
+        
+        
+        quizData = [quizTitle, page1.current_username, [[question, answer] for question, answer in zip(self.arrQuizQuestions, self.arrQuizAnswers)]]
+        
+        
+        with open("softwareDev34/Unit3/AOS1/SATDeleopment/quizzesArray.csv", 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f, delimiter=';')
+            writer.writerow([quizData[0], quizData[1], quizData[2]])
+            
+        print('Quiz saved')
+        
+        self.arrQuizQuestions.clear()
+        self.arrQuizAnswers.clear()
+        
+        messagebox.showinfo(title="Quiz Saved", message="Your quiz has been saved successfully.")
+        show_page2()
+        
+    
+    def show(self):
+        hide_all()
+        # add widgets here
+        
+        self.lblNewQuiz.place(relx=0.5, rely=0.1, anchor="center")
+        self.frmCard.place(relx=0.5, rely=0.5, anchor="center")
+        
+        self.entryQuizTitle.place(relx=0.5, rely=0.2, anchor="center")
+        self.entryQuestion.place(relx=0.5, rely=0.3, anchor="center")
+        self.entryAnswer.place(relx=0.5, rely=0.5, anchor="center")
+        self.btnNext.place(relx=0.5, rely=0.7, anchor="center")
+        self.btnFinish.place(relx=0.5, rely=0.85, anchor="center")
+        self.btnExit.place(relx=0.9, rely=0.95, anchor="center")
+        
+    
+    def hide(self):
+        # hide widgets here
+        self.lblNewQuiz.place_forget()
+        self.frmCard.place_forget()
+        self.entryQuestion.place_forget()
+        self.entryAnswer.place_forget()
+        self.btnNext.place_forget()
+        self.btnFinish.place_forget()
+        self.btnExit.place_forget()
+        self.entryQuizTitle.place_forget()
+        
+class playQuizPage:
+    def __init__(self):
+        pass
+    def show(self):
+        hide_all()
+        # add widgets here
+        
+    
+    def hide(self):
+        # hide widgets here
+        pass
+
+class flashCardPage:
+    def __init__(self):
+        pass
+    def show(self):
+        hide_all()
+        # add widgets here
+        
+    
+    def hide(self):
+        # hide widgets here
+        pass
+
+class kahootPage:
+    def __init__(self):
+        pass
+    def show(self):
+        hide_all()
+        # add widgets here
+        
+    
+    def hide(self):
+        # hide widgets here
+        pass
 
 
 
