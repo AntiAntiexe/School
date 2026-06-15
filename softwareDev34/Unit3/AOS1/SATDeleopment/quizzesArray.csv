@@ -1,5 +1,5 @@
-FranceQuiz;Anton;[['What is the capital of France?', 'Paris'], ['What is 2 + 2?', '4'], ['What is the largest mammal?', 'Blue Whale'], ['What is the chemical symbol for water?', 'H2O'], ['What is the speed of light?', '299,792,458 m/s']]
-SpainQuiz;Anton;[['What is the capital of Spain?', 'Madrid'], ['What is 5 + 7?', '12'], ['What is the smallest mammal?', 'Bumblebee Bat'], ['What is the chemical symbol for gold?', 'Au'], ['What is the speed of sound?', '343 m/s']]
+FranceQuiz;anton;[['What is the capital of France?', 'Paris'], ['What is 2 + 2?', '4'], ['What is the largest mammal?', 'Blue Whale']]
+SpainQuiz;anton;[['What is the capital of Spain?', 'Madrid'], ['What is 5 + 7?', '12'], ['What is the smallest mammal?', 'Bumblebee Bat'], ['What is the chemical symbol for gold?', 'Au'], ['What is the speed of sound?', '343 m/s']]
 ItalyQuiz;Anton;[['What is the capital of Italy?', 'Rome'], ['What is 10 - 4?', '6'], ['What is the fastest land animal?', 'Cheetah'], ['What is the chemical symbol for silver?', 'Ag'], ['What is the speed of gravity?', '9.8 m/s²']]
 GermanyQuiz;Anton;[['What is the capital of Germany?', 'Berlin'], ['What is 3 * 3?', '9'], ['What is the largest bird?', 'Ostrich'], ['What is the chemical symbol for iron?', 'Fe'], ['What is the speed of sound in water?', '1482 m/s']]
 JapanQuiz;Anton;[['What is the capital of Japan?', 'Tokyo'], ['What is 15 / 3?', '5'], ['What is the tallest mountain?', 'Mount Everest'], ['What is the chemical symbol for carbon?', 'C'], ['What is the speed of light in a vacuum?', '299,792,458 m/s']]
@@ -19,3 +19,4 @@ ItalyQuiz2;Anton;[['What is the capital of Italy?', 'Rome'], ['What is 10 - 4?',
 GermanyQuiz2;Anton;[['What is the capital of Germany?', 'Berlin'], ['What is 3 * 3?', '9'], ['What is the largest bird?', 'Ostrich'], ['What is the chemical symbol for iron?', 'Fe'], ['What is the speed of sound in water?', '1482 m/s']]
 JapanQuiz2;Anton;[['What is the capital of Japan?', 'Tokyo'], ['What is 15 / 3?', '5'], ['What is the tallest mountain?', 'Mount Everest'], ['What is the chemical symbol for carbon?', 'C'], ['What is the speed of light in a vacuum?', '299,792,458 m/s']]
 newsies;Anton;[['Log ', 'in'], ['Yes', 'Now'], ['t', 'and c'], ['eat ', 'starve'], ['per', 'chance'], ['hey', 'bye']]
+My new quiz;Anton;[['What is the cap of vic', 'Melb'], ['asdg', 'tgyf'], ['iuyf', 'iuyf'], ['oiuyfg', 'iutf'], ['ikugv', 'ouyg'], ['ouyg', 'ouyfv']]

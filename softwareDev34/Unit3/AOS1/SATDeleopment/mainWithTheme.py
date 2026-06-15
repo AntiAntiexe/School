@@ -261,6 +261,8 @@ class mainPage:
         self.quiz_labels = []
         self.quiz_buttons = []
         self.quiz_frames = []
+        
+        self.quizzes = []
 
     def getQuizzes(self):
         username = getattr(page1, 'strUsernameToFind', '').strip()
@@ -280,12 +282,17 @@ class mainPage:
   
     def playQuiz(self):
         #methodOfPlay = self.quizzes[self.quiz_buttons.index(self.btnPlay)][2]
+        page6.getQuizToPlay()
+        show_page6()
         
+        '''
         win = Toplevel()
         win.title('warning')
         win.configure(bg=colours["bg"])
         
         lblPlay = ttk.Label(master=win, text="How would you like to play the quiz?", font=font_para, style='TLabel').pack(pady=20, padx=20)
+        
+        show_page6()
         
         def flashCard():
             win.destroy()
@@ -296,7 +303,7 @@ class mainPage:
             show_page8()
         
         btnFlashCard = ttk.Button(master=win, text="Flashcards", command=flashCard, style='TButton').pack(pady=10, padx=20)
-        btnKahoot = ttk.Button(master=win, text="Kahoot", command=kahoot, style='TButton').pack(pady=10, padx=20)
+        btnKahoot = ttk.Button(master=win, text="Kahoot", command=kahoot, style='TButton').pack(pady=10, padx=20)'''
         
         
         
@@ -345,6 +352,9 @@ class mainPage:
         if self.quizzes is None:
             self.quizzes = []
         
+        print("Quizzes for user:")
+        print(self.quizzes)
+        
         self.sideBar.place(relx=0, rely=0, anchor="nw", width=200, height=800)
 
         self.canvas.place(relx=0.6, rely=0.5, anchor="center", width=800, height=500)
@@ -365,16 +375,18 @@ class mainPage:
 
 
             lblQuiz = ttk.Label(master=frmQuiz, text=strQuizTitle, font=small_font, style='Secondary.TLabel')
-            btnPlay = ttk.Button(master=frmQuiz, text="Play", command=self.playQuiz, style='Secondary.TButton')
+            self.btnPlay = ttk.Button(master=frmQuiz, text="Play", command=self.playQuiz, style='Secondary.TButton')
 
             lblQuiz.place(relx=0.05, rely=0.5, anchor="w")
-            btnPlay.place(relx=0.95, rely=0.5, anchor="e")
+            self.btnPlay.place(relx=0.95, rely=0.5, anchor="e")
 
             self.quiz_labels.append(lblQuiz)
-            self.quiz_buttons.append(btnPlay)
+            print(self.btnPlay)
+            self.quiz_buttons.append(self.btnPlay)
             self.quiz_frames.append(frmQuiz)
-
-
+        print("Quiz buttons:")
+        print(self.quiz_buttons)
+        
         self.hello.place(relx=0.6, rely=0.1, anchor="center")
         self.btnSort.place(relx=0.5, rely=0.3, anchor="center")
         self.btnAdd.place(relx=0.5, rely=0.5, anchor="center")
@@ -677,18 +689,62 @@ class newQuizPage:
         self.btnFinish.place_forget()
         self.btnExit.place_forget()
         self.entryQuizTitle.place_forget()
-        
+      
 class playQuizPage:
     def __init__(self):
-        pass
+        
+        #self.quizToPlay = page2.quizzes[page2.quiz_buttons.index(page2.btnPlay)][2]
+        
+        print("quiz button to play:")
+        print(page2.btnPlay)
+        
+        #print(self.quizToPlay)
+        
+        self.frmPlay = ttk.Frame(master=app, style='TFrame', width=600, height=400)
+        self.lblPlay = ttk.Label(master=self.frmPlay, text="How would you like to play the quiz?", font=font_para, style='Secondary.TLabel')
+        
+        
+        self.btnFlashCard = ttk.Button(master=self.frmPlay, text="Flashcards", command=self.flashCard, style='TButton')
+        self.btnKahoot = ttk.Button(master=self.frmPlay, text="Kahoot", command=self.kahoot, style='TButton')
+        
+        self.btnCancel = ttk.Button(master=self.frmPlay, text="Cancel", command=self.cancel, style='TButton')
+        
     def show(self):
         hide_all()
         # add widgets here
         
+        self.frmPlay.place(relx=0.5, rely=0.5, anchor="center")
+        self.lblPlay.place(relx=0.5, rely=0.1, anchor="center")
+        
+        self.btnFlashCard.place(relx=0.5, rely=0.3, anchor="center")
+        self.btnKahoot.place(relx=0.5, rely=0.5, anchor="center")
+        
+        self.btnCancel.place(relx=0.5, rely=0.7, anchor="center")
+        
+    def getQuizToPlay(self):
+        print("Get quiz to play")
+        print(page2.btnPlay)
+        #quizToPlay = page2.quizzes[page2.quiz_buttons.index(page2.btnPlay)][2]
+        #print(quizToPlay)
+        
+    def cancel(self):
+        
+        show_page2()
+        
+    def flashCard(self):
+        show_page7()
+    
+    def kahoot(self):
+        show_page8()
     
     def hide(self):
         # hide widgets here
-        pass
+        self.lblPlay.place_forget()
+        self.frmPlay.place_forget()
+        self.btnFlashCard.place_forget()
+        self.btnKahoot.place_forget()
+        
+        self.btnCancel.place_forget()
 
 class flashCardPage:
     def __init__(self):
@@ -731,6 +787,8 @@ page6 = playQuizPage()
 page7 = flashCardPage()
 
 page8 = kahootPage()
+
+
 
 
 
