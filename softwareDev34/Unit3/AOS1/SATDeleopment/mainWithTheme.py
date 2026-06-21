@@ -289,7 +289,7 @@ class mainPage:
 
         return rquizzes_for_user
   
-    def playQuiz(self):
+    def playQuiz(self, quiz_index):
         #methodOfPlay = self.quizzes[self.quiz_buttons.index(self.btnPlay)][2]
         page6.getQuizToPlay()
         show_page6()
