@@ -1036,8 +1036,24 @@ class kahootPage:
     
     def hide(self):
         # hide widgets here
-        pass
+        self.lblKahoot.place_forget()
+        self.btnStart.place_forget()
+        self.frmSettings.place_forget()
+        self.lblTimePerQ.place_forget()
+        self.entryTimePerQ.place_forget()
+        self.btnFinish.place_forget()
+        self.btnAns1.place_forget()
+        self.btnAns3.place_forget()
+        self.btnAns4.place_forget()
+        self.btnAns2.place_forget()
 
+        self.lblAns1.place_forget()
+        self.lblAns2.place_forget()
+        self.lblAns3.place_forget()
+        self.lblAns4.place_forget()
+
+        self.lblQuestion.place_forget()
+        
 
 
 page1 = logInPage()
