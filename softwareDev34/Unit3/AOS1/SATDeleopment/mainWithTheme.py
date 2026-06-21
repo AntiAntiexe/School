@@ -364,7 +364,7 @@ class mainPage:
             btnPlay = ttk.Button(master=frmQuiz, text="Play", command=lambda i=i: self.playQuiz(i), style='Secondary.TButton')
 
             lblQuiz.place(relx=0.05, rely=0.5, anchor="w")
-            self.btnPlay.place(relx=0.95, rely=0.5, anchor="e")
+            btnPlay.place(relx=0.95, rely=0.5, anchor="e")
 
             self.quiz_labels.append(lblQuiz)
             print(self.btnPlay)
