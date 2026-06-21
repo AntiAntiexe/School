@@ -30,7 +30,7 @@ app.geometry("1000x800")
 app.configure(bg=colours["bg"])
 
 #style.use('clam')
-
+font_button = ("Helvetica", 100, "bold")
 font_title = ("Helvetica", 60, "bold")
 font_para = ("Helvetica", 30, "normal")
 small_font = ("Helvetica", 20, "normal")
