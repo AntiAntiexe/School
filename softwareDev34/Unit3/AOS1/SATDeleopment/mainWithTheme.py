@@ -1025,6 +1025,13 @@ class kahootPage:
     def show(self):
         hide_all()
         # add widgets here
+        #self.lblSettings.place(relx=0.5, rely=0.1, anchor="center")
+        self.lblKahoot.place(relx=0.5, rely=0.1, anchor="center")
+        self.btnStart.place(relx=0.5, rely=0.9, anchor="center")
+        self.frmSettings.place(relx=0.5, rely=0.5, anchor="center")
+        self.lblTimePerQ.place(relx=0.5, rely=0.4, anchor="center")
+        self.entryTimePerQ.place(relx=0.5, rely=0.5, anchor="center")
+        #self.btnFinish.place(relx=0.5, rely=0.7, anchor="center")
         
     
     def hide(self):
