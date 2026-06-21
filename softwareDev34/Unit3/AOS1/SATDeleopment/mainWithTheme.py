@@ -26,7 +26,7 @@ colours = {
 
 app = tk.Tk()
 app.title("Squiz")
-app.geometry("1000x800")
+app.geometry("1100x800")
 app.configure(bg=colours["bg"])
 
 #style.use('clam')
@@ -60,6 +60,11 @@ style.configure('Secondary.TLabel', background=colours["border"], foreground=col
 style.configure('Tertiary.TLabel', background=colours["actualBorder"], foreground=colours["lightText"])
 
 style.configure('Success.TLabel', background=colours["success"], foreground=colours["lightText"])
+
+style.configure('Correct.TLabel', background=colours["border"], foreground=colours["success"])
+style.configure('Incorrect.TLabel', background=colours["border"], foreground=colours["warning"])
+
+
 
 style.configure('TEntry', background=colours["actualBorder"], foreground=colours["lightText"], fieldbackground=colours["border"], relief="flat",borderwidth=0, highlightthickness=2, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"] )
 style.map('TEntry', background=[('focus', colours["actualBorder"]), ('focus', colours["actualBorder"])], foreground=[('focus', colours["lightText"])], highlightcolor=[('focus', colours["actualBorder"])])
@@ -570,7 +575,6 @@ class newQuizPage:
         
         self.arrQuizQuestions = []
         self.arrQuizAnswers = []
-        
     
     def exit(self):
         response = messagebox.askyesno(title="Exit", message="Are you sure you want to exit? Your progress will not be saved.")
@@ -588,10 +592,19 @@ class newQuizPage:
             messagebox.showwarning(title="Invalid Question", message="Please enter a valid question.")
             return
         
+        if len(self.entryQuestion.get()) > 37:
+            messagebox.showwarning(title="Invalid Question", message="Please enter a question that is less than 38 characters")
+            return
+
+        
         if self.entryAnswer.get() == '' or self.entryAnswer.get() == "Answer":
             print('Please enter an answer')
             messagebox.showwarning(title="Invalid Answer", message="Please enter a valid answer.")
             return
+        
+        if len(self.entryAnswer.get()) > 13:
+            messagebox.showwarning(title="Invalid Answer", message="Please enter an answer that is less than 13 characters")
+
         
         question = self.entryQuestion.get()
         answer = self.entryAnswer.get()
@@ -803,21 +816,31 @@ class flashCardPage:
 class kahootPage:
     def __init__(self):
 
-        self.frmSettings = ttk.Frame(master=app, style='TFrame', width=600, height=400)
+        self.frmSettings = ttk.Frame(master=app, style='TFrame', width=700, height=500)
 
         #self.lblSettings = ttk.Label(master=self.frmSettings, text="Options", font=smaller_title, style='Tertiary.TLabel')
 
         self.n = 0
 
+        self.frmResults = ttk.Frame(master=app, style='TFrame', width=600, height=400)
+
         self.lblResults = ttk.Label(master=app, text="Results", font=font_title, style='TLabel')
 
-        self.lblCorrect = ttk.Label(master=app, text="", font=font_title, style='TLabel')
+        self.lblCorrect = ttk.Label(master=self.frmResults, text="", font=font_title, style='Correct.TLabel')
 
-        self.lblIncorrect = ttk.Label(master=app, text="", font=font_title, style='TLabel')
+        self.lblIncorrect = ttk.Label(master=self.frmResults, text="", font=font_title, style='Incorrect.TLabel')
+
+        self.lblPercentage = ttk.Label(master=self.frmResults, text="", font=font_title, style='Secondary.TLabel')
+
+        self.lblQuizName = ttk.Label(master=self.frmResults, text="", font=font_title, style='TLabel')
+
+        self.lblCorrectlbl = ttk.Label(master=self.frmResults, text="Correct", font=smaller_title, style='Secondary.TLabel')
+
+        self.lblIncorrectlbl = ttk.Label(master=self.frmResults, text="Incorrect", font=smaller_title, style='Secondary.TLabel')
 
         self.lblKahoot = ttk.Label(master=app, text="Kahoot Mode", font=font_title, style='TLabel')
         self.btnStart = ttk.Button(master=self.frmSettings, text="Start", command=self.getAnswers, style='TButton')
-        self.btnFinish = ttk.Button(master=app, text="Finish", command=self.finishKahoot, style='TButton')
+        self.btnDone = ttk.Button(master=self.frmResults, text="Done", command=self.finishKahoot, style='TButton')
         
         self.lblTimePerQ = ttk.Label(master=app, text="Time per question (seconds):", font=font_para, style='Secondary.TLabel')
         self.entryTimePerQ = ttk.Entry(master=app, width=10, font=font_para, style='TEntry')
@@ -839,6 +862,8 @@ class kahootPage:
     
         self.btnAns4 = ttk.Button(master=app, text="GGGGG\nGGGGG", command=self.ans4Selected, style='Next.TButton')
         self.lblAns4 = ttk.Label(master=app, text="", font=font_title, style='Tertiary.TLabel')
+
+        
 
     def ans1Selected(self):
         print(self.lblAns1.cget('text'))
@@ -954,17 +979,33 @@ class kahootPage:
     def finished(self):
         hide_all()
 
+        self.frmResults.place(relx=0.5, rely=0.5, anchor="center")
+
+        self.btnDone.place(relx=0.5, rely=0.9, anchor="center")
+
         self.lblResults.place(relx=0.5, rely=0.1, anchor="center")
 
+        self.lblIncorrectlbl.place(relx=0.2, rely=0.38, anchor="center")
         self.lblIncorrect.config(text=self.incorrect)
         self.lblIncorrect.place(relx=0.2, rely=0.5, anchor="center")
 
+        self.lblCorrectlbl.place(relx=0.8, rely=0.38, anchor="center")
         self.lblCorrect.config(text=self.correct)
         self.lblCorrect.place(relx=0.8, rely=0.5, anchor="center")
 
+        percentage = (len(self.allQuestions)-self.incorrect)/len(self.allQuestions)*100
+
+        self.lblPercentage.config(text=f'{round(percentage, 2)}%')
+
+        self.lblPercentage.place(relx=0.5, rely=0.5, anchor="center")
+
+        
+
+
+
             
     def startKahoot(self):
-        time.sleep(1)
+        time.sleep(0.1)
         #hide_all()
         '''
         self.btnAns1.config(style='Next.TButton')
@@ -1041,7 +1082,7 @@ class kahootPage:
         self.frmSettings.place_forget()
         self.lblTimePerQ.place_forget()
         self.entryTimePerQ.place_forget()
-        self.btnFinish.place_forget()
+        self.btnDone.place_forget()
         self.btnAns1.place_forget()
         self.btnAns3.place_forget()
         self.btnAns4.place_forget()
@@ -1053,7 +1094,20 @@ class kahootPage:
         self.lblAns4.place_forget()
 
         self.lblQuestion.place_forget()
+
+        self.lblIncorrect.place_forget()
+        self.lblIncorrectlbl.place_forget()
+
+        self.lblCorrect.place_forget()
+        self.lblCorrectlbl.place_forget()
+
+        self.lblPercentage.place_forget()
+
+        self.frmResults.place_forget()
+
+        self.btnDone.place_forget()
         
+        self.lblResults.place_forget()
 
 
 page1 = logInPage()
