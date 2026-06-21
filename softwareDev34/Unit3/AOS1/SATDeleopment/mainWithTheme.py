@@ -802,7 +802,226 @@ class flashCardPage:
 
 class kahootPage:
     def __init__(self):
-        pass
+
+        self.frmSettings = ttk.Frame(master=app, style='TFrame', width=600, height=400)
+
+        #self.lblSettings = ttk.Label(master=self.frmSettings, text="Options", font=smaller_title, style='Tertiary.TLabel')
+
+        self.n = 0
+
+        self.lblResults = ttk.Label(master=app, text="Results", font=font_title, style='TLabel')
+
+        self.lblCorrect = ttk.Label(master=app, text="", font=font_title, style='TLabel')
+
+        self.lblIncorrect = ttk.Label(master=app, text="", font=font_title, style='TLabel')
+
+        self.lblKahoot = ttk.Label(master=app, text="Kahoot Mode", font=font_title, style='TLabel')
+        self.btnStart = ttk.Button(master=self.frmSettings, text="Start", command=self.getAnswers, style='TButton')
+        self.btnFinish = ttk.Button(master=app, text="Finish", command=self.finishKahoot, style='TButton')
+        
+        self.lblTimePerQ = ttk.Label(master=app, text="Time per question (seconds):", font=font_para, style='Secondary.TLabel')
+        self.entryTimePerQ = ttk.Entry(master=app, width=10, font=font_para, style='TEntry')
+
+        self.lblQuestion = ttk.Label(master=app, text="", font=font_title, style='TLabel')
+        self.entryTimePerQ.insert(0, "30")
+
+        self.entryTimePerQ.bind('<FocusIn>', lambda event: page1.on_entry_click(event, self.entryTimePerQ, "30"))
+        self.entryTimePerQ.bind('<FocusOut>', lambda event: page1.on_focusout(event, self.entryTimePerQ, "30"))
+
+        self.btnAns1 = ttk.Button(master=app, text="GGGGG\nGGGGG", command=self.ans1Selected, style='Next.TButton')
+        self.lblAns1 = ttk.Label(master=app, text="", font=font_title, style='Tertiary.TLabel')
+
+        self.btnAns2 = ttk.Button(master=app, text="GGGGG\nGGGGG", command=self.ans2Selected, style='Next.TButton')
+        self.lblAns2 = ttk.Label(master=app, text="", font=font_title, style='Tertiary.TLabel')
+
+        self.btnAns3 = ttk.Button(master=app, text="GGGGG\nGGGGG", command=self.ans3Selected, style='Next.TButton')
+        self.lblAns3 = ttk.Label(master=app, text="", font=font_title, style='Tertiary.TLabel')
+    
+        self.btnAns4 = ttk.Button(master=app, text="GGGGG\nGGGGG", command=self.ans4Selected, style='Next.TButton')
+        self.lblAns4 = ttk.Label(master=app, text="", font=font_title, style='Tertiary.TLabel')
+
+    def ans1Selected(self):
+        print(self.lblAns1.cget('text'))
+        if self.lblAns1.cget('text') == self.allAnswers[self.n][self.ansPositions[self.n]]:
+            print('corect answer')
+            #self.btnAns1.config(style='Correct.TButton')
+            #self.lblAns1.configure(style='Success.TLabel')
+            #time.sleep(1)
+            self.correct +=1
+
+        else:
+            print('incorrect')
+            self.incorrect +=1
+        
+        self.n += 1
+
+        
+
+        self.startKahoot()
+
+        
+
+    def ans2Selected(self):
+        print(self.lblAns2.cget('text'))
+        if self.lblAns2.cget('text') == self.allAnswers[self.n][self.ansPositions[self.n]]:
+            print('corect answer')
+            #self.btnAns2.config(style='Correct.TButton')
+            #self.lblAns2.configure(style='Success.TLabel')
+            #time.sleep(1)
+            self.correct += 1
+        else:
+            print('incorrect')
+            self.incorrect += 1
+
+        self.n += 1
+        
+
+        self.startKahoot()
+
+        
+
+    def ans3Selected(self):
+        print(self.lblAns3.cget('text'))
+        if self.lblAns3.cget('text') == self.allAnswers[self.n][self.ansPositions[self.n]]:
+            print('corect answer')
+            #self.btnAns3.config(style='Correct.TButton')
+            #self.lblAns3.configure(style='Success.TLabel')
+            #time.sleep(1)
+
+            self.correct += 1
+        else:
+            print('incorrect')
+            self.incorrect += 1
+
+        self.n += 1
+        
+
+        self.startKahoot()
+
+    def ans4Selected(self):
+        print(self.lblAns4.cget('text'))
+        if self.lblAns4.cget('text') == self.allAnswers[self.n][self.ansPositions[self.n]]:
+            print('corect answer')
+            #self.btnAns4.config(style='Correct.TButton')
+            #self.lblAns4.configure(style='Success.TLabel')
+            #time.sleep(1)
+            self.correct += 1
+        else:
+            print('incorrect')
+            self.incorrect += 1
+
+        self.n += 1
+        
+        self.startKahoot()
+    
+    def getAnswers(self):
+        # logic to start kahoot mode
+        
+        self.correct = 0
+        self.incorrect = 0
+        possibleAnswers = []
+        self.allAnswers = []
+        self.allQuestions = []
+        self.ansPositions = []
+
+        for question, answer in page6.arrQuizToPlay:
+            for i in range(len(page6.arrQuizToPlay)):
+                if page6.arrQuizToPlay[i][1] != answer:
+                    possibleAnswers.append(page6.arrQuizToPlay[i][1])
+
+            incorrectAnswers = random.sample(possibleAnswers, 3)
+
+            answerPos = random.randint(0, 3)
+
+
+
+            incorrectAnswers.insert(answerPos, answer)
+            self.allAnswers.append(incorrectAnswers)
+            self.allQuestions.append(question)
+            self.ansPositions.append(answerPos)
+
+            print(question)
+            print(incorrectAnswers)
+            self.lblQuestion.config(text=question)
+
+            possibleAnswers = []
+
+        print(self.allAnswers) 
+        print(self.allQuestions)
+        hide_all()
+        self.startKahoot()
+                              
+    def finished(self):
+        hide_all()
+
+        self.lblResults.place(relx=0.5, rely=0.1, anchor="center")
+
+        self.lblIncorrect.config(text=self.incorrect)
+        self.lblIncorrect.place(relx=0.2, rely=0.5, anchor="center")
+
+        self.lblCorrect.config(text=self.correct)
+        self.lblCorrect.place(relx=0.8, rely=0.5, anchor="center")
+
+            
+    def startKahoot(self):
+        time.sleep(1)
+        #hide_all()
+        '''
+        self.btnAns1.config(style='Next.TButton')
+        self.lblAns1.configure(style='Tertiary.TLabel')
+
+        self.btnAns2.config(style='Next.TButton')
+        self.lblAns2.configure(style='Tertiary.TLabel')
+
+        self.btnAns3.config(style='Next.TButton')
+        self.lblAns3.configure(style='Tertiary.TLabel')
+
+        self.btnAns4.config(style='Next.TButton')
+        self.lblAns4.configure(style='Tertiary.TLabel')'''
+
+        if self.n >= len(self.allQuestions):
+            self.finished()
+            return
+
+
+        self.lblQuestion.config(text=self.allQuestions[self.n])
+
+        #self.btnAns1.config(text=incorrectAnswers[0])
+        self.lblAns1.config(text=self.allAnswers[self.n][0])
+
+        #self.btnAns2.config(text=incorrectAnswers[1])
+        self.lblAns2.config(text=self.allAnswers[self.n][1])
+
+        #self.btnAns3.config(text=incorrectAnswers[2])
+        self.lblAns3.config(text=self.allAnswers[self.n][2])
+
+        #self.btnAns4.config(text=incorrectAnswers[3])
+        self.lblAns4.config(text=self.allAnswers[self.n][3])
+
+        self.lblQuestion.place(relx=0.5, rely=0.1, anchor="center")
+
+        self.btnAns1.place(relx=0.25, rely=0.4, anchor="center")
+        self.lblAns1.place(relx=0.25, rely=0.4, anchor="center")
+
+        self.btnAns2.place(relx=0.75, rely=0.4, anchor="center")
+        self.lblAns2.place(relx=0.75, rely=0.4, anchor="center")
+
+        self.btnAns3.place(relx=0.25, rely=0.8, anchor="center")
+        self.lblAns3.place(relx=0.25, rely=0.8, anchor="center")
+
+        self.btnAns4.place(relx=0.75, rely=0.8, anchor="center") 
+        self.lblAns4.place(relx=0.75, rely=0.8, anchor="center") 
+
+
+            
+
+       
+
+           
+
+    def finishKahoot(self):
+        show_page2()
+
     def show(self):
         hide_all()
         # add widgets here
