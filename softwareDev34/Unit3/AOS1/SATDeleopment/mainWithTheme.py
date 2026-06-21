@@ -367,8 +367,8 @@ class mainPage:
             btnPlay.place(relx=0.95, rely=0.5, anchor="e")
 
             self.quiz_labels.append(lblQuiz)
-            print(self.btnPlay)
-            self.quiz_buttons.append(self.btnPlay)
+            print(btnPlay)
+            self.quiz_buttons.append(btnPlay)
             self.quiz_frames.append(frmQuiz)
         print("Quiz buttons:")
         print(self.quiz_buttons)
