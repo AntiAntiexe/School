@@ -678,14 +678,8 @@ class newQuizPage:
       
 class playQuizPage:
     def __init__(self):
-        
-        #self.quizToPlay = page2.quizzes[page2.quiz_buttons.index(page2.btnPlay)][2]
-        
-        print("quiz button to play:")
-        print(page2.btnPlay)
-        
-        #print(self.quizToPlay)
-        
+        self.arrQuizToPlay = []
+        self.strQuizTitle = ""
         self.frmPlay = ttk.Frame(master=app, style='TFrame', width=600, height=400)
         self.lblPlay = ttk.Label(master=self.frmPlay, text="How would you like to play the quiz?", font=font_para, style='Secondary.TLabel')
         
