@@ -57,6 +57,9 @@ style.map('Correct.TButton', background=[('active', colours["success"])], foregr
 
 style.configure('TLabel', background=colours["bg"], foreground=colours["text"])
 style.configure('Secondary.TLabel', background=colours["border"], foreground=colours["lightText"])
+style.configure('Tertiary.TLabel', background=colours["actualBorder"], foreground=colours["lightText"])
+
+style.configure('Success.TLabel', background=colours["success"], foreground=colours["lightText"])
 
 style.configure('TEntry', background=colours["actualBorder"], foreground=colours["lightText"], fieldbackground=colours["border"], relief="flat",borderwidth=0, highlightthickness=2, highlightcolor=colours["actualBorder"], highlightbackground=colours["actualBorder"] )
 style.map('TEntry', background=[('focus', colours["actualBorder"]), ('focus', colours["actualBorder"])], foreground=[('focus', colours["lightText"])], highlightcolor=[('focus', colours["actualBorder"])])
