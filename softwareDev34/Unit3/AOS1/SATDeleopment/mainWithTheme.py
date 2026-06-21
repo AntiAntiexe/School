@@ -48,8 +48,11 @@ style.map('TButton', background=[('active', colours["primary"])])
 style.configure('Secondary.TButton',font=small_font, background=colours["actualBorder"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
 style.map('Secondary.TButton', background=[('active', colours["primary"])])
 
-style.configure('Next.TButton',font=font_para, background=colours["success"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
-style.map('Next.TButton', background=[('active', colours["primary"])], foreground=[('active', colours["lightText"])])
+style.configure('Next.TButton', padding= 20, font=font_button, background=colours["actualBorder"], foreground=colours["actualBorder"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
+style.map('Next.TButton', background=[('active', colours["actualBorder"])], foreground=[('active', colours["actualBorder"])])
+
+style.configure('Correct.TButton', padding= 20, font=font_button, background=colours["success"], foreground=colours["lightText"], borderwidth=0.5, bordercolor=colours["actualBorder"], relief="flat", focusthickness=0, highlightthickness=0)
+style.map('Correct.TButton', background=[('active', colours["success"])], foreground=[('active', colours["lightText"])])
 
 
 style.configure('TLabel', background=colours["bg"], foreground=colours["text"])
