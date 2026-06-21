@@ -5,7 +5,7 @@ from tensorflow import keras
 
 class FruitClassifier:
     def __init__(self):
-        model_dir = "appliedComputing/groupProj/mainModel/model.h5"
+        model_dir = "appliedComputing12/groupProj/mainModel/model.h5"
         self.model = keras.models.load_model(model_dir)
     
     def runClassifier(self, fileName):
