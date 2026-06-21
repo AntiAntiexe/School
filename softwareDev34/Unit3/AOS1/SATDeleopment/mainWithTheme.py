@@ -751,6 +751,43 @@ class flashCardPage:
     def show(self):
         hide_all()
         # add widgets here
+        self.lblQuizTitle.config(text=page6.strQuizTitle)
+        print("Quiz to play in flashcard page:")
+        print(page6.arrQuizToPlay)
+        self.lblQuestion.config(text=page6.arrQuizToPlay[self.n][0])
+        #self.lblAnswer.config(text=page6.arrQuizToPlay[0][1])
+        
+        self.btnAnswer.place(relx=0.3, rely=0.8, anchor="center")
+        self.btnNextCard.place(relx=0.7, rely=0.8, anchor="center")
+        self.btnFinish.place(relx=0.5, rely=0.8, anchor="center")
+        
+        self.lblQuizTitle.place(relx=0.5, rely=0.1, anchor="center")
+        self.crdFlashCard.place(relx=0.5, rely=0.5, anchor="center")
+        self.lblQuestion.place(relx=0.5, rely=0.5, anchor="center")
+        self.lblAnswer.place(relx=0.5, rely=0.7, anchor="center")
+
+    def flipCard(self):
+        self.intClicks += 1
+
+        if self.intClicks % 2 == 0:
+            self.lblQuestion.config(text=page6.arrQuizToPlay[self.n][0])
+        else:
+            self.lblQuestion.config(text=page6.arrQuizToPlay[self.n][1])
+
+    def finishQuiz(self):
+        show_page2()
+
+    def nextCard(self):
+        # logic to go to the next card
+        self.n += 1
+
+        if self.n >= len(page6.arrQuizToPlay):
+            self.n = 0
+            self.intClicks = 0
+            self.lblQuestion.config(text=page6.arrQuizToPlay[self.n][0])
+        else:
+            self.intClicks = 0
+            self.lblQuestion.config(text=page6.arrQuizToPlay[self.n][0])
         
     
     def hide(self):
