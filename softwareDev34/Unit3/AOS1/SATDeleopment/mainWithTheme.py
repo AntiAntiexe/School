@@ -294,29 +294,6 @@ class mainPage:
         page6.getQuizToPlay(quiz_index)
         show_page6()
         
-        '''
-        win = Toplevel()
-        win.title('warning')
-        win.configure(bg=colours["bg"])
-        
-        lblPlay = ttk.Label(master=win, text="How would you like to play the quiz?", font=font_para, style='TLabel').pack(pady=20, padx=20)
-        
-        show_page6()
-        
-        def flashCard():
-            win.destroy()
-            show_page7()
-        
-        def kahoot():
-            win.destroy()
-            show_page8()
-        
-        btnFlashCard = ttk.Button(master=win, text="Flashcards", command=flashCard, style='TButton').pack(pady=10, padx=20)
-        btnKahoot = ttk.Button(master=win, text="Kahoot", command=kahoot, style='TButton').pack(pady=10, padx=20)'''
-        
-        
-        
-        #methodOFPlay = messagebox.askquestion(title="Play Quiz", message="How would you like to play the quiz?", icon='question', type='yesnocancel', default='yes', detail="Yes: Play as Quiz\nNo: Play as Flashcards\nCancel: Play as Kahoot")
         
 
     def sort(self):
