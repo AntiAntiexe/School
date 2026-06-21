@@ -792,7 +792,13 @@ class flashCardPage:
     
     def hide(self):
         # hide widgets here
-        pass
+        self.lblQuizTitle.place_forget()
+        self.crdFlashCard.place_forget()
+        self.lblQuestion.place_forget()
+        self.lblAnswer.place_forget()
+        self.btnAnswer.place_forget()
+        self.btnNextCard.place_forget()
+        self.btnFinish.place_forget()
 
 class kahootPage:
     def __init__(self):
