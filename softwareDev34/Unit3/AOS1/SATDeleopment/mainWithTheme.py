@@ -731,7 +731,23 @@ class playQuizPage:
 
 class flashCardPage:
     def __init__(self):
-        pass
+        self.arrQuiz = page6.arrQuizToPlay
+        self.strTitle = page6.strQuizTitle
+
+        self.intClicks = 0
+
+        self.n = 0
+
+        self.lblQuizTitle = ttk.Label(master=app, text=self.strTitle, font=font_title, style='TLabel')
+
+        self.crdFlashCard = ttk.Frame(master=app, style='TFrame', width=600, height=400)
+        self.lblQuestion = ttk.Label(master=self.crdFlashCard, text="", font=font_para, style='Secondary.TLabel')
+        self.lblAnswer = ttk.Label(master=self.crdFlashCard, text="", font=font_para, style='Secondary.TLabel')
+
+        self.btnAnswer = ttk.Button(master=app, text="Flip", command=self.flipCard, style='TButton')
+        self.btnNextCard = ttk.Button(master=app, text="Next", command=self.nextCard, style='TButton')
+        self.btnFinish = ttk.Button(master=app, text="Finish", command=self.finishQuiz, style='TButton')
+
     def show(self):
         hide_all()
         # add widgets here
