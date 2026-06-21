@@ -703,9 +703,12 @@ class playQuizPage:
         
     def getQuizToPlay(self, quiz_index):
         print("Get quiz to play")
-        print(page2.btnPlay)
-        #quizToPlay = page2.quizzes[page2.quiz_buttons.index(page2.btnPlay)][2]
-        #print(quizToPlay)
+        print(quiz_index)
+        self.arrQuizToPlay = page2.quizzes[quiz_index][2]
+        self.strQuizTitle = page2.quizzes[quiz_index][0]
+
+        self.arrQuizToPlay = eval(self.arrQuizToPlay)  # Convert string representation of list back to a list
+        print(self.arrQuizToPlay)
         
     def cancel(self):
         
