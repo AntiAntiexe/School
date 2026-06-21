@@ -291,7 +291,7 @@ class mainPage:
   
     def playQuiz(self, quiz_index):
         #methodOfPlay = self.quizzes[self.quiz_buttons.index(self.btnPlay)][2]
-        page6.getQuizToPlay()
+        page6.getQuizToPlay(quiz_index)
         show_page6()
         
         '''
