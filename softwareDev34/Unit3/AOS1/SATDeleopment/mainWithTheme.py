@@ -701,7 +701,7 @@ class playQuizPage:
         
         self.btnCancel.place(relx=0.5, rely=0.7, anchor="center")
         
-    def getQuizToPlay(self):
+    def getQuizToPlay(self, quiz_index):
         print("Get quiz to play")
         print(page2.btnPlay)
         #quizToPlay = page2.quizzes[page2.quiz_buttons.index(page2.btnPlay)][2]
