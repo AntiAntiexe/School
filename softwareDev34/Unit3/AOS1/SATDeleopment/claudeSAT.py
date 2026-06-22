@@ -31,24 +31,24 @@ import time
 #  CONSTANTS  (global, read-only – named in UPPER_SNAKE_CASE)
 # ══════════════════════════════════════════════════════════════════════
 
-ACCOUNTS_FILE_PATH  = 'softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv'
-QUIZZES_FILE_PATH   = 'softwareDev34/Unit3/AOS1/SATDeleopment/quizzesArray.csv'
-ICON_FILE_PATH      = 'softwareDev34/Unit3/AOS1/SATDeleopment/whiteArrowIcon.png'
+strAccountsPath  = 'softwareDev34/Unit3/AOS1/SATDeleopment/accounts.csv'
+strQuizzesPath   = 'softwareDev34/Unit3/AOS1/SATDeleopment/quizzesArray.csv'
+strIconPath      = 'softwareDev34/Unit3/AOS1/SATDeleopment/whiteArrowIcon.png'
 
-MIN_PASSWORD_LENGTH = 8    # int – minimum characters required for a valid password
-MIN_QUESTIONS       = 5    # int – minimum Q&A pairs required to save a quiz
-MAX_QUESTION_LENGTH = 37   # int – max characters allowed in one question field
-MAX_ANSWER_LENGTH   = 13   # int – max characters allowed in one answer field
-MIN_TIME_PER_Q      = 5    # int – minimum seconds per Kahoot question (range check)
-MAX_TIME_PER_Q      = 120  # int – maximum seconds per Kahoot question (range check)
-DEFAULT_TIME_PER_Q  = 30   # int – default seconds per Kahoot question
+intMinPasswordLength = 8    # int – minimum characters required for a valid password
+intMinQuestions       = 5    # int – minimum Q&A pairs required to save a quiz
+intMaxQuestioLength = 37   # int – max characters allowed in one question field
+intMaxAnswerLength   = 13   # int – max characters allowed in one answer field
+intMinTimePerQ      = 5    # int – minimum seconds per Kahoot question (range check)
+intMaxTimePerQ      = 120  # int – maximum seconds per Kahoot question (range check)
+intDefaultTimePerQ  = 30   # int – default seconds per Kahoot question
 
 
 # ══════════════════════════════════════════════════════════════════════
 #  COLOUR PALETTE  (global dict – text type: str)
 # ══════════════════════════════════════════════════════════════════════
 
-colours = {
+dictColours = {
     "bg":          "#12162b",   # deep-space navy – main window background
     "card":        "#1c2340",   # slightly lighter card / frame surface
     "sidebar":     "#161b34",   # sidebar panel background
@@ -76,156 +76,84 @@ app = tk.Tk()
 app.title("Squiz")
 app.geometry("1100x800")
 app.resizable(False, False)
-app.configure(bg=colours["bg"])
+app.configure(bg=dictColours["bg"])
 
 
 # ══════════════════════════════════════════════════════════════════════
 #  FONTS  (global tuples – used across all pages)
 # ══════════════════════════════════════════════════════════════════════
 
-font_title    = ("Helvetica", 48, "bold")     # page headings
-font_subtitle = ("Helvetica", 28, "bold")     # section headings
-font_para     = ("Helvetica", 22, "normal")   # body / entry text
-small_bold    = ("Helvetica", 16, "bold")     # quiz card title
-small_font    = ("Helvetica", 16, "normal")   # muted / secondary text
-font_answer   = ("Helvetica", 18, "bold")     # Kahoot answer label text
-font_huge     = ("Helvetica", 72, "bold")     # large score numbers
+tplFontTitle    = ("Helvetica", 48, "bold")     # page headings
+tplFontSubTitle = ("Helvetica", 28, "bold")     # section headings
+tplFontPara     = ("Helvetica", 22, "normal")   # body / entry text
+tplSmallBold    = ("Helvetica", 16, "bold")     # quiz card title
+tplSmallFont    = ("Helvetica", 16, "normal")   # muted / secondary text
+tplFontAnswer   = ("Helvetica", 18, "bold")     # Kahoot answer label text
+tplFontHuge     = ("Helvetica", 72, "bold")     # large score numbers
 
 
 # ══════════════════════════════════════════════════════════════════════
 #  TTK STYLE CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════
 
-style = ttk.Style()
-style.theme_use('classic')
+ttkStyle = ttk.Style()
+ttkStyle.theme_use('classic')
 
 # ── Buttons ──────────────────────────────────────────────────────────
 
 # Primary action button (large)
-style.configure('TButton',
-    font=font_para,
-    background=colours["primary"],
-    foreground=colours["lightText"],
-    borderwidth=0, relief="flat",
-    focusthickness=0, highlightthickness=0,
-    padding=(24, 10))
-style.map('TButton',
-    background=[('active', colours["primaryHov"])])
+ttkStyle.configure('TButton', font=tplFontPara, background=dictColours["primary"], foreground=dictColours["lightText"], borderwidth=0, relief="flat", focusthickness=0, highlightthickness=0, padding=(24, 10))
+ttkStyle.map('TButton', background=[('active', dictColours["primaryHov"])])
 
 # Secondary / smaller button
-style.configure('Secondary.TButton',
-    font=small_font,
-    background=colours["primary"],
-    foreground=colours["lightText"],
-    borderwidth=0, relief="flat",
-    focusthickness=0, highlightthickness=0,
-    padding=(14, 7))
-style.map('Secondary.TButton',
-    background=[('active', colours["primaryHov"])])
+ttkStyle.configure('Secondary.TButton', font=tplSmallFont, background=dictColours["primary"], foreground=dictColours["lightText"], borderwidth=0, relief="flat", focusthickness=0, highlightthickness=0, padding=(14, 7))
+ttkStyle.map('Secondary.TButton', background=[('active', dictColours["primaryHov"])])
 
 # Ghost sidebar button
-style.configure('Sidebar.TButton',
-    font=small_font,
-    background=colours["sidebar"],
-    foreground=colours["muted"],
-    borderwidth=0, relief="flat",
-    focusthickness=0, highlightthickness=0,
-    padding=(14, 10))
-style.map('Sidebar.TButton',
-    background=[('active', colours["border"])],
-    foreground=[('active', colours["text"])])
+ttkStyle.configure('Sidebar.TButton', font=tplSmallFont, background=dictColours["sidebar"], foreground=dictColours["muted"], borderwidth=0, relief="flat", focusthickness=0, highlightthickness=0, padding=(14, 10))
+ttkStyle.map('Sidebar.TButton', background=[('active', dictColours["border"])], foreground=[('active', dictColours["text"])])
 
 # Destructive / danger button
-style.configure('Danger.TButton',
-    font=font_para,
-    background=colours["danger"],
-    foreground=colours["lightText"],
-    borderwidth=0, relief="flat",
-    focusthickness=0, highlightthickness=0,
-    padding=(24, 10))
-style.map('Danger.TButton',
-    background=[('active', colours["dangerHov"])])
+ttkStyle.configure('Danger.TButton', font=tplFontPara, background=dictColours["danger"], foreground=dictColours["lightText"], borderwidth=0, relief="flat", focusthickness=0, highlightthickness=0, padding=(24, 10))
+ttkStyle.map('Danger.TButton', background=[('active', dictColours["dangerHov"])])
 
 # Kahoot answer tile (large square button – text hidden; label is overlaid)
-style.configure('Tile.TButton',
-    padding=20,
-    font=("Helvetica", 60),
-    background=colours["answerTile"],
-    foreground=colours["answerTile"],   # invisible placeholder text
-    borderwidth=0, relief="flat",
-    focusthickness=0, highlightthickness=0)
-style.map('Tile.TButton',
-    background=[('active', colours["border"])],
-    foreground=[('active', colours["border"])])
+ttkStyle.configure('Tile.TButton', padding=20, font=("Helvetica", 60), background=dictColours["answerTile"], foreground=dictColours["answerTile"], borderwidth=0, relief="flat", focusthickness=0, highlightthickness=0)
+ttkStyle.map('Tile.TButton', background=[('active', dictColours["border"])], foreground=[('active', dictColours["border"])])
 
 # ── Labels ───────────────────────────────────────────────────────────
 
-style.configure('TLabel',
-    background=colours["bg"],
-    foreground=colours["text"])
-style.configure('Card.TLabel',
-    background=colours["card"],
-    foreground=colours["text"])
-style.configure('Muted.TLabel',
-    background=colours["bg"],
-    foreground=colours["muted"])
-style.configure('MutedCard.TLabel',
-    background=colours["card"],
-    foreground=colours["muted"])
-style.configure('Sidebar.TLabel',
-    background=colours["sidebar"],
-    foreground=colours["muted"])
-style.configure('SidebarTitle.TLabel',
-    background=colours["sidebar"],
-    foreground=colours["lightText"])
-style.configure('Success.TLabel',
-    background=colours["card"],
-    foreground=colours["success"])
-style.configure('Warning.TLabel',
-    background=colours["card"],
-    foreground=colours["warning"])
-style.configure('TileText.TLabel',
-    background=colours["answerTile"],
-    foreground=colours["lightText"])
+ttkStyle.configure('TLabel', background=dictColours["bg"], foreground=dictColours["text"])
+ttkStyle.configure('Card.TLabel', background=dictColours["card"], foreground=dictColours["text"])
+ttkStyle.configure('Muted.TLabel', background=dictColours["bg"], foreground=dictColours["muted"])
+ttkStyle.configure('MutedCard.TLabel', background=dictColours["card"], foreground=dictColours["muted"])
+ttkStyle.configure('Sidebar.TLabel', background=dictColours["sidebar"], foreground=dictColours["muted"])
+ttkStyle.configure('SidebarTitle.TLabel', background=dictColours["sidebar"], foreground=dictColours["lightText"])
+ttkStyle.configure('Success.TLabel', background=dictColours["card"], foreground=dictColours["success"])
+ttkStyle.configure('Warning.TLabel', background=dictColours["card"], foreground=dictColours["warning"])
+ttkStyle.configure('TileText.TLabel', background=dictColours["answerTile"], foreground=dictColours["lightText"])
 
 # ── Entry fields ─────────────────────────────────────────────────────
 
-style.configure('TEntry',
-    background=colours["inputBg"],
-    foreground=colours["lightText"],
-    fieldbackground=colours["inputBg"],
-    relief="flat", borderwidth=0,
-    insertcolor=colours["lightText"])
+ttkStyle.configure('TEntry', background=dictColours["inputBg"], foreground=dictColours["lightText"], fieldbackground=dictColours["inputBg"], relief="flat", borderwidth=0, insertcolor=dictColours["lightText"])
 
 # ── Frames ───────────────────────────────────────────────────────────
 
-style.configure('TFrame',
-    background=colours["card"])
-style.configure('Sidebar.TFrame',
-    background=colours["sidebar"])
-style.configure('BG.TFrame',
-    background=colours["bg"])
+ttkStyle.configure('TFrame', background=dictColours["card"])
+ttkStyle.configure('Sidebar.TFrame', background=dictColours["sidebar"])
+ttkStyle.configure('BG.TFrame', background=dictColours["bg"])
 
 # ── Scrollbar ────────────────────────────────────────────────────────
 
-style.configure('TScrollbar',
-    arrowcolor=colours["primary"],
-    relief="flat", arrowsize=0,
-    background=colours["border"],
-    width=6,
-    troughcolor=colours["card"],
-    bordercolor=colours["card"],
-    borderwidth=0,
-    highlightthickness=0)
-style.map('TScrollbar',
-    background=[('active', colours["primary"])])
+ttkStyle.configure('TScrollbar', arrowcolor=dictColours["primary"], relief="flat", arrowsize=0, background=dictColours["border"], width=6, troughcolor=dictColours["card"], bordercolor=dictColours["card"], borderwidth=0, highlightthickness=0)
+ttkStyle.map('TScrollbar', background=[('active', dictColours["primary"])])
 
 
 # ══════════════════════════════════════════════════════════════════════
 #  PAGE NAVIGATION HELPERS  (global functions)
 # ══════════════════════════════════════════════════════════════════════
 
-def hide_all() -> None:
+def hideAll():
     """
     Hide every page so the target page can be shown cleanly.
     Called before any show() method to avoid widget overlap.
@@ -239,35 +167,35 @@ def hide_all() -> None:
     page7.hide()
     page8.hide()
 
-def show_page1() -> None:
+def showPage1():
     """Navigate to the Login page (page 1)."""
     page1.show()
 
-def show_page2() -> None:
+def showPage2():
     """Navigate to the Main dashboard (page 2)."""
     page2.show()
 
-def show_page3() -> None:
+def showPage3():
     """Navigate to the Sign-Up page (page 3)."""
     page3.show()
 
-def show_page4() -> None:
+def showPage4():
     """Navigate to the Manage Account page (page 4)."""
     page4.show()
 
-def show_page5() -> None:
+def showPage5():
     """Navigate to the Create Quiz page (page 5)."""
     page5.show()
 
-def show_page6() -> None:
+def showPage6():
     """Navigate to the Play Mode Selection page (page 6)."""
     page6.show()
 
-def show_page7() -> None:
+def showPage7():
     """Navigate to the Flashcard Mode page (page 7)."""
     page7.show()
 
-def show_page8() -> None:
+def showPage8():
     """Navigate to the Kahoot/Quiz Mode page (page 8)."""
     page8.show()
 
@@ -291,17 +219,17 @@ class BasePage:
     inheritance, and access modifiers.
     """
 
-    def show(self) -> None:
+    def show(self):
         """Display this page.  Must be overridden in every sub-class."""
         raise NotImplementedError("Sub-classes must override show()")
 
-    def hide(self) -> None:
+    def hide(self):
         """Hide this page.  Must be overridden in every sub-class."""
         raise NotImplementedError("Sub-classes must override hide()")
 
-    def _set_placeholder(self,
+    def _setPlaceholder(self,
                          entry_widget,
-                         strPlaceholder: str) -> None:
+                         strPlaceholder):
         """
         Protected helper – restore placeholder text in an Entry widget.
 
@@ -311,7 +239,7 @@ class BasePage:
         Parameters
         ----------
         entry_widget  : ttk.Entry – the widget whose text will be reset
-        strPlaceholder: str       – the placeholder string to insert
+        strPlaceholder       – the placeholder string to insert
         """
         entry_widget.delete(0, tk.END)          # clear current content
         entry_widget.insert(0, strPlaceholder)  # restore placeholder text
@@ -338,7 +266,7 @@ class FormPage(BasePage):
     def on_entry_click(self,
                        event,
                        entry_widget,
-                       strPlaceholder: str) -> None:
+                       strPlaceholder: str):
         """
         Clear placeholder text when a user clicks into an Entry field.
         For password fields the characters are masked with '*'.
@@ -347,7 +275,7 @@ class FormPage(BasePage):
         ----------
         event         : tkinter event object (unused, required by bind)
         entry_widget  : ttk.Entry – widget that received focus
-        strPlaceholder: str       – the placeholder string currently shown
+        strPlaceholder       – the placeholder string currently shown
         """
         if entry_widget.get() == strPlaceholder:   # equality comparison
             entry_widget.delete(0, tk.END)
@@ -357,7 +285,7 @@ class FormPage(BasePage):
     def on_focusout(self,
                     event,
                     entry_widget,
-                    strPlaceholder: str) -> None:
+                    strPlaceholder: str):
         """
         Restore placeholder text when the user leaves an empty Entry.
 
@@ -365,10 +293,10 @@ class FormPage(BasePage):
         ----------
         event         : tkinter event object (unused, required by bind)
         entry_widget  : ttk.Entry – widget that lost focus
-        strPlaceholder: str       – placeholder string to restore
+        strPlaceholder       – placeholder string to restore
         """
         if not entry_widget.get():              # existence check (logical NOT)
-            self._set_placeholder(entry_widget, strPlaceholder)
+            self._setPlaceholder(entry_widget, strPlaceholder)
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -392,13 +320,13 @@ class logInPage(FormPage):
                             empty or contain the placeholder text
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialise all widgets for the login page."""
         super().__init__()
 
         # ── Public attribute ───────────────────────────────────────
-        self.current_username: str = ""   # str – stores the logged-in username
-        self.strUsernameToFind: str = ""  # str – last validated username
+        self.strCurrentUsername = ""   # str – stores the logged-in username
+        self.strUsernameToFind = ""  # str – last validated username
 
         # ── Private 1-D arrays (populated on each submit) ─────────
         self.__arrUsernames = []   # list[str] – 1-D array of usernames
@@ -407,27 +335,27 @@ class logInPage(FormPage):
         # ── Widgets ───────────────────────────────────────────────
         self.lblTitle = ttk.Label(
             master=app, text="Squiz",
-            font=font_title, style='TLabel')
+            font=tplFontTitle, style='TLabel')
 
         self.lblSubtitle = ttk.Label(
             master=app, text="Create, study, succeed.",
-            font=small_font, style='Muted.TLabel')
+            font=tplSmallFont, style='Muted.TLabel')
 
         self.frLogin = ttk.Frame(
             master=app, style='TFrame', width=480, height=360)
 
         self.lblFormTitle = ttk.Label(
             master=self.frLogin, text="Welcome back",
-            font=font_subtitle, style='Card.TLabel')
+            font=tplFontSubTitle, style='Card.TLabel')
 
         self.entryUsername = ttk.Entry(
             master=self.frLogin, width=22,
-            font=font_para, style='TEntry')
+            font=tplFontPara, style='TEntry')
         self.entryUsername.insert(0, "Username")
 
         self.entryPassword = ttk.Entry(
             master=self.frLogin, width=22,
-            font=font_para, style='TEntry')
+            font=tplFontPara, style='TEntry')
         self.entryPassword.insert(0, "Password")
 
         self.btnLogin = ttk.Button(
@@ -436,7 +364,7 @@ class logInPage(FormPage):
 
         self.lblNoAccount = ttk.Label(
             master=app, text="Don't have an account?",
-            font=small_font, style='Muted.TLabel')
+            font=tplSmallFont, style='Muted.TLabel')
 
         self.btnSignUp = ttk.Button(
             master=app, text="Sign Up",
@@ -446,24 +374,24 @@ class logInPage(FormPage):
         # Bind placeholder focus events (inherited from FormPage)
         self.entryUsername.bind(
             '<FocusIn>',
-            lambda e: self.on_entry_click(e, self.entryUsername, "Username"))
+            lambda event: self.on_entry_click(event, self.entryUsername, "Username"))
         self.entryUsername.bind(
             '<FocusOut>',
-            lambda e: self.on_focusout(e, self.entryUsername, "Username"))
+            lambda event: self.on_focusout(event, self.entryUsername, "Username"))
         self.entryPassword.bind(
             '<FocusIn>',
-            lambda e: self.on_entry_click(e, self.entryPassword, "Password"))
+            lambda event: self.on_entry_click(event, self.entryPassword, "Password"))
         self.entryPassword.bind(
             '<FocusOut>',
-            lambda e: self.on_focusout(e, self.entryPassword, "Password"))
+            lambda event: self.on_focusout(event, self.entryPassword, "Password"))
         # Allow the Enter key to submit
         self.entryPassword.bind('<Return>', lambda e: self.submit())
 
     # ── Public methods ─────────────────────────────────────────────
 
-    def show(self) -> None:
+    def show(self):
         """Display the login page and bring widgets to the front."""
-        hide_all()
+        hideAll()
         self.lblTitle.place(relx=0.5, rely=0.10, anchor="center")
         self.lblSubtitle.place(relx=0.5, rely=0.19, anchor="center")
         self.frLogin.place(relx=0.5, rely=0.54, anchor="center")
@@ -483,7 +411,7 @@ class logInPage(FormPage):
         except Exception:
             pass
 
-    def hide(self) -> None:
+    def hide(self):
         """Remove all login widgets from the screen."""
         for w in (self.lblTitle, self.lblSubtitle, self.frLogin,
                   self.lblFormTitle, self.entryUsername,
@@ -491,11 +419,11 @@ class logInPage(FormPage):
                   self.lblNoAccount, self.btnSignUp):
             w.place_forget()
 
-    def goToNewAcc(self) -> None:
+    def goToNewAcc(self):
         """Navigate to the Sign-Up page."""
-        show_page3()
+        showPage3()
 
-    def submit(self) -> None:
+    def submit(self):
         """
         Read accounts.csv into 1-D arrays and run a Binary Search to
         authenticate the entered username/password combination.
@@ -510,7 +438,7 @@ class logInPage(FormPage):
         # ── Load accounts into 1-D arrays from CSV (read from data source)
         self.__arrUsernames = []
         self.__arrPasswords = []
-        with open(ACCOUNTS_FILE_PATH, mode='r') as file:
+        with open(strAccountsPath, mode='r') as file:
             reader = csv.reader(file)
             for row in reader:
                 self.__arrUsernames.append(row[0])   # text (str) – username
@@ -518,7 +446,7 @@ class logInPage(FormPage):
 
         # ── Retrieve and sanitise input ────────────────────────────
         self.strUsernameToFind = self.entryUsername.get().strip()
-        strPasswordToFind: str  = self.entryPassword.get()
+        strPasswordToFind  = self.entryPassword.get()
 
         # Existence checks – fields must not be empty or placeholder text
         if not self.strUsernameToFind or self.strUsernameToFind == "Username":
@@ -542,7 +470,7 @@ class logInPage(FormPage):
                 # Username found; now verify password
                 if self.__arrPasswords[intMid] == strPasswordToFind:
                     bFound = True
-                    self.current_username = self.strUsernameToFind
+                    self.strCurrentUsername = self.strUsernameToFind
                 else:
                     # Username match but wrong password – keep searching
                     intLow = intMid + 1   # increment
@@ -554,7 +482,7 @@ class logInPage(FormPage):
         # ── Result ────────────────────────────────────────────────
         if bFound:
             messagebox.showinfo("Login Successful",
-                                f"Welcome back, {self.current_username}!")
+                                f"Welcome back, {self.strCurrentUsername}!")
             page2.show()
         else:
             messagebox.showwarning("Login Failed",
@@ -584,7 +512,7 @@ class mainPage(BasePage):
         [2] qa_data  – text  (str, string representation of a 2-D list)
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialise sidebar, scrollable list, and header widgets."""
         super().__init__()
 
@@ -592,12 +520,12 @@ class mainPage(BasePage):
         self.__intSortClicks: int = 0   # int – tracks sort direction toggle
 
         # ── Public quiz data (2-D array) ──────────────────────────
-        self.quizzes = []   # list[list] – each inner list is a quiz record
+        self.arrQuizzes = []   # list[list] – each inner list is a quiz record
 
         # ── 1-D arrays of dynamic widget references ────────────────
-        self.quiz_frames  = []
-        self.quiz_labels  = []
-        self.quiz_buttons = []
+        self.arrQuizFrames  = []
+        self.arrQuizLabels  = []
+        self.arrQuizButtons = []
 
         # ── Sidebar frame ─────────────────────────────────────────
         self.frmSidebar = ttk.Frame(
@@ -605,10 +533,10 @@ class mainPage(BasePage):
 
         self.lblAppName = ttk.Label(
             master=self.frmSidebar, text="Squiz",
-            font=font_subtitle, style='SidebarTitle.TLabel')
+            font=tplFontSubTitle, style='SidebarTitle.TLabel')
         self.lblAppTag = ttk.Label(
             master=self.frmSidebar, text="my quizzes",
-            font=small_font, style='Sidebar.TLabel')
+            font=tplSmallFont, style='Sidebar.TLabel')
 
         self.btnSort = ttk.Button(
             master=self.frmSidebar, text="⇅  Sort A–Z",
@@ -621,38 +549,38 @@ class mainPage(BasePage):
             command=self.managePage, style='Sidebar.TButton')
         self.btnLogout = ttk.Button(
             master=self.frmSidebar, text="← Log Out",
-            command=show_page1, style='Sidebar.TButton')
+            command=showPage1, style='Sidebar.TButton')
 
         # ── Content area header ───────────────────────────────────
         self.lblPageTitle = ttk.Label(
             master=app, text="My Quizzes",
-            font=font_title, style='TLabel')
+            font=tplFontTitle, style='TLabel')
 
         # ── Scrollable canvas for quiz cards ─────────────────────
-        self.canvas = Canvas(
-            app, bg=colours["bg"],
+        self.canvasScroll = Canvas(
+            app, bg=dictColours["bg"],
             highlightthickness=0, borderwidth=0, relief="flat")
-        self.scrollbar = ttk.Scrollbar(
-            master=self.canvas, orient="vertical",
-            command=self.canvas.yview, style='TScrollbar')
-        self.canvas.configure(yscrollcommand=self.scrollbar.set)
-        self.scrollable_frame = Frame(self.canvas, bg=colours["bg"])
-        self.scrollable_frame.bind(
+        self.scrollbarScroll = ttk.Scrollbar(
+            master=self.canvasScroll, orient="vertical",
+            command=self.canvasScroll.yview, style='TScrollbar')
+        self.canvasScroll.configure(yscrollcommand=self.scrollbarScroll.set)
+        self.frameScrollable = Frame(self.canvasScroll, bg=dictColours["bg"])
+        self.frameScrollable.bind(
             "<Configure>",
-            lambda e: self.canvas.configure(
-                scrollregion=self.canvas.bbox("all")))
-        self.canvas_window = self.canvas.create_window(
-            (20, 10), window=self.scrollable_frame, anchor="nw")
+            lambda e: self.canvasScroll.configure(
+                scrollregion=self.canvasScroll.bbox("all")))
+        self.intCanvasWindow = self.canvasScroll.create_window(
+            (20, 10), window=self.frameScrollable, anchor="nw")
 
         # Bind mouse-wheel scrolling for Windows and macOS
-        self.canvas.bind(
+        self.canvasScroll.bind(
             "<MouseWheel>",
-            lambda e: self.canvas.yview_scroll(
+            lambda e: self.canvasScroll.yview_scroll(
                 -1 * (e.delta // 120), "units"))
 
     # ── Private helpers ────────────────────────────────────────────
 
-    def __buildQuizCard(self, intIndex: int) -> None:
+    def __buildQuizCard(self, intIndex: int):
         """
         Private – create one quiz-card widget and append it to the
         scroll area.
@@ -662,16 +590,16 @@ class mainPage(BasePage):
         intIndex : int – position of the quiz in self.quizzes (2-D array)
         """
         # Access record field [0] (title – text type)
-        strQuizTitle: str = self.quizzes[intIndex][0]
+        strQuizTitle = self.arrQuizzes[intIndex][0]
 
         frmQuiz = ttk.Frame(
-            self.scrollable_frame, style='TFrame', width=740, height=65)
+            self.frameScrollable, style='TFrame', width=740, height=65)
         frmQuiz.pack(pady=6, padx=15)
         frmQuiz.pack_propagate(False)   # maintain fixed height
 
         lblQuiz = ttk.Label(
             master=frmQuiz, text=strQuizTitle,
-            font=small_bold, style='Card.TLabel')
+            font=tplSmallBold, style='Card.TLabel')
         btnPlay = ttk.Button(
             master=frmQuiz, text="Play →",
             command=lambda i=intIndex: self.playQuiz(i),
@@ -681,9 +609,9 @@ class mainPage(BasePage):
         btnPlay.place(relx=0.96, rely=0.5, anchor="e")
 
         # Append to 1-D tracking arrays for cleanup later
-        self.quiz_labels.append(lblQuiz)
-        self.quiz_buttons.append(btnPlay)
-        self.quiz_frames.append(frmQuiz)
+        self.arrQuizLabels.append(lblQuiz)
+        self.arrQuizButtons.append(btnPlay)
+        self.arrQuizFrames.append(frmQuiz)
 
     # ── Public methods ─────────────────────────────────────────────
 
@@ -699,15 +627,15 @@ class mainPage(BasePage):
         Each row is a record with fields at fixed indices:
             [0] title    : str
             [1] username : str
-            [2] qa_data  : str (string repr of a 2-D list)
+            [2] qa_data   (string repr of a 2-D list)
         """
-        strUsername: str = getattr(page1, 'strUsernameToFind', '').strip()
+        strUsername = getattr(page1, 'strUsernameToFind', '').strip()
         if not strUsername:   # existence check – must have a logged-in user
             return []
 
         arrAllData = []   # 1-D array of raw rows; each row is itself a list
 
-        with open(QUIZZES_FILE_PATH) as file:
+        with open(strQuizzesPath) as file:
             reader = csv.reader(file, delimiter=';')
             for row in reader:
                 arrAllData.append(row)   # build 2-D array
@@ -717,7 +645,7 @@ class mainPage(BasePage):
                           if row[1].strip() == strUsername]
         return arrUserQuizzes
 
-    def playQuiz(self, intQuizIndex: int) -> None:
+    def playQuiz(self, intQuizIndex: int):
         """
         Load the chosen quiz and navigate to the play-mode page.
 
@@ -726,9 +654,9 @@ class mainPage(BasePage):
         intQuizIndex : int – index of the selected quiz in self.quizzes
         """
         page6.getQuizToPlay(intQuizIndex)
-        show_page6()
+        showPage6()
 
-    def sort(self) -> None:
+    def sort(self):
         """
         Toggle between ascending (A→Z) and descending (Z→A) order
         using the Selection Sort algorithm.
@@ -739,7 +667,7 @@ class mainPage(BasePage):
             Time complexity: O(n²)
         """
         self.__intSortClicks += 1   # increment click counter
-        intN: int = len(self.quizzes)
+        intN: int = len(self.arrQuizzes)
 
         if self.__intSortClicks % 2 == 0:   # modulus – even → descending
             self.btnSort.config(text="⇅  Sort A–Z")
@@ -747,37 +675,37 @@ class mainPage(BasePage):
             for i in range(intN - 1):
                 intMaxIdx: int = i
                 for j in range(i + 1, intN):
-                    if self.quizzes[j][0].lower() > \
-                            self.quizzes[intMaxIdx][0].lower():   # > operator
+                    if self.arrQuizzes[j][0].lower() > \
+                            self.arrQuizzes[intMaxIdx][0].lower():   # > operator
                         intMaxIdx = j
                 if intMaxIdx != i:
                     # Swap quiz records in the 2-D array
-                    self.quizzes[i], self.quizzes[intMaxIdx] = \
-                        self.quizzes[intMaxIdx], self.quizzes[i]
+                    self.arrQuizzes[i], self.arrQuizzes[intMaxIdx] = \
+                        self.arrQuizzes[intMaxIdx], self.arrQuizzes[i]
         else:
             self.btnSort.config(text="⇅  Sort Z–A")
             # ── Ascending Selection Sort (A → Z) ──────────────────
             for i in range(intN - 1):
                 intMinIdx: int = i
                 for j in range(i + 1, intN):
-                    if self.quizzes[j][0].lower() < \
-                            self.quizzes[intMinIdx][0].lower():   # < operator
+                    if self.arrQuizzes[j][0].lower() < \
+                            self.arrQuizzes[intMinIdx][0].lower():   # < operator
                         intMinIdx = j
                 if intMinIdx != i:
-                    self.quizzes[i], self.quizzes[intMinIdx] = \
-                        self.quizzes[intMinIdx], self.quizzes[i]
+                    self.arrQuizzes[i], self.arrQuizzes[intMinIdx] = \
+                        self.arrQuizzes[intMinIdx], self.arrQuizzes[i]
 
         self.show(reload_quizzes=False)   # re-render with sorted order
 
-    def add(self) -> None:
+    def add(self):
         """Navigate to the Create Quiz page."""
-        show_page5()
+        showPage5()
 
-    def managePage(self) -> None:
+    def managePage(self):
         """Navigate to the Manage Account page."""
         page4.show()
 
-    def show(self, reload_quizzes: bool = True) -> None:
+    def show(self, reload_quizzes: bool = True):
         """
         Display the main dashboard.
 
@@ -786,13 +714,13 @@ class mainPage(BasePage):
         reload_quizzes : bool – True  → re-read quizzes from CSV
                                 False → use current self.quizzes (after sort)
         """
-        hide_all()
+        hideAll()
         self.hide()   # destroy previously rendered quiz cards
 
         if reload_quizzes:
-            self.quizzes = self.getQuizzes()
-        if self.quizzes is None:
-            self.quizzes = []
+            self.arrQuizzes = self.getQuizzes()
+        if self.arrQuizzes is None:
+            self.arrQuizzes = []
 
         # ── Place sidebar ──────────────────────────────────────────
         self.frmSidebar.place(x=0, y=0, width=200, height=800)
@@ -809,42 +737,42 @@ class mainPage(BasePage):
 
         # ── Place content area ─────────────────────────────────────
         self.lblPageTitle.place(relx=0.62, rely=0.09, anchor="center")
-        self.canvas.place(relx=0.62, rely=0.57, anchor="center",
+        self.canvasScroll.place(relx=0.62, rely=0.57, anchor="center",
                           width=820, height=550)
-        self.scrollbar.pack(side=RIGHT, fill=Y)
+        self.scrollbarScroll.pack(side=RIGHT, fill=Y)
 
         # Render a quiz card for each quiz record (iteration over 2-D array)
-        for i in range(len(self.quizzes)):
+        for i in range(len(self.arrQuizzes)):
             self.__buildQuizCard(i)
 
         # Show empty-state hint when the user has no quizzes yet
-        if len(self.quizzes) == 0:
+        if len(self.arrQuizzes) == 0:
             ttk.Label(
-                master=self.scrollable_frame,
+                master=self.frameScrollable,
                 text="No quizzes yet — press ＋ New Quiz to get started",
-                font=small_font, style='Muted.TLabel'
+                font=tplSmallFont, style='Muted.TLabel'
             ).pack(pady=40)
 
-    def hide(self) -> None:
+    def hide(self):
         """Destroy quiz cards and hide all static widgets."""
         # Destroy dynamically created quiz cards (iteration over 1-D array)
-        for frame in self.quiz_frames:
+        for frame in self.arrQuizFrames:
             frame.destroy()
-        self.quiz_labels.clear()
-        self.quiz_buttons.clear()
-        self.quiz_frames.clear()
+        self.arrQuizLabels.clear()
+        self.arrQuizButtons.clear()
+        self.arrQuizFrames.clear()
 
         # Hide static widgets
         self.frmSidebar.place_forget()
         self.lblPageTitle.place_forget()
-        self.scrollbar.pack_forget()
+        self.scrollbarScroll.pack_forget()
 
         # Lower the canvas below the login frame to prevent it covering page 1
         try:
-            self.canvas.lower(page1.frLogin)
+            self.canvasScroll.lower(page1.frLogin)
         except Exception:
             try:
-                self.canvas.lower()
+                self.canvasScroll.lower()
             except Exception:
                 pass
 
@@ -864,7 +792,7 @@ class newAccPage(FormPage):
         4. Uniqueness check  – Linear Search to confirm username is free
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialise all sign-up page widgets."""
         super().__init__()
 
@@ -875,25 +803,25 @@ class newAccPage(FormPage):
         # ── Widgets ───────────────────────────────────────────────
         self.lblTitle = ttk.Label(
             master=app, text="Create Account",
-            font=font_title, style='TLabel')
+            font=tplFontTitle, style='TLabel')
         self.lblSubtitle = ttk.Label(
             master=app, text="Join Squiz today — it's free.",
-            font=small_font, style='Muted.TLabel')
+            font=tplSmallFont, style='Muted.TLabel')
 
         self.frmSignUp = ttk.Frame(
             master=app, style='TFrame', width=480, height=380)
         self.lblFormTitle = ttk.Label(
             master=self.frmSignUp, text="Sign Up",
-            font=font_subtitle, style='Card.TLabel')
+            font=tplFontSubTitle, style='Card.TLabel')
 
         self.entryNewUsername = ttk.Entry(
             master=self.frmSignUp, width=22,
-            font=font_para, style='TEntry')
+            font=tplFontPara, style='TEntry')
         self.entryNewUsername.insert(0, "Username")
 
         self.entryNewPassword = ttk.Entry(
             master=self.frmSignUp, width=22,
-            font=font_para, style='TEntry')
+            font=tplFontPara, style='TEntry')
         self.entryNewPassword.insert(0, "Password")
 
         self.btnSubmit = ttk.Button(
@@ -920,11 +848,11 @@ class newAccPage(FormPage):
 
     # ── Public methods ─────────────────────────────────────────────
 
-    def goToLogin(self) -> None:
+    def goToLogin(self):
         """Return to the Login page."""
-        show_page1()
+        showPage1()
 
-    def createNewAcc(self) -> None:
+    def createNewAcc(self):
         """
         Validate input and write a new account record to accounts.csv.
 
@@ -937,14 +865,14 @@ class newAccPage(FormPage):
         # ── Load existing accounts into 1-D arrays ─────────────────
         self.__arrUsernames = []
         self.__arrPasswords = []
-        with open(ACCOUNTS_FILE_PATH, mode='r') as file:
+        with open(strAccountsPath, mode='r') as file:
             reader = csv.reader(file)
             for row in reader:
                 self.__arrUsernames.append(row[0])
                 self.__arrPasswords.append(row[1])
 
-        strNewUsername: str = self.entryNewUsername.get().strip()
-        strNewPassword: str = self.entryNewPassword.get()
+        strNewUsername = self.entryNewUsername.get().strip()
+        strNewPassword = self.entryNewPassword.get()
 
         # ── 1. Existence check – username ──────────────────────────
         if not strNewUsername or strNewUsername == "Username":
@@ -976,24 +904,24 @@ class newAccPage(FormPage):
             return
 
         # ── 4. Range check – password must be long enough ─────────
-        if len(strNewPassword) < MIN_PASSWORD_LENGTH:   # < comparison
+        if len(strNewPassword) < intMinPasswordLength:   # < comparison
             messagebox.showwarning("Weak Password",
                                    f"Password must be at least "
-                                   f"{MIN_PASSWORD_LENGTH} characters long.")
+                                   f"{intMinPasswordLength} characters long.")
             return
 
         # ── Write new account record to CSV (write to data source) ─
-        with open(ACCOUNTS_FILE_PATH, 'a', newline='') as f:
+        with open(strAccountsPath, 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([strNewUsername, strNewPassword])
 
         messagebox.showinfo("Account Created",
                             "Your account has been created. Please log in.")
-        show_page1()
+        showPage1()
 
-    def show(self) -> None:
+    def show(self):
         """Display the sign-up page."""
-        hide_all()
+        hideAll()
         self.lblTitle.place(relx=0.5, rely=0.10, anchor="center")
         self.lblSubtitle.place(relx=0.5, rely=0.19, anchor="center")
         self.frmSignUp.place(relx=0.5, rely=0.54, anchor="center")
@@ -1003,7 +931,7 @@ class newAccPage(FormPage):
         self.btnSubmit.place(relx=0.5, rely=0.76, anchor="center")
         self.btnBackToLogin.place(relx=0.5, rely=0.93, anchor="center")
 
-    def hide(self) -> None:
+    def hide(self):
         """Remove all sign-up widgets from the screen."""
         for w in (self.lblTitle, self.lblSubtitle, self.frmSignUp,
                   self.lblFormTitle, self.entryNewUsername,
@@ -1024,27 +952,27 @@ class manageAccPage(BasePage):
     all associated quizzes from both CSV files.
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialise widgets for the manage account page."""
         super().__init__()
 
         self.lblTitle = ttk.Label(
             master=app, text="My Account",
-            font=font_title, style='TLabel')
+            font=tplFontTitle, style='TLabel')
         self.lblSubtitle = ttk.Label(
             master=app, text="Manage your Squiz account settings.",
-            font=small_font, style='Muted.TLabel')
+            font=tplSmallFont, style='Muted.TLabel')
 
         self.frmManage = ttk.Frame(
             master=app, style='TFrame', width=520, height=320)
         self.lblWarningHeader = ttk.Label(
             master=self.frmManage, text="Danger Zone",
-            font=small_bold, style='Warning.TLabel')
+            font=tplSmallBold, style='Warning.TLabel')
         self.lblWarning = ttk.Label(
             master=self.frmManage,
             text="Deleting your account is permanent\n"
                  "and removes all your quizzes.",
-            font=small_font, style='MutedCard.TLabel')
+            font=tplSmallFont, style='MutedCard.TLabel')
         self.btnDeleteAcc = ttk.Button(
             master=self.frmManage, text="Delete My Account",
             command=self.deleteAcc, style='Danger.TButton')
@@ -1052,11 +980,11 @@ class manageAccPage(BasePage):
             master=self.frmManage, text="← Back to Quizzes",
             command=self.done)
 
-    def done(self) -> None:
+    def done(self):
         """Return to the main quiz dashboard."""
         page2.show()
 
-    def deleteAcc(self) -> None:
+    def deleteAcc(self):
         """
         Confirm deletion, then remove the user's record from both CSVs.
 
@@ -1070,35 +998,35 @@ class manageAccPage(BasePage):
         if not bConfirmed:   # logical NOT – user chose 'No'
             return
 
-        strUsername: str = getattr(page1, 'strUsernameToFind', '').strip()
+        strUsername = getattr(page1, 'strUsernameToFind', '').strip()
         if not strUsername:   # existence check
             messagebox.showerror("Error",
                                  "Could not identify the logged-in account.")
             return
 
         # ── Remove user from accounts.csv ──────────────────────────
-        with open(ACCOUNTS_FILE_PATH, mode='r') as file:
+        with open(strAccountsPath, mode='r') as file:
             arrLines = file.readlines()   # 1-D array of file lines
         arrUpdated = [ln for ln in arrLines
                       if not ln.startswith(strUsername + ',')]
-        with open(ACCOUNTS_FILE_PATH, mode='w') as file:
+        with open(strAccountsPath, mode='w') as file:
             file.writelines(arrUpdated)
 
         # ── Remove user's quizzes from quizzesArray.csv ────────────
-        with open(QUIZZES_FILE_PATH, mode='r') as file:
+        with open(strQuizzesPath, mode='r') as file:
             arrLines = file.readlines()
         arrUpdated = [ln for ln in arrLines
                       if not (';' + strUsername + ';') in ln]
-        with open(QUIZZES_FILE_PATH, mode='w') as file:
+        with open(strQuizzesPath, mode='w') as file:
             file.writelines(arrUpdated)
 
         messagebox.showinfo("Account Deleted",
                             "Your account has been successfully deleted.")
-        show_page1()
+        showPage1()
 
-    def show(self) -> None:
+    def show(self):
         """Display the manage account page."""
-        hide_all()
+        hideAll()
         self.lblTitle.place(relx=0.5, rely=0.12, anchor="center")
         self.lblSubtitle.place(relx=0.5, rely=0.21, anchor="center")
         self.frmManage.place(relx=0.5, rely=0.55, anchor="center")
@@ -1107,7 +1035,7 @@ class manageAccPage(BasePage):
         self.btnDeleteAcc.place(relx=0.5, rely=0.58, anchor="center")
         self.btnDone.place(relx=0.5, rely=0.80, anchor="center")
 
-    def hide(self) -> None:
+    def hide(self):
         """Remove all manage account widgets from the screen."""
         for w in (self.lblTitle, self.lblSubtitle, self.frmManage,
                   self.lblWarningHeader, self.lblWarning,
@@ -1135,7 +1063,7 @@ class newQuizPage(FormPage):
                             at least MIN_QUESTIONS pairs before saving
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialise all create-quiz page widgets."""
         super().__init__()
 
@@ -1146,32 +1074,32 @@ class newQuizPage(FormPage):
         # ── Widgets ───────────────────────────────────────────────
         self.lblTitle = ttk.Label(
             master=app, text="Create Quiz",
-            font=font_title, style='TLabel')
+            font=tplFontTitle, style='TLabel')
 
         self.lblCount = ttk.Label(
-            master=app, text=f"Questions added: 0  (minimum {MIN_QUESTIONS})",
-            font=small_font, style='Muted.TLabel')
+            master=app, text=f"Questions added: 0  (minimum {intMinQuestions})",
+            font=tplSmallFont, style='Muted.TLabel')
 
         self.frmCard = ttk.Frame(
             master=app, style='TFrame', width=580, height=440)
 
         self.entryQuizTitle = ttk.Entry(
             master=self.frmCard, width=26,
-            font=font_para, style='TEntry')
+            font=tplFontPara, style='TEntry')
         self.entryQuizTitle.insert(0, "Quiz Title")
 
         self.lblDivider = ttk.Label(
             master=self.frmCard, text="── Add Questions ──",
-            font=small_font, style='MutedCard.TLabel')
+            font=tplSmallFont, style='MutedCard.TLabel')
 
         self.entryQuestion = ttk.Entry(
             master=self.frmCard, width=26,
-            font=font_para, style='TEntry')
+            font=tplFontPara, style='TEntry')
         self.entryQuestion.insert(0, "Question")
 
         self.entryAnswer = ttk.Entry(
             master=self.frmCard, width=26,
-            font=font_para, style='TEntry')
+            font=tplFontPara, style='TEntry')
         self.entryAnswer.insert(0, "Answer")
 
         self.btnNext = ttk.Button(
@@ -1202,7 +1130,7 @@ class newQuizPage(FormPage):
 
     # ── Public methods ─────────────────────────────────────────────
 
-    def exit(self) -> None:
+    def exit(self):
         """Confirm discard and return to the main dashboard."""
         bConfirmed: bool = messagebox.askyesno(
             "Discard Quiz",
@@ -1211,10 +1139,10 @@ class newQuizPage(FormPage):
             self.__arrQuizQuestions.clear()
             self.__arrQuizAnswers.clear()
             self.lblCount.config(
-                text=f"Questions added: 0  (minimum {MIN_QUESTIONS})")
-            show_page2()
+                text=f"Questions added: 0  (minimum {intMinQuestions})")
+            showPage2()
 
-    def nextQuestion(self) -> None:
+    def nextQuestion(self):
         """
         Validate the current Q&A pair and append to the 1-D arrays.
 
@@ -1222,7 +1150,7 @@ class newQuizPage(FormPage):
             • Existence check – both fields must not be empty
             • Range check     – lengths must not exceed defined limits
         """
-        strQuestion: str = self.entryQuestion.get().strip()
+        strQuestion = self.entryQuestion.get().strip()
         strAnswer:   str = self.entryAnswer.get().strip()
 
         # Existence checks
@@ -1236,15 +1164,15 @@ class newQuizPage(FormPage):
             return
 
         # Range checks
-        if len(strQuestion) > MAX_QUESTION_LENGTH:   # > operator
+        if len(strQuestion) > intMaxQuestioLength:   # > operator
             messagebox.showwarning("Question Too Long",
                                    f"Questions must be ≤ "
-                                   f"{MAX_QUESTION_LENGTH} characters.")
+                                   f"{intMaxQuestioLength} characters.")
             return
-        if len(strAnswer) > MAX_ANSWER_LENGTH:
+        if len(strAnswer) > intMaxAnswerLength:
             messagebox.showwarning("Answer Too Long",
                                    f"Answers must be ≤ "
-                                   f"{MAX_ANSWER_LENGTH} characters.")
+                                   f"{intMaxAnswerLength} characters.")
             return
 
         # Append to 1-D arrays
@@ -1254,13 +1182,13 @@ class newQuizPage(FormPage):
         # Update counter display
         intCount: int = len(self.__arrQuizQuestions)   # int – current count
         self.lblCount.config(
-            text=f"Questions added: {intCount}  (minimum {MIN_QUESTIONS})")
+            text=f"Questions added: {intCount}  (minimum {intMinQuestions})")
 
         # Reset entry fields to their placeholders
-        self._set_placeholder(self.entryQuestion, "Question")
-        self._set_placeholder(self.entryAnswer,   "Answer")
+        self._setPlaceholder(self.entryQuestion, "Question")
+        self._setPlaceholder(self.entryAnswer,   "Answer")
 
-    def finishQuiz(self) -> None:
+    def finishQuiz(self):
         """
         Validate the completed quiz and write it to quizzesArray.csv.
 
@@ -1271,7 +1199,7 @@ class newQuizPage(FormPage):
             • Existence check – title must not be empty
             • Range check     – at least MIN_QUESTIONS questions required
         """
-        strQuizTitle: str = self.entryQuizTitle.get().strip()
+        strQuizTitle = self.entryQuizTitle.get().strip()
 
         # Existence check – title
         if not strQuizTitle or strQuizTitle == "Quiz Title":
@@ -1280,9 +1208,9 @@ class newQuizPage(FormPage):
             return
 
         # Range check – minimum question count
-        if len(self.__arrQuizQuestions) < MIN_QUESTIONS:   # < operator
+        if len(self.__arrQuizQuestions) < intMinQuestions:   # < operator
             messagebox.showwarning("Not Enough Questions",
-                                   f"A quiz needs at least {MIN_QUESTIONS} "
+                                   f"A quiz needs at least {intMinQuestions} "
                                    f"questions. Please add more.")
             return
 
@@ -1291,26 +1219,26 @@ class newQuizPage(FormPage):
                        zip(self.__arrQuizQuestions, self.__arrQuizAnswers)]
 
         # Write quiz record to CSV (write to data source)
-        with open(QUIZZES_FILE_PATH, 'a', newline='', encoding='utf-8') as f:
+        with open(strQuizzesPath, 'a', newline='', encoding='utf-8') as f:
             writer = csv.writer(f, delimiter=';')
             writer.writerow([strQuizTitle,
-                             page1.current_username,
+                             page1.strCurrentUsername,
                              arrQuizData])
 
         # Reset state
         self.__arrQuizQuestions.clear()
         self.__arrQuizAnswers.clear()
-        self._set_placeholder(self.entryQuizTitle, "Quiz Title")
+        self._setPlaceholder(self.entryQuizTitle, "Quiz Title")
         self.lblCount.config(
-            text=f"Questions added: 0  (minimum {MIN_QUESTIONS})")
+            text=f"Questions added: 0  (minimum {intMinQuestions})")
 
         messagebox.showinfo("Quiz Saved",
                             f'"{strQuizTitle}" has been saved!')
-        show_page2()
+        showPage2()
 
-    def show(self) -> None:
+    def show(self):
         """Display the create-quiz page."""
-        hide_all()
+        hideAll()
         self.lblTitle.place(relx=0.5, rely=0.08, anchor="center")
         self.lblCount.place(relx=0.5, rely=0.16, anchor="center")
         self.frmCard.place(relx=0.5, rely=0.56, anchor="center")
@@ -1322,7 +1250,7 @@ class newQuizPage(FormPage):
         self.btnFinish.place(relx=0.5, rely=0.87, anchor="center")
         self.btnExit.place(relx=0.92, rely=0.96, anchor="center")
 
-    def hide(self) -> None:
+    def hide(self):
         """Remove all create-quiz widgets from the screen."""
         for w in (self.lblTitle, self.lblCount, self.frmCard,
                   self.entryQuizTitle, self.lblDivider,
@@ -1345,7 +1273,7 @@ class playQuizPage(BasePage):
         strQuizTitle  – text (str) of the selected quiz
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialise mode-selection widgets."""
         super().__init__()
 
@@ -1356,10 +1284,10 @@ class playQuizPage(BasePage):
         # ── Widgets ───────────────────────────────────────────────
         self.lblQuizName = ttk.Label(
             master=app, text="",
-            font=font_title, style='TLabel')
+            font=tplFontTitle, style='TLabel')
         self.lblSubtitle = ttk.Label(
             master=app, text="Choose how you'd like to study",
-            font=small_font, style='Muted.TLabel')
+            font=tplSmallFont, style='Muted.TLabel')
 
         self.frmPlay = ttk.Frame(
             master=app, style='TFrame', width=520, height=320)
@@ -1370,7 +1298,7 @@ class playQuizPage(BasePage):
         self.lblFlashDesc = ttk.Label(
             master=self.frmPlay,
             text="Flip through cards at your own pace",
-            font=small_font, style='MutedCard.TLabel')
+            font=tplSmallFont, style='MutedCard.TLabel')
 
         self.btnKahoot = ttk.Button(
             master=self.frmPlay, text="⚡   Quiz Mode",
@@ -1378,45 +1306,45 @@ class playQuizPage(BasePage):
         self.lblKahootDesc = ttk.Label(
             master=self.frmPlay,
             text="Multiple-choice questions against the clock",
-            font=small_font, style='MutedCard.TLabel')
+            font=tplSmallFont, style='MutedCard.TLabel')
 
         self.btnCancel = ttk.Button(
             master=self.frmPlay, text="← Back",
             command=self.cancel)
 
-    def getQuizToPlay(self, intQuizIndex: int) -> None:
+    def getQuizToPlay(self, intQuizIndex: int):
         """
         Load the quiz at the given index from the main page's 2-D array.
 
         Record fields accessed by index:
             [0] title   : str
             [1] username: str
-            [2] data    : str (string repr of 2-D [[q, a], ...] list)
+            [2] data     (string repr of 2-D [[q, a], ...] list)
 
         Parameters
         ----------
         intQuizIndex : int – index in page2.quizzes
         """
-        self.strQuizTitle  = page2.quizzes[intQuizIndex][0]   # text
-        strRawData: str    = page2.quizzes[intQuizIndex][2]   # text
+        self.strQuizTitle  = page2.arrQuizzes[intQuizIndex][0]   # text
+        strRawData    = page2.arrQuizzes[intQuizIndex][2]   # text
         # Convert the stored string back to a Python 2-D list
         self.arrQuizToPlay = eval(strRawData)
 
-    def cancel(self) -> None:
+    def cancel(self):
         """Return to the main quiz dashboard."""
-        show_page2()
+        showPage2()
 
-    def flashCard(self) -> None:
+    def flashCard(self):
         """Navigate to Flashcard mode."""
-        show_page7()
+        showPage7()
 
-    def kahoot(self) -> None:
+    def kahoot(self):
         """Navigate to Quiz (Kahoot) mode."""
-        show_page8()
+        showPage8()
 
-    def show(self) -> None:
+    def show(self):
         """Display the mode selection page."""
-        hide_all()
+        hideAll()
         self.lblQuizName.config(text=self.strQuizTitle)
         self.lblQuizName.place(relx=0.5, rely=0.13, anchor="center")
         self.lblSubtitle.place(relx=0.5, rely=0.22, anchor="center")
@@ -1429,7 +1357,7 @@ class playQuizPage(BasePage):
         self.lblKahootDesc.place(relx=0.5, rely=0.71, anchor="center")
         self.btnCancel.place(relx=0.5, rely=0.88, anchor="center")
 
-    def hide(self) -> None:
+    def hide(self):
         """Remove all mode-selection widgets from the screen."""
         for w in (self.lblQuizName, self.lblSubtitle, self.frmPlay,
                   self.btnFlashCard, self.lblFlashDesc,
@@ -1452,7 +1380,7 @@ class flashCardPage(BasePage):
     Data: page6.arrQuizToPlay – 2-D list of [question, answer] pairs.
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialise flashcard widgets."""
         super().__init__()
 
@@ -1463,19 +1391,19 @@ class flashCardPage(BasePage):
         # ── Widgets ───────────────────────────────────────────────
         self.lblQuizTitle = ttk.Label(
             master=app, text="",
-            font=font_subtitle, style='TLabel')
+            font=tplFontSubTitle, style='TLabel')
         self.lblProgress = ttk.Label(
             master=app, text="",
-            font=small_font, style='Muted.TLabel')
+            font=tplSmallFont, style='Muted.TLabel')
 
         self.crdFlashCard = ttk.Frame(
             master=app, style='TFrame', width=720, height=340)
         self.lblSide = ttk.Label(
             master=self.crdFlashCard, text="QUESTION",
-            font=small_bold, style='MutedCard.TLabel')
+            font=tplSmallBold, style='MutedCard.TLabel')
         self.lblContent = ttk.Label(
             master=self.crdFlashCard, text="",
-            font=font_para, style='Card.TLabel', wraplength=660)
+            font=tplFontPara, style='Card.TLabel', wraplength=660)
 
         self.btnFlip = ttk.Button(
             master=app, text="Flip Card ↺",
@@ -1490,7 +1418,7 @@ class flashCardPage(BasePage):
 
     # ── Private helpers ────────────────────────────────────────────
 
-    def __refreshCard(self) -> None:
+    def __refreshCard(self):
         """
         Private – update the progress label and show the question side
         of the current card.
@@ -1505,7 +1433,7 @@ class flashCardPage(BasePage):
 
     # ── Public methods ─────────────────────────────────────────────
 
-    def flipCard(self) -> None:
+    def flipCard(self):
         """Toggle the card between question (front) and answer (back)."""
         self.__intClicks += 1   # increment
 
@@ -1518,22 +1446,22 @@ class flashCardPage(BasePage):
             self.lblContent.config(
                 text=page6.arrQuizToPlay[self.__intN][1])   # field [1]
 
-    def nextCard(self) -> None:
+    def nextCard(self):
         """Advance to the next card; wrap back to the first when at the end."""
         intTotal: int = len(page6.arrQuizToPlay)
         self.__intN      = (self.__intN + 1) % intTotal   # modulus wrap-around
         self.__intClicks = 0
         self.__refreshCard()
 
-    def finishQuiz(self) -> None:
+    def finishQuiz(self):
         """End the flashcard session and return to the main page."""
         self.__intN      = 0
         self.__intClicks = 0
-        show_page2()
+        showPage2()
 
-    def show(self) -> None:
+    def show(self):
         """Reset state and display the flashcard page."""
-        hide_all()
+        hideAll()
         self.__intN      = 0
         self.__intClicks = 0
         self.lblQuizTitle.config(text=page6.strQuizTitle)
@@ -1548,7 +1476,7 @@ class flashCardPage(BasePage):
         self.btnNext.place(relx=0.67, rely=0.83, anchor="center")
         self.btnFinish.place(relx=0.5, rely=0.95, anchor="center")
 
-    def hide(self) -> None:
+    def hide(self):
         """Remove all flashcard widgets from the screen."""
         for w in (self.lblQuizTitle, self.lblProgress,
                   self.crdFlashCard, self.lblSide, self.lblContent,
@@ -1578,7 +1506,7 @@ class kahootPage(FormPage):
         • Range check – must be between MIN_TIME_PER_Q and MAX_TIME_PER_Q
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialise all Kahoot mode widgets."""
         super().__init__()
 
@@ -1593,20 +1521,20 @@ class kahootPage(FormPage):
         # ── Settings screen ────────────────────────────────────────
         self.lblKahoot = ttk.Label(
             master=app, text="Quiz Mode",
-            font=font_title, style='TLabel')
+            font=tplFontTitle, style='TLabel')
         self.lblSubtitle = ttk.Label(
             master=app, text="Multiple-choice against the clock",
-            font=small_font, style='Muted.TLabel')
+            font=tplSmallFont, style='Muted.TLabel')
 
         self.frmSettings = ttk.Frame(
             master=app, style='TFrame', width=560, height=340)
         self.lblTimePerQ = ttk.Label(
             master=self.frmSettings, text="Seconds per question:",
-            font=font_para, style='Card.TLabel')
+            font=tplFontPara, style='Card.TLabel')
         self.entryTimePerQ = ttk.Entry(
             master=self.frmSettings, width=8,
-            font=font_para, style='TEntry')
-        self.entryTimePerQ.insert(0, str(DEFAULT_TIME_PER_Q))
+            font=tplFontPara, style='TEntry')
+        self.entryTimePerQ.insert(0, str(intDefaultTimePerQ))
         self.btnStart = ttk.Button(
             master=self.frmSettings, text="Start Quiz ▶",
             command=self.getAnswers)
@@ -1614,7 +1542,7 @@ class kahootPage(FormPage):
         # ── Live question display ──────────────────────────────────
         self.lblQuestion = ttk.Label(
             master=app, text="",
-            font=font_subtitle, style='TLabel', wraplength=900)
+            font=tplFontSubTitle, style='TLabel', wraplength=900)
 
         # Answer tiles: each is a coloured button with an overlaid label
         # (label carries the answer text; button colour provides visual hit area)
@@ -1622,55 +1550,55 @@ class kahootPage(FormPage):
                                    command=self.ans1Selected,
                                    style='Tile.TButton')
         self.lblAns1 = ttk.Label(master=app, text="",
-                                  font=font_answer, style='TileText.TLabel',
+                                  font=tplFontAnswer, style='TileText.TLabel',
                                   wraplength=420)
 
         self.btnAns2 = ttk.Button(master=app, text=" ",
                                    command=self.ans2Selected,
                                    style='Tile.TButton')
         self.lblAns2 = ttk.Label(master=app, text="",
-                                  font=font_answer, style='TileText.TLabel',
+                                  font=tplFontAnswer, style='TileText.TLabel',
                                   wraplength=420)
 
         self.btnAns3 = ttk.Button(master=app, text=" ",
                                    command=self.ans3Selected,
                                    style='Tile.TButton')
         self.lblAns3 = ttk.Label(master=app, text="",
-                                  font=font_answer, style='TileText.TLabel',
+                                  font=tplFontAnswer, style='TileText.TLabel',
                                   wraplength=420)
 
         self.btnAns4 = ttk.Button(master=app, text=" ",
                                    command=self.ans4Selected,
                                    style='Tile.TButton')
         self.lblAns4 = ttk.Label(master=app, text="",
-                                  font=font_answer, style='TileText.TLabel',
+                                  font=tplFontAnswer, style='TileText.TLabel',
                                   wraplength=420)
 
         # ── Results screen ─────────────────────────────────────────
         self.lblResults = ttk.Label(
             master=app, text="Results",
-            font=font_title, style='TLabel')
+            font=tplFontTitle, style='TLabel')
 
         self.frmResults = ttk.Frame(
             master=app, style='TFrame', width=700, height=440)
         self.lblCorrectHdr   = ttk.Label(
             master=self.frmResults, text="Correct",
-            font=small_bold, style='Card.TLabel')
+            font=tplSmallBold, style='Card.TLabel')
         self.lblCorrect      = ttk.Label(
             master=self.frmResults, text="",
-            font=font_huge, style='Success.TLabel')
+            font=tplFontHuge, style='Success.TLabel')
         self.lblIncorrectHdr = ttk.Label(
             master=self.frmResults, text="Incorrect",
-            font=small_bold, style='Card.TLabel')
+            font=tplSmallBold, style='Card.TLabel')
         self.lblIncorrect    = ttk.Label(
             master=self.frmResults, text="",
-            font=font_huge, style='Warning.TLabel')
+            font=tplFontHuge, style='Warning.TLabel')
         self.lblScoreHdr     = ttk.Label(
             master=self.frmResults, text="Score",
-            font=small_bold, style='Card.TLabel')
+            font=tplSmallBold, style='Card.TLabel')
         self.lblPercentage   = ttk.Label(
             master=self.frmResults, text="",
-            font=font_subtitle, style='Card.TLabel')
+            font=tplFontSubTitle, style='Card.TLabel')
         self.btnDone = ttk.Button(
             master=self.frmResults, text="Back to Quizzes",
             command=self.finishKahoot)
@@ -1679,25 +1607,25 @@ class kahootPage(FormPage):
         self.entryTimePerQ.bind(
             '<FocusIn>',
             lambda e: self.on_entry_click(
-                e, self.entryTimePerQ, str(DEFAULT_TIME_PER_Q)))
+                e, self.entryTimePerQ, str(intDefaultTimePerQ)))
         self.entryTimePerQ.bind(
             '<FocusOut>',
             lambda e: self.on_focusout(
-                e, self.entryTimePerQ, str(DEFAULT_TIME_PER_Q)))
+                e, self.entryTimePerQ, str(intDefaultTimePerQ)))
 
     # ── Private helpers ────────────────────────────────────────────
 
-    def __processAnswer(self, strSelected: str) -> None:
+    def __processAnswer(self, strSelected: str):
         """
         Private – evaluate whether the selected answer is correct and
         advance to the next question.
 
         Parameters
         ----------
-        strSelected : str – the answer text from the clicked label
+        strSelected  – the answer text from the clicked label
         """
         # Retrieve the correct answer using the pre-stored position index
-        strCorrect: str = self.__allAnswers[self.__intN][
+        strCorrect = self.__allAnswers[self.__intN][
             self.__ansPositions[self.__intN]]
 
         if strSelected == strCorrect:   # equality comparison
@@ -1708,7 +1636,7 @@ class kahootPage(FormPage):
         self.__intN += 1               # advance to next question
         self.__showQuestion()
 
-    def __showQuestion(self) -> None:
+    def __showQuestion(self):
         """
         Private – render the current question and four answer tiles, or
         show the results screen when all questions are exhausted.
@@ -1748,13 +1676,13 @@ class kahootPage(FormPage):
                            width=520, height=175)
         self.lblAns4.place(relx=0.74, rely=0.78, anchor="center")
 
-    def __showResults(self) -> None:
+    def __showResults(self):
         """
         Private – calculate the final score and display the results panel.
 
         The percentage is stored as a floating-point number (float).
         """
-        hide_all()
+        hideAll()
 
         intTotal:      int   = len(self.__allQuestions)          # int
         # Calculate score as floating-point percentage (float data type)
@@ -1780,23 +1708,23 @@ class kahootPage(FormPage):
 
     # ── Public answer callbacks ────────────────────────────────────
 
-    def ans1Selected(self) -> None:
+    def ans1Selected(self):
         """Handle selection of answer tile 1."""
         self.__processAnswer(self.lblAns1.cget('text'))
 
-    def ans2Selected(self) -> None:
+    def ans2Selected(self):
         """Handle selection of answer tile 2."""
         self.__processAnswer(self.lblAns2.cget('text'))
 
-    def ans3Selected(self) -> None:
+    def ans3Selected(self):
         """Handle selection of answer tile 3."""
         self.__processAnswer(self.lblAns3.cget('text'))
 
-    def ans4Selected(self) -> None:
+    def ans4Selected(self):
         """Handle selection of answer tile 4."""
         self.__processAnswer(self.lblAns4.cget('text'))
 
-    def getAnswers(self) -> None:
+    def getAnswers(self):
         """
         Validate settings, build randomised answer sets for every question,
         and launch the quiz.
@@ -1806,7 +1734,7 @@ class kahootPage(FormPage):
             • Range check – seconds must be between MIN_TIME_PER_Q and
                             MAX_TIME_PER_Q (inclusive)
         """
-        strTimeInput: str = self.entryTimePerQ.get().strip()
+        strTimeInput = self.entryTimePerQ.get().strip()
 
         # ── Type check – must be numeric (integer) ─────────────────
         if not strTimeInput.isdigit():   # logical NOT
@@ -1817,10 +1745,10 @@ class kahootPage(FormPage):
         intTimePerQ: int = int(strTimeInput)   # convert text → integer
 
         # ── Range check – must be within allowed bounds ────────────
-        if intTimePerQ < MIN_TIME_PER_Q or intTimePerQ > MAX_TIME_PER_Q:
+        if intTimePerQ < intMinTimePerQ or intTimePerQ > intMaxTimePerQ:
             messagebox.showwarning("Out of Range",
                                    f"Seconds per question must be between "
-                                   f"{MIN_TIME_PER_Q} and {MAX_TIME_PER_Q}.")
+                                   f"{intMinTimePerQ} and {intMaxTimePerQ}.")
             return
 
         # ── Reset quiz-state counters and arrays ───────────────────
@@ -1852,16 +1780,16 @@ class kahootPage(FormPage):
             self.__ansPositions.append(intAnsPos)
             arrPossible = []   # reset for next iteration
 
-        hide_all()
+        hideAll()
         self.__showQuestion()
 
-    def finishKahoot(self) -> None:
+    def finishKahoot(self):
         """Return to the main quiz dashboard."""
-        show_page2()
+        showPage2()
 
-    def show(self) -> None:
+    def show(self):
         """Display the Kahoot settings panel."""
-        hide_all()
+        hideAll()
         self.lblKahoot.place(relx=0.5, rely=0.10, anchor="center")
         self.lblSubtitle.place(relx=0.5, rely=0.19, anchor="center")
         self.frmSettings.place(relx=0.5, rely=0.54, anchor="center")
@@ -1869,7 +1797,7 @@ class kahootPage(FormPage):
         self.entryTimePerQ.place(relx=0.5, rely=0.48, anchor="center")
         self.btnStart.place(relx=0.5, rely=0.72, anchor="center")
 
-    def hide(self) -> None:
+    def hide(self):
         """Remove all Kahoot mode widgets from the screen."""
         for w in (self.lblKahoot, self.lblSubtitle, self.frmSettings,
                   self.lblTimePerQ, self.entryTimePerQ, self.btnStart,
@@ -1904,5 +1832,5 @@ page8 = kahootPage()      # Kahoot/Quiz mode    – kahootPage(FormPage → Base
 #  LAUNCH APPLICATION
 # ══════════════════════════════════════════════════════════════════════
 
-show_page1()       # Start at the login screen
+showPage1()       # Start at the login screen
 app.mainloop()     # Enter the Tkinter event loop
